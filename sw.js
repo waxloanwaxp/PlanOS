@@ -5,7 +5,7 @@
 
 const CACHE_NAME = 'pheel-os-v1';
 const STATIC_ASSETS = [
-  '/PheelOs.html',
+  '/PlanOS.html',
   '/manifest.json',
   '/sw.js',
   '/offline.html',

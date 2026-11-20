@@ -2,7 +2,7 @@
   "name": "PHEEL OS",
   "short_name": "PHEEL OS",
   "description": "Plan + AI + Manifest — สร้างชีวิตที่คุณต้องการ ด้วยระบบวางแผน นิสัย และจักรวาลฝัน",
-  "start_url": "/PheelOs.html",
+  "start_url": "/PlanOS.html",
   "display": "standalone",
   "background_color": "#eef0f4",
   "theme_color": "#006bd6",
@@ -78,21 +78,21 @@
       "name": "วางแผนวันนี้",
       "short_name": "แผน",
       "description": "เปิดมุมมองวางแผนรายวัน",
-      "url": "/PheelOs.html?view=plan",
+      "url": "/PlanOS.html?view=plan",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "จับเวลาโฟกัส",
       "short_name": "โฟกัส",
       "description": "เริ่มจับเวลาโฟกัส Pomodoro",
-      "url": "/PheelOs.html?view=focus",
+      "url": "/PlanOS.html?view=focus",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "บันทึกอารมณ์",
       "short_name": "อารมณ์",
       "description": "บันทึก Mood & Energy ประจำวัน",
-      "url": "/PheelOs.html?view=mood",
+      "url": "/PlanOS.html?view=mood",
       "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
     }
   ],
