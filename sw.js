@@ -103,7 +103,7 @@ async function cacheFirst(request) {
   } catch (error) {
     // Return offline page for navigation requests
     if (request.mode === 'navigate') {
-      return cache.match('/PheelOs.html') || cache.match('/offline.html');
+      return cache.match('/index.html') || cache.match('/offline.html');
     }
     throw error;
   }
@@ -126,7 +126,7 @@ async function networkFirst(request) {
     }
     // Return offline fallback for navigation
     if (request.mode === 'navigate') {
-      return cache.match('/PheelOs.html') || cache.match('/offline.html');
+      return cache.match('/index.html') || cache.match('/offline.html');
     }
     throw error;
   }
@@ -211,15 +211,15 @@ self.addEventListener('notificationclick', (event) => {
 
   if (event.action === 'open') {
     event.waitUntil(
-      clients.openWindow('/PheelOs.html')
+      clients.openWindow('/index.html')
     );
   } else if (event.action === 'focus') {
     event.waitUntil(
-      clients.openWindow('/PheelOs.html?view=focus')
+      clients.openWindow('/index.html?view=focus')
     );
   } else {
     event.waitUntil(
-      clients.openWindow('/PheelOs.html')
+      clients.openWindow('/index.html')
     );
   }
 });

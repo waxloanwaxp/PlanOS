@@ -1442,64 +1442,40 @@
     let loginTab = `signin`;
 
     /* ============================================================
-       Persistence & Initialization (IndexedDB)
+       Persistence & Initialization (localStorage)
        ============================================================ */
-    const DB_NAME = 'PheelOS';
-    const STORE_NAME = 'appState';
-    const DB_VERSION = 1;
+    const STORAGE_KEY = 'PlanOS_state';
 
-    function openDB() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        request.onupgradeneeded = (event) => {
-          const db = event.target.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME);
-          }
-        };
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    async function getAppState() {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        const request = store.get('state');
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    async function setAppState(state) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, 'readwrite');
-        const store = tx.objectStore(STORE_NAME);
-        const request = store.put(state, 'state');
-        request.onsuccess = () => resolve();
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    async function persistState() {
+    function getAppState() {
       try {
-        await setAppState(appState);
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
       } catch (err) {
-        console.warn('PheelOS: Failed to persist state', err);
+        console.warn('PlanOS: Failed to load state', err);
+        return null;
       }
     }
 
-    async function initApp() {
+    function setAppState(state) {
       try {
-        const saved = await getAppState();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        console.warn('PlanOS: Failed to persist state', err);
+      }
+    }
+
+    function persistState() {
+      setAppState(appState);
+    }
+
+    function initApp() {
+      try {
+        const saved = getAppState();
         if (saved && typeof saved === 'object' && saved.user) {
           appState = saved;
         }
       } catch (err) {
-        console.warn('PheelOS: Failed to load state, using defaults', err);
+        console.warn('PlanOS: Failed to load state, using defaults', err);
       }
 
       applyTheme(appState.theme || 'light');
