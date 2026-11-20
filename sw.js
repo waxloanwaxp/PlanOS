@@ -5,20 +5,20 @@
 
 const CACHE_NAME = 'pheel-os-v1';
 const STATIC_ASSETS = [
-  '/index.html',
-  '/manifest.json',
-  '/sw.js',
-  '/offline.html',
-  '/icons/icon-72x72.png',
-  '/icons/icon-96x96.png',
-  '/icons/icon-128x128.png',
-  '/icons/icon-144x144.png',
-  '/icons/icon-152x152.png',
-  '/icons/icon-192x192.png',
-  '/icons/icon-192x192-maskable.png',
-  '/icons/icon-384x384.png',
-  '/icons/icon-512x512.png',
-  '/icons/icon-512x512-maskable.png'
+  './index.html',
+  './manifest.json',
+  './sw.js',
+  './offline.html',
+  './icons/icon-72x72.png',
+  './icons/icon-96x96.png',
+  './icons/icon-128x128.png',
+  './icons/icon-144x144.png',
+  './icons/icon-152x152.png',
+  './icons/icon-192x192.png',
+  './icons/icon-192x192-maskable.png',
+  './icons/icon-384x384.png',
+  './icons/icon-512x512.png',
+  './icons/icon-512x512-maskable.png'
 ];
 
 // External resources to cache (fonts, icons, libraries)

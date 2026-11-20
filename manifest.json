@@ -2,69 +2,69 @@
   "name": "PHEEL OS",
   "short_name": "PHEEL OS",
   "description": "Plan + AI + Manifest — สร้างชีวิตที่คุณต้องการ ด้วยระบบวางแผน นิสัย และจักรวาลฝัน",
-  "start_url": "/index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#eef0f4",
   "theme_color": "#006bd6",
   "orientation": "portrait-primary",
-  "scope": "/",
+  "scope": "./",
   "icons": [
     {
-      "src": "icons/icon-72x72.png",
+      "src": "./icons/icon-72x72.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-96x96.png",
+      "src": "./icons/icon-96x96.png",
       "sizes": "96x96",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-128x128.png",
+      "src": "./icons/icon-128x128.png",
       "sizes": "128x128",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-144x144.png",
+      "src": "./icons/icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-152x152.png",
+      "src": "./icons/icon-152x152.png",
       "sizes": "152x152",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-192x192.png",
+      "src": "./icons/icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-192x192-maskable.png",
+      "src": "./icons/icon-192x192-maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icons/icon-384x384.png",
+      "src": "./icons/icon-384x384.png",
       "sizes": "384x384",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512x512.png",
+      "src": "./icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-512x512-maskable.png",
+      "src": "./icons/icon-512x512-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
@@ -78,22 +78,22 @@
       "name": "วางแผนวันนี้",
       "short_name": "แผน",
       "description": "เปิดมุมมองวางแผนรายวัน",
-      "url": "/index.html?view=plan",
-      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
+      "url": "./index.html?view=plan",
+      "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "จับเวลาโฟกัส",
       "short_name": "โฟกัส",
       "description": "เริ่มจับเวลาโฟกัส Pomodoro",
-      "url": "/index.html?view=focus",
-      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
+      "url": "./index.html?view=focus",
+      "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
     },
     {
       "name": "บันทึกอารมณ์",
       "short_name": "อารมณ์",
       "description": "บันทึก Mood & Energy ประจำวัน",
-      "url": "/index.html?view=mood",
-      "icons": [{ "src": "icons/icon-96x96.png", "sizes": "96x96" }]
+      "url": "./index.html?view=mood",
+      "icons": [{ "src": "./icons/icon-96x96.png", "sizes": "96x96" }]
     }
   ],
   "prefer_related_applications": false,
