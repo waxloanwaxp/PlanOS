@@ -1411,9 +1411,8 @@
     /* ============================================================
        Global Runtime State & Timer Engine
        ============================================================ */
-    let appState = buildDemoState();
-    appState.isLoggedIn = false; // Show 01-Login first on initial visit
-    appState.view = `login`;
+    // Load from localStorage on init, or start with empty state
+    let appState = null;
 
     let timerState = {
       mode: `pomodoro`, // pomodoro | short | long | custom
@@ -1473,9 +1472,13 @@
         const saved = getAppState();
         if (saved && typeof saved === 'object' && saved.user) {
           appState = saved;
+        } else {
+          // No saved state - create empty state
+          appState = buildEmptyState(`นักสร้างชีวิต`, `user@pheel-os.com`);
         }
       } catch (err) {
         console.warn('PlanOS: Failed to load state, using defaults', err);
+        appState = buildEmptyState(`นักสร้างชีวิต`, `user@pheel-os.com`);
       }
 
       applyTheme(appState.theme || 'light');
@@ -1708,28 +1711,14 @@
         appState.view = `dashboard`;
         showToast(`ยินดีต้อนรับ! รับ Manifest Money ฿10,000,000 ทันที`);
       } else {
-        // Sign in loads demo populated profile if email matches or first login
-        if (!appState.tasks || appState.tasks.length === 0) {
-          appState = buildDemoState();
-        }
-        if (email) appState.user.email = email;
+        // Sign in - use empty state for clean start
+        appState = buildEmptyState(name || `นักสร้างชีวิต`, email || `member@pheel-os.com`);
         appState.isLoggedIn = true;
         appState.view = `dashboard`;
         showToast(`เข้าสู่ระบบสำเร็จ ยินดีต้อนรับกลับมา`);
       }
       persistState();
       renderApp();
-    }
-
-    function loginAsDemo() {
-      const currentTheme = appState.theme || `light`;
-      appState = buildDemoState();
-      appState.theme = currentTheme;
-      appState.isLoggedIn = true;
-      appState.view = `dashboard`;
-      persistState();
-      renderApp();
-      showToast(`เข้าสู่ระบบด้วยข้อมูลตัวอย่าง PLAN OS เรียบร้อย`);
     }
 
     function logoutToLogin() {
