@@ -1,0 +1,3912 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="artifact-type" content="tool">
+  <meta name="design-style" content="showroom">
+  <title>PLAN OS — Plan + AI + Manifest</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#006bd6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="PLAN OS">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23006bd6' width='100' height='100' rx='20'/><text x='50' y='68' font-family='Arial, sans-serif' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>P</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Showroom base) */
+      --background: #fbfbfd;
+      --surface-container-low: #f5f5f7;
+      --surface-container: #e8e8ed;
+      --surface-container-high: #dcdce1;
+      --surface-elevated: #ffffff;
+      --backdrop-scrim: rgba(29, 29, 31, 0.42);
+      --device-frame-bg: #1d1d1f;
+      --device-stage-bg: #eef0f4;
+
+      /* Ink */
+      --on-surface: #1d1d1f;
+      --on-surface-variant: #6e6e73;
+
+      /* Rules */
+      --outline: #d2d2d7;
+      --outline-variant: #e5e5ea;
+
+      /* Accents */
+      --primary: #006bd6;
+      --on-primary: #ffffff;
+      --primary-container: #e8f1fd;
+      --on-primary-container: #0058b0;
+      --secondary: #bf4800;
+      --secondary-container: #fff1e8;
+      --tertiary: #1d1d1f;
+      --error: #d70015;
+      --on-error: #ffffff;
+      --error-container: #fdebec;
+
+      /* Semantic */
+      --positive: #1f7a34;
+      --positive-container: #e7f6eb;
+      --warning: #b25e09;
+      --warning-container: #fef4e6;
+
+      /* Focus ring */
+      --focus: #006bd6;
+
+      /* Data series */
+      --data-1: #006bd6;
+      --data-2: #bf4800;
+      --data-3: #248a3d;
+      --data-4: #8944ab;
+      --data-context: #aeaeb2;
+
+      /* 6 Life Areas Tokens */
+      --area-career: #006bd6;
+      --area-career-bg: #e8f1fd;
+      --area-finance: #1f7a34;
+      --area-finance-bg: #e7f6eb;
+      --area-health: #c9342b;
+      --area-health-bg: #fdeceb;
+      --area-relationship: #b83280;
+      --area-relationship-bg: #fcebf4;
+      --area-growth: #7c3aed;
+      --area-growth-bg: #f3ecfe;
+      --area-lifestyle: #bf4800;
+      --area-lifestyle-bg: #fff1e8;
+
+      /* Ambient Focus Scenes */
+      --scene-loft-bg: #f5f5f7;
+      --scene-forest-bg: #eaf3ed;
+      --scene-midnight-bg: #0e1626;
+      --scene-midnight-ink: #f2ece1;
+      --scene-ocean-bg: #e8f2f8;
+
+      /* Fonts */
+      --font-headline: 'Noto Sans Thai', 'Inter Tight', sans-serif;
+      --font-body: 'Noto Sans Thai', 'Inter', sans-serif;
+      --font-label: 'Noto Sans Thai', 'Inter', sans-serif;
+
+      /* Type scale */
+      --display-size: clamp(1.625rem, 1.35rem + 1vw, 2rem);
+      --headline-size: clamp(1.2rem, 1.05rem + 0.45vw, 1.4rem);
+      --subhead-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+      --body-size: 0.9375rem;
+      --label-size: 0.75rem;
+
+      /* Spacing scale (4pt base) */
+      --space-2xs: 0.125rem;
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.25rem;
+      --space-2xl: 3.5rem;
+
+      /* Shape */
+      --rounded-sm: 0.5rem;
+      --rounded-md: 0.875rem;
+      --rounded-lg: 1.25rem;
+      --rounded: 9999px;
+      --rounded-full: 9999px;
+
+      /* Effects */
+      --headline-tracking: -0.02em;
+      --figure-tracking: -0.025em;
+      --tile-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --sheet-shadow: 0 -8px 32px rgba(0, 0, 0, 0.14);
+      --device-shadow: 0 24px 64px rgba(29, 29, 31, 0.16);
+      --globe-ocean: #e4eef9;
+      --globe-land: #c8d8ec;
+      --globe-grid: rgba(0, 107, 214, 0.15);
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 380ms;
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --background: #0d1016;
+      --surface-container-low: #171b24;
+      --surface-container: #222834;
+      --surface-container-high: #2d3544;
+      --surface-elevated: #1b202b;
+      --backdrop-scrim: rgba(0, 0, 0, 0.65);
+      --device-stage-bg: #07090d;
+
+      --on-surface: #f5f5f7;
+      --on-surface-variant: #a1a7b3;
+
+      --outline: #384152;
+      --outline-variant: #252c3a;
+
+      --primary: #3b9eff;
+      --on-primary: #061322;
+      --primary-container: #162a42;
+      --on-primary-container: #8dc5ff;
+      --secondary: #ff8a3d;
+      --secondary-container: #332013;
+      --tertiary: #f5f5f7;
+      --error: #ff5c66;
+      --on-error: #260608;
+      --error-container: #361418;
+
+      --positive: #3fd16a;
+      --positive-container: #122e1c;
+      --warning: #f5a638;
+      --warning-container: #33240f;
+
+      --focus: #3b9eff;
+
+      --area-career-bg: #15283f;
+      --area-finance-bg: #122e1c;
+      --area-health-bg: #361618;
+      --area-relationship-bg: #341628;
+      --area-growth-bg: #271a42;
+      --area-lifestyle-bg: #332013;
+
+      --globe-ocean: #122036;
+      --globe-land: #243b5c;
+      --globe-grid: rgba(59, 158, 255, 0.2);
+      --tile-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.32);
+      --device-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
+    }
+
+    /* Base reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.55;
+      color: var(--on-surface);
+      background: var(--device-stage-bg);
+      -webkit-tap-highlight-color: transparent;
+    }
+    header { position: static !important; }
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+    button { cursor: pointer; }
+    h1, h2, h3, h4, p { margin: 0; }
+
+    /* Focus visibility */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Android PWA Outer Shell */
+    .pwa-stage {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+      background: var(--device-stage-bg);
+    }
+
+    .pwa-phone {
+      width: 100%;
+      max-width: 430px;
+      height: min(880px, calc(100vh - var(--space-lg)));
+      height: min(880px, calc(100dvh - var(--space-lg)));
+      background: var(--background);
+      border-radius: 2.25rem;
+      border: 6px solid var(--device-frame-bg);
+      box-shadow: var(--device-shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* App Top Header (static inside flex column) */
+    .app-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--background);
+      border-bottom: 1px solid var(--outline-variant);
+      flex-shrink: 0;
+    }
+    .brand-lockup {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--rounded-sm);
+      background: var(--primary);
+      color: var(--on-primary);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .brand-title-wrap {
+      min-width: 0;
+    }
+    .brand-name {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 0.95rem;
+      line-height: 1.15;
+      color: var(--on-surface);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-sub {
+      font-size: var(--label-size);
+      color: var(--on-surface-variant);
+      line-height: 1.2;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-shrink: 0;
+    }
+
+    .wallet-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 36px;
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+      font-size: 0.78rem;
+      font-variant-numeric: tabular-nums;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .wallet-pill:hover { background: var(--surface-container); }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      border-radius: var(--rounded);
+      border: 0;
+      background: transparent;
+      color: var(--on-surface-variant);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .icon-btn:hover {
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+    }
+
+    /* Main Scrollable Area */
+    .pwa-main {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      scroll-behavior: smooth;
+    }
+    .pwa-main.is-login {
+      justify-content: center;
+      padding: var(--space-lg);
+    }
+
+    /* Bottom Navigation Bar (Android Material 3 style) */
+    .bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-2xs);
+      padding: var(--space-xs) var(--space-sm) var(--space-sm);
+      background: var(--surface-elevated);
+      border-top: 1px solid var(--outline-variant);
+      flex-shrink: 0;
+    }
+    .bottom-nav.hidden { display: none; }
+
+    .nav-item {
+      min-height: 48px;
+      border: 0;
+      background: transparent;
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xs);
+      padding: var(--space-xs);
+      border-radius: var(--rounded-md);
+      font-size: 0.7rem;
+      font-weight: 500;
+      transition: color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .nav-item:hover { background: var(--surface-container-low); }
+    .nav-item.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .nav-item.active:active { background: var(--primary-container); }
+    .nav-item .nav-pill {
+      padding: var(--space-2xs) var(--space-sm);
+      border-radius: var(--rounded);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--dur-short) var(--ease-out);
+    }
+    .nav-item.active .nav-pill {
+      background: var(--primary-container);
+    }
+
+    /* Showroom Tiles & Components */
+    .tile {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      border: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .tile-elevated {
+      background: var(--surface-elevated);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      border: 1px solid var(--outline-variant);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .tile-clickable {
+      cursor: pointer;
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+    }
+    .tile-clickable:hover {
+      box-shadow: var(--tile-shadow-hover);
+      transform: translateY(-1px);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .section-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--subhead-size);
+      letter-spacing: var(--headline-tracking);
+      color: var(--on-surface);
+    }
+    .page-title {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--headline-size);
+      letter-spacing: var(--headline-tracking);
+      line-height: 1.15;
+      color: var(--on-surface);
+    }
+    .eyebrow {
+      font-size: var(--label-size);
+      font-weight: 600;
+      color: var(--secondary);
+    }
+    .muted {
+      color: var(--on-surface-variant);
+      font-size: 0.85rem;
+    }
+
+    /* Key Figures */
+    .figure-val {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: var(--display-size);
+      letter-spacing: var(--figure-tracking);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-surface);
+    }
+    .figure-md {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: var(--figure-tracking);
+      font-variant-numeric: tabular-nums;
+      color: var(--on-surface);
+    }
+
+    /* Buttons */
+    .btn-primary {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: opacity var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .btn-primary:hover { opacity: 0.92; }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 500;
+      font-size: 0.875rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+    .btn-secondary:hover { background: var(--surface-container-high); }
+
+    .btn-sm {
+      min-height: 36px;
+      padding: var(--space-xs) var(--space-md);
+      font-size: 0.8rem;
+    }
+
+    .link-more {
+      border: 0;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: var(--space-xs) var(--space-sm);
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      border-radius: var(--rounded);
+    }
+    .link-more:hover { background: var(--primary-container); }
+
+    /* Segmented Controls & Chips */
+    .segmented {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      gap: var(--space-xs);
+      background: var(--surface-container);
+      padding: var(--space-xs);
+      border-radius: var(--rounded);
+    }
+    .seg-btn {
+      min-height: 36px;
+      border: 0;
+      border-radius: var(--rounded);
+      background: transparent;
+      color: var(--on-surface-variant);
+      font-weight: 500;
+      font-size: 0.82rem;
+      padding: var(--space-xs) var(--space-sm);
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .seg-btn.active {
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      font-weight: 600;
+    }
+
+    .chip-row {
+      display: flex;
+      gap: var(--space-xs);
+      overflow-x: auto;
+      padding-bottom: var(--space-2xs);
+      scrollbar-width: none;
+    }
+    .chip-row::-webkit-scrollbar { display: none; }
+
+    .chip {
+      min-height: 36px;
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      font-size: 0.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .chip.active {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 600;
+    }
+
+    /* Life Area Badges */
+    .area-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      padding: var(--space-2xs) var(--space-sm);
+      border-radius: var(--rounded);
+      font-size: 0.72rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .area-career { background: var(--area-career-bg); color: var(--area-career); }
+    .area-finance { background: var(--area-finance-bg); color: var(--area-finance); }
+    .area-health { background: var(--area-health-bg); color: var(--area-health); }
+    .area-relationship { background: var(--area-relationship-bg); color: var(--area-relationship); }
+    .area-growth { background: var(--area-growth-bg); color: var(--area-growth); }
+    .area-lifestyle { background: var(--area-lifestyle-bg); color: var(--area-lifestyle); }
+
+    .prio-high { background: var(--error-container); color: var(--error); }
+    .prio-medium { background: var(--warning-container); color: var(--warning); }
+    .prio-low { background: var(--surface-container); color: var(--on-surface-variant); }
+
+    /* Grids */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    /* Progress Bar */
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: var(--rounded);
+      background: var(--primary);
+      transition: width var(--dur-long) var(--ease-out);
+    }
+    .progress-fill.positive { background: var(--positive); }
+    .progress-fill.secondary { background: var(--secondary); }
+
+    /* Task Row */
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--surface-elevated);
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+      transition: opacity var(--dur-short) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+    .task-item.done {
+      opacity: 0.68;
+      background: var(--surface-container-low);
+    }
+    .task-check {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      min-height: 24px;
+      margin-top: var(--space-2xs);
+      border-radius: var(--rounded);
+      border: 2px solid var(--outline);
+      background: transparent;
+      color: var(--on-primary);
+      display: grid;
+      place-items: center;
+      padding: 0;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .task-item.done .task-check {
+      background: var(--positive);
+      border-color: var(--positive);
+    }
+    .task-check-wrap {
+      min-width: 44px;
+      min-height: 44px;
+      margin: calc(var(--space-xs) * -1);
+      display: grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      padding: 0;
+    }
+    .task-body {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .task-title {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--on-surface);
+      line-height: 1.35;
+    }
+    .task-item.done .task-title {
+      text-decoration: line-through;
+      color: var(--on-surface-variant);
+    }
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    /* Form Controls */
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .input-ctrl {
+      width: 100%;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline);
+      background: var(--surface-elevated);
+      color: var(--on-surface);
+      font-size: 0.9rem;
+      transition: border-color var(--dur-micro) var(--ease-out);
+    }
+    .input-ctrl:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-container);
+    }
+    textarea.input-ctrl {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    /* Week Strip & Month Calendar */
+    .week-strip {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: var(--space-xs);
+    }
+    .day-pill {
+      min-height: 54px;
+      border-radius: var(--rounded-md);
+      border: 0;
+      background: var(--surface-container-low);
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xs);
+      padding: var(--space-xs);
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .day-pill.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 700;
+    }
+    .day-pill .day-num {
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .day-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: var(--rounded);
+      background: var(--secondary);
+    }
+    .day-pill.active .day-dot { background: var(--on-primary); }
+
+    .month-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: var(--space-xs);
+    }
+    .month-cell {
+      min-height: 44px;
+      border-radius: var(--rounded-sm);
+      border: 0;
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      font-size: 0.8rem;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xs);
+    }
+    .month-cell.empty { background: transparent; pointer-events: none; }
+    .month-cell.selected {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 700;
+    }
+
+    /* Timeline */
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 52px minmax(0, 1fr);
+      gap: var(--space-sm);
+      align-items: start;
+      padding-block: var(--space-xs);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .timeline-hour {
+      font-size: 0.78rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      color: var(--on-surface-variant);
+      padding-top: var(--space-xs);
+    }
+    .timeline-slot {
+      min-height: 44px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .timeline-empty-btn {
+      min-height: 44px;
+      border-radius: var(--rounded-sm);
+      border: 1px dashed var(--outline);
+      background: transparent;
+      color: var(--on-surface-variant);
+      font-size: 0.78rem;
+      text-align: left;
+      padding: var(--space-xs) var(--space-sm);
+      opacity: 0.7;
+    }
+    .timeline-empty-btn:hover {
+      opacity: 1;
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Habit 7-day dots */
+    .habit-week {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: var(--space-xs);
+    }
+    .habit-day-btn {
+      min-height: 44px;
+      border-radius: var(--rounded-sm);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-elevated);
+      color: var(--on-surface-variant);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xs);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+    .habit-day-btn.done {
+      background: var(--positive);
+      border-color: var(--positive);
+      color: var(--on-primary);
+    }
+
+    /* Focus Timer Scenes */
+    .focus-card {
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+      text-align: center;
+      transition: background-color var(--dur-long) var(--ease-out);
+    }
+    .focus-scene-loft { background: var(--scene-loft-bg); }
+    .focus-scene-forest { background: var(--scene-forest-bg); }
+    .focus-scene-midnight {
+      background: var(--scene-midnight-bg);
+      color: var(--scene-midnight-ink);
+    }
+    .focus-scene-midnight .muted { color: var(--data-context); }
+    .focus-scene-ocean { background: var(--scene-ocean-bg); }
+
+    .timer-ring-wrap {
+      position: relative;
+      width: 210px;
+      height: 210px;
+      display: grid;
+      place-items: center;
+    }
+    .timer-readout {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2xs);
+    }
+    .timer-clock {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 2.6rem;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: var(--figure-tracking);
+      line-height: 1;
+    }
+
+    /* Mood Buttons */
+    .mood-scale {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-xs);
+    }
+    .mood-btn {
+      min-height: 58px;
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-elevated);
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2xs);
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: var(--space-xs);
+    }
+    .mood-btn.selected {
+      background: var(--primary-container);
+      border-color: var(--primary);
+      color: var(--on-primary-container);
+      font-weight: 700;
+    }
+
+    /* Globe Container */
+    .globe-box {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    #manifest-globe-canvas {
+      width: 240px;
+      height: 240px;
+      max-width: 100%;
+      cursor: grab;
+      touch-action: none;
+    }
+    #manifest-globe-canvas:active { cursor: grabbing; }
+
+    /* Bottom Sheet Modal (for Add Task, Add Habit, More Nav, Details) */
+    .sheet-overlay {
+      position: absolute;
+      inset: 0;
+      background: var(--backdrop-scrim);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 40;
+    }
+    .sheet-overlay.open { display: flex; }
+    .sheet-panel {
+      width: 100%;
+      max-height: 86%;
+      background: var(--surface-elevated);
+      border-radius: var(--rounded-lg) var(--rounded-lg) 0 0;
+      box-shadow: var(--sheet-shadow);
+      padding: var(--space-md);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      animation: sheetSlideUp var(--dur-short) var(--ease-out);
+    }
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      border-radius: var(--rounded);
+      background: var(--outline);
+      margin: 0 auto;
+    }
+
+    /* Toast Notification */
+    .pwa-toast {
+      position: absolute;
+      top: 96px;
+      left: var(--space-md);
+      right: var(--space-md);
+      background: var(--tertiary);
+      color: var(--background);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--rounded-md);
+      font-size: 0.84rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      z-index: 50;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .pwa-toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* More Navigation Grid */
+    .more-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .more-tile {
+      min-height: 84px;
+      border-radius: var(--rounded-md);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      color: var(--on-surface);
+      padding: var(--space-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-align: center;
+    }
+    .more-tile:hover {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    /* Charts explicit min-height */
+    .chart-box {
+      width: 100%;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Toggle Switch */
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      min-height: 44px;
+    }
+    .switch-btn {
+      width: 50px;
+      height: 28px;
+      border-radius: var(--rounded);
+      border: 0;
+      background: var(--surface-container-high);
+      padding: 3px;
+      display: flex;
+      align-items: center;
+      transition: background-color var(--dur-short) var(--ease-out);
+    }
+    .switch-btn.on { background: var(--primary); }
+    .switch-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--rounded);
+      background: var(--on-primary);
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+    .switch-btn.on .switch-thumb { transform: translateX(22px); }
+
+    @keyframes sheetSlideUp {
+      from { transform: translateY(24px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @media (max-width: 640px) {
+      .pwa-stage { padding: 0; }
+      .pwa-phone {
+        max-width: 100%;
+        height: 100dvh;
+        border-radius: 0;
+        border: 0;
+        box-shadow: none;
+      }
+    }
+
+    /* PWA Offline Indicator */
+    .offline-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--warning), var(--error));
+      z-index: 100;
+      transform: translateY(-100%);
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+    .offline-indicator.visible {
+      transform: translateY(0);
+    }
+
+    /* PWA Installed Styles */
+    body.pwa-installed .pwa-phone {
+      border-radius: 0;
+      border: 0;
+      box-shadow: none;
+      max-width: 100%;
+      height: 100dvh;
+    }
+    body.pwa-installed .pwa-stage {
+      padding: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Offline Indicator -->
+  <div class="offline-indicator" id="offline-indicator" aria-hidden="true"></div>
+
+  <div class="pwa-stage">
+    <div class="pwa-phone" id="pwa-phone">
+      <!-- App Top Header -->
+      <header class="app-header" id="app-header">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">P</div>
+          <div class="brand-title-wrap">
+            <div class="brand-name" id="header-title">PLAN OS</div>
+            <div class="brand-sub" id="header-sub">Plan + AI + Manifest</div>
+          </div>
+        </div>
+        <div class="header-actions" id="header-actions">
+          <button type="button" class="wallet-pill" id="header-wallet-btn" onclick="navigateTo('manifest', { tab: 'shop' })" title="เปิด Universe Shop">
+            <i data-lucide="sparkles" style="width:14px;height:14px;"></i>
+            <span id="header-money">฿19,500,000</span>
+          </button>
+          <button type="button" class="icon-btn" onclick="navigateTo('tutorial')" aria-label="คู่มือการใช้งาน" tabindex="0" role="button">
+            <i data-lucide="help-circle" style="width:20px;height:20px;"></i>
+          </button>
+          <button type="button" class="icon-btn" onclick="navigateTo('settings')" aria-label="ตั้งค่า" tabindex="0" role="button">
+            <i data-lucide="settings" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Viewport -->
+      <main class="pwa-main" id="pwa-main"></main>
+
+      <!-- Bottom Navigation Bar (04-Navigation) -->
+      <nav class="bottom-nav" id="bottom-nav" aria-label="เมนูหลัก">
+        <button type="button" class="nav-item active" data-nav="dashboard" onclick="navigateTo('dashboard')">
+          <span class="nav-pill"><i data-lucide="layout-dashboard" style="width:19px;height:19px;"></i></span>
+          <span>หน้าหลัก</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="plan" onclick="navigateTo('plan')">
+          <span class="nav-pill"><i data-lucide="calendar-days" style="width:19px;height:19px;"></i></span>
+          <span>วางแผน</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="habits" onclick="navigateTo('habits')">
+          <span class="nav-pill"><i data-lucide="check-circle-2" style="width:19px;height:19px;"></i></span>
+          <span>นิสัย</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="manifest" onclick="navigateTo('manifest')">
+          <span class="nav-pill"><i data-lucide="globe" style="width:19px;height:19px;"></i></span>
+          <span>Manifest</span>
+        </button>
+        <button type="button" class="nav-item" data-nav="more" onclick="openMoreDrawer()">
+          <span class="nav-pill"><i data-lucide="grid-2x2" style="width:19px;height:19px;"></i></span>
+          <span>เพิ่มเติม</span>
+        </button>
+      </nav>
+
+      <!-- Bottom Sheet Modal -->
+      <div class="sheet-overlay" id="sheet-overlay" onclick="handleOverlayClick(event)">
+        <div class="sheet-panel" id="sheet-panel"></div>
+      </div>
+
+      <!-- Inline Toast -->
+      <div class="pwa-toast" id="pwa-toast" role="status" aria-live="polite">
+        <span id="pwa-toast-text"></span>
+        <i data-lucide="check" style="width:16px;height:16px;"></i>
+      </div>
+    </div>
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    /* ============================================================
+       PLAN OS — Data & Constants (6 Life Areas, Shop, Archetypes)
+       ============================================================ */
+    const LIFE_AREAS = [
+      { id: `career`, label: `การงาน`, en: `Career`, cls: `area-career`, colorVar: `var(--area-career)` },
+      { id: `finance`, label: `การเงิน`, en: `Finance`, cls: `area-finance`, colorVar: `var(--area-finance)` },
+      { id: `health`, label: `สุขภาพ`, en: `Health`, cls: `area-health`, colorVar: `var(--area-health)` },
+      { id: `relationship`, label: `ความสัมพันธ์`, en: `Relationship`, cls: `area-relationship`, colorVar: `var(--area-relationship)` },
+      { id: `growth`, label: `พัฒนาตนเอง`, en: `Growth`, cls: `area-growth`, colorVar: `var(--area-growth)` },
+      { id: `lifestyle`, label: `ไลฟ์สไตล์`, en: `Lifestyle`, cls: `area-lifestyle`, colorVar: `var(--area-lifestyle)` }
+    ];
+
+    const PRIORITIES = [
+      { id: `High`, label: `High`, cls: `prio-high`, reward: 300000 },
+      { id: `Medium`, label: `Medium`, cls: `prio-medium`, reward: 150000 },
+      { id: `Low`, label: `Low`, cls: `prio-low`, reward: 80000 }
+    ];
+
+    const DAYS_TH = [`จ`, `อ`, `พ`, `พฤ`, `ศ`, `ส`, `อา`];
+    const WEEK_DATES = [
+      { dayIdx: 0, dayLabel: `จ`, dateNum: 16, dateStr: `2026-11-16` },
+      { dayIdx: 1, dayLabel: `อ`, dateNum: 17, dateStr: `2026-11-17` },
+      { dayIdx: 2, dayLabel: `พ`, dateNum: 18, dateStr: `2026-11-18` },
+      { dayIdx: 3, dayLabel: `พฤ`, dateNum: 19, dateStr: `2026-11-19` },
+      { dayIdx: 4, dayLabel: `ศ`, dateNum: 20, dateStr: `2026-11-20` },
+      { dayIdx: 5, dayLabel: `ส`, dateNum: 21, dateStr: `2026-11-21` },
+      { dayIdx: 6, dayLabel: `อา`, dateNum: 22, dateStr: `2026-11-22` }
+    ];
+
+    const SHOP_CATALOG = [
+      { id: `trip-bora`, type: `trips`, name: `Bora Bora Lagoon Escape`, sub: `French Polynesia · Overwater Villa`, price: 3200000, lat: -16.5, lon: -151.7, icon: `palmtree` },
+      { id: `trip-cappadocia`, type: `trips`, name: `Cappadocia Balloon Dreams`, sub: `Turkey · Sunrise Hot Air Balloon`, price: 1800000, lat: 38.6, lon: 34.8, icon: `wind` },
+      { id: `trip-iceland`, type: `trips`, name: `Iceland Northern Lights`, sub: `Reykjavik · Aurora Glass Igloo`, price: 2600000, lat: 64.1, lon: -21.9, icon: `sparkles` },
+      { id: `trip-amalfi`, type: `trips`, name: `Amalfi Coast Summer`, sub: `Italy · Positano Cliffside Retreat`, price: 2900000, lat: 40.6, lon: 14.5, icon: `sun` },
+      { id: `trip-swiss`, type: `trips`, name: `Zermatt Alpine Chalet`, sub: `Switzerland · Matterhorn Private Rail`, price: 3800000, lat: 46.0, lon: 7.7, icon: `mountain` },
+      { id: `place-kyoto`, type: `places`, name: `Kyoto Machiya House`, sub: `Japan · Traditional Zen Garden`, price: 12500000, lat: 35.0, lon: 135.7, icon: `home` },
+      { id: `place-como`, type: `places`, name: `Lake Como Villa`, sub: `Italy · Waterfront Private Dock`, price: 28000000, lat: 45.9, lon: 9.2, icon: `building-2` },
+      { id: `place-nyc`, type: `places`, name: `Central Park Penthouse`, sub: `New York · 62nd Floor Skyline`, price: 35000000, lat: 40.7, lon: -73.9, icon: `building` },
+      { id: `place-bkk`, type: `places`, name: `Sukhumvit Sky Residence`, sub: `Bangkok · Private Pool Penthouse`, price: 18000000, lat: 13.7, lon: 100.5, icon: `landmark` },
+      { id: `garage-ferrari`, type: `garage`, name: `Ferrari 296 GTB`, sub: `Supercar · 830 HP Hybrid V6`, price: 14500000, icon: `car` },
+      { id: `garage-ducati`, type: `garage`, name: `Ducati Panigale V4`, sub: `Superbike · Racing Red`, price: 2400000, icon: `bike` },
+      { id: `garage-aston`, type: `garage`, name: `Aston Martin DB12`, sub: `Grand Tourer · British Racing Green`, price: 16800000, icon: `car-front` },
+      { id: `garage-benetti`, type: `garage`, name: `Benetti Oasis 40M`, sub: `Superyacht · Marina Berthing`, price: 42000000, icon: `ship` },
+      { id: `garage-g700`, type: `garage`, name: `Gulfstream G700`, sub: `Private Jet · Ultra-Long Range`, price: 58000000, icon: `plane` }
+    ];
+
+    const WORK_STYLES = [
+      { id: `Improviser`, name: `Improviser`, th: `จอมด้นสด`, desc: `ยืดหยุ่น ปรับแผนหน้างานเก่ง ชอบลงมือทำตามจังหวะที่ใช่` },
+      { id: `Sprinter`, name: `Sprinter`, th: `จอมเร่งเครื่อง`, desc: `พลังโฟกัสสูงในระยะสั้น ปิดงานใหญ่ได้ไวเมื่อมีเดดไลน์ชัดเจน` },
+      { id: `Surfer`, name: `Surfer`, th: `นักโต้คลื่น`, desc: `จับจังหวะพลังงานของตัวเองได้ดี ทำงานหนักสลับพักอย่างสมดุล` },
+      { id: `Architect`, name: `Architect`, th: `นักวางระบบ`, desc: `วางแผนไว้ล่วงหน้า · ทำสม่ำเสมอเกือบทุกวัน โครงสร้างชัดเจน` }
+    ];
+
+    const MOOD_LEVELS = [
+      { val: 1, label: `แย่มาก`, icon: `cloud-rain` },
+      { val: 2, label: `เหนื่อย`, icon: `cloud` },
+      { val: 3, label: `เฉยๆ`, icon: `minus-circle` },
+      { val: 4, label: `ดี`, icon: `sun` },
+      { val: 5, label: `ยอดเยี่ยม`, icon: `sparkles` }
+    ];
+
+    const MOOD_TRIGGERS = [`งานสำเร็จ`, `ออกกำลังกาย`, `นอนเพียงพอ`, `เจอคนสำคัญ`, `การเงินดี`, `อ่านหนังสือ`, `งานเร่ง`, `พักผ่อนน้อย`];
+
+    function buildDemoState() {
+      return {
+        isLoggedIn: true,
+        view: `dashboard`,
+        theme: `light`,
+        emptyPreview: false,
+        user: {
+          name: `คุณฟีล`,
+          email: `pheel@pheel-os.com`,
+          plan: `Pro · AI Coach`,
+          level: 11,
+          exp: 70,
+          expMax: 150,
+          manifestMoney: 19500000,
+          dailyFocusGoal: 60,
+          remindersEnabled: true
+        },
+        selectedDate: `2026-11-18`,
+        planMode: `day`,
+        planAreaFilter: `all`,
+        manifestTab: `trips`,
+        shopFilter: `all`,
+        aiCoachTab: `style`,
+        tasks: [
+          { id: `t1`, title: `ลงทุนและรีบาลานซ์พอร์ตประจำเดือน`, area: `finance`, priority: `High`, date: `2026-11-18`, time: `09:00`, done: false, note: `ตรวจสอบ DCA กองทุนดัชนีและสัดส่วนเงินสดสำรอง`, reminder: true },
+          { id: `t2`, title: `อ่านหนังสือ Atomic Habits 1 บท`, area: `growth`, priority: `Low`, date: `2026-11-18`, time: `12:30`, done: true, note: `สรุปประเด็นสำคัญลงสมุดโน้ต`, reminder: false },
+          { id: `t3`, title: `ออกกำลังกาย Zone 2 + Core Training`, area: `health`, priority: `Medium`, date: `2026-11-18`, time: `17:30`, done: false, note: `วิ่งเบา 35 นาที + ยืดเหยียด 10 นาที`, reminder: true },
+          { id: `t4`, title: `ส่งร่าง Proposal ให้ลูกค้าองค์กร`, area: `career`, priority: `High`, date: `2026-11-18`, time: `10:30`, done: true, note: `แนบแผนงาน 3 เฟสพร้อมใบเสนอราคา`, reminder: true },
+          { id: `t5`, title: `อ่านหนังสือก่อนนอน 30 นาที`, area: `growth`, priority: `Low`, date: `2026-11-18`, time: `21:30`, done: false, note: `วางมือถือก่อนนอน 30 นาที`, reminder: true },
+          { id: `t6`, title: `ดินเนอร์กับครอบครัว`, area: `relationship`, priority: `Medium`, date: `2026-11-19`, time: `19:00`, done: false, note: `จองร้านอาหารล่วงหน้า`, reminder: true },
+          { id: `t7`, title: `วางโครงสร้างโปรเจกต์ร้านเค้กออนไลน์`, area: `career`, priority: `High`, date: `2026-11-20`, time: `09:30`, done: false, note: `กำหนดต้นทุนวัตถุดิบและช่องทางส่ง`, reminder: true }
+        ],
+        habits: [
+          { id: `h1`, title: `วางแผนงานทุกเช้า 10 นาที`, area: `career`, targetPerWeek: 5, days: [true, true, true, false, false, false, false], streak: 14 },
+          { id: `h2`, title: `ออกกำลังกาย 30 นาที`, area: `health`, targetPerWeek: 4, days: [true, false, true, false, false, true, false], streak: 9 },
+          { id: `h3`, title: `อ่านหนังสือก่อนนอน`, area: `growth`, targetPerWeek: 6, days: [true, true, true, true, false, false, false], streak: 21 },
+          { id: `h4`, title: `บันทึกรายรับ-รายจ่าย`, area: `finance`, targetPerWeek: 7, days: [true, true, false, false, false, false, false], streak: 5 }
+        ],
+        moods: [
+          { id: `m1`, date: `2026-11-18`, mood: 4, energy: 4, triggers: [`งานสำเร็จ`, `อ่านหนังสือ`], gratitude: `ปิดงานส่ง Proposal ได้ก่อนเที่ยง รู้สึกโล่งและมีสมาธิมาก`, vent: `ช่วงบ่ายประชุมติดกันเล็กน้อย แต่จัดการเวลาได้ดี` },
+          { id: `m2`, date: `2026-11-17`, mood: 5, energy: 5, triggers: [`ออกกำลังกาย`, `นอนเพียงพอ`], gratitude: `ตื่นเช้าสดชื่น วิ่งครบ 5 กิโลเมตร`, vent: `` },
+          { id: `m3`, date: `2026-11-16`, mood: 4, energy: 3, triggers: [`การเงินดี`, `งานเร่ง`], gratitude: `ได้รับผลตอบแทนจากเงินปันผลตามแผน`, vent: `งานช่วงเย็นค่อนข้างแน่น` },
+          { id: `m4`, date: `2026-11-15`, mood: 4, energy: 4, triggers: [`เจอคนสำคัญ`], gratitude: `ได้พูดคุยแลกเปลี่ยนไอเดียกับเพื่อนสนิท`, vent: `` }
+        ],
+        goals: [
+          { id: `g1`, title: `เปิดร้านขายเค้กออนไลน์ให้มียอดขายแรก`, area: `career`, targetDate: `2026-12-31`, progress: 65, completed: false },
+          { id: `g2`, title: `สะสมเงินสำรองฉุกเฉินครบ 6 เดือน`, area: `finance`, targetDate: `2026-12-15`, progress: 80, completed: false },
+          { id: `g3`, title: `วิ่งระยะ Mini Marathon 10 กม. ต่ำกว่า 60 นาที`, area: `health`, targetDate: `2026-11-30`, progress: 100, completed: true },
+          { id: `g4`, title: `อ่านหนังสือจบ 12 เล่มในปีนี้`, area: `growth`, targetDate: `2026-12-31`, progress: 85, completed: false }
+        ],
+        projects: [
+          {
+            id: `p1`,
+            title: `เปิดตัวแบรนด์ร้านเค้กออนไลน์`,
+            area: `career`,
+            deadline: `20 ธ.ค. 2026`,
+            currentPhase: 1,
+            phases: [`วางสูตร & ต้นทุน`, `ถ่ายภาพ & สร้างเพจ`, `เปิดรับพรีออเดอร์`],
+            steps: [
+              { id: `s1`, text: `คำนวณต้นทุนวัตถุดิบ 5 เมนูหลัก`, done: true },
+              { id: `s2`, text: `ออกแบบกล่องบรรจุภัณฑ์และโลโก้`, done: true },
+              { id: `s3`, text: `ถ่ายภาพเซตเปิดตัวสินค้า`, done: false },
+              { id: `s4`, text: `เปิดระบบสั่งจองล่วงหน้าสัปดาห์แรก`, done: false }
+            ]
+          },
+          {
+            id: `p2`,
+            title: `ปรับปรุงสุขภาพและรูปร่าง Q4`,
+            area: `health`,
+            deadline: `31 ธ.ค. 2026`,
+            currentPhase: 2,
+            phases: [`ตรวจสุขภาพ`, `สร้างตารางซ้อม`, `รักษาวินัยต่อเนื่อง`],
+            steps: [
+              { id: `s5`, text: `ตรวจเลือดและประเมินร่างกาย`, done: true },
+              { id: `s6`, text: `วางแผนโภชนาการโปรตีนต่อวัน`, done: true },
+              { id: `s7`, text: `ซ้อมวิ่ง Zone 2 ครบ 12 สัปดาห์`, done: true },
+              { id: `s8`, text: `ประเมินผลลัพธ์ปลายเดือน`, done: false }
+            ]
+          }
+        ],
+        ownedShopIds: [`trip-bora`, `trip-cappadocia`, `trip-iceland`, `place-kyoto`, `garage-ferrari`, `garage-ducati`],
+        manifestos: [
+          { id: `mf1`, text: `ฉันลงมือทำอย่างมีระบบในทุกวัน และดึงดูดโอกาสที่ยอดเยี่ยมเข้ามาในชีวิตเสมอ`, pinned: true },
+          { id: `mf2`, text: `สุขภาพที่แข็งแรงและจิตใจที่สงบ คือรากฐานของความมั่งคั่งที่ยั่งยืน`, pinned: false },
+          { id: `mf3`, text: `ทุกเป้าหมายที่ฉันตั้งใจไว้ กำลังก่อตัวเป็นความจริงทีละก้าวอย่างมั่นคง`, pinned: false }
+        ],
+        activeManifestoIdx: 0,
+        focusStats: {
+          totalMinutes: 540,
+          sessionsToday: 2
+        }
+      };
+    }
+
+    function buildEmptyState(name, email) {
+      return {
+        isLoggedIn: true,
+        view: `dashboard`,
+        theme: `light`,
+        emptyPreview: false,
+        user: {
+          name: name || `ผู้ใช้งานใหม่`,
+          email: email || `user@pheel-os.com`,
+          plan: `Pro · โบนัสเริ่มต้น`,
+          level: 1,
+          exp: 0,
+          expMax: 150,
+          manifestMoney: 10000000,
+          dailyFocusGoal: 50,
+          remindersEnabled: true
+        },
+        selectedDate: `2026-11-18`,
+        planMode: `day`,
+        planAreaFilter: `all`,
+        manifestTab: `trips`,
+        shopFilter: `all`,
+        aiCoachTab: `style`,
+        tasks: [],
+        habits: [],
+        moods: [],
+        goals: [],
+        projects: [],
+        ownedShopIds: [],
+        manifestos: [
+          { id: `mf-init`, text: `ฉันเริ่มต้นสร้างชีวิตที่ต้องการทีละวัน ด้วยความชัดเจนและใจที่สงบ`, pinned: true }
+        ],
+        activeManifestoIdx: 0,
+        focusStats: {
+          totalMinutes: 0,
+          sessionsToday: 0
+        }
+      };
+    }
+
+    /* ============================================================
+       Global Runtime State & Timer Engine
+       ============================================================ */
+    let appState = buildDemoState();
+    appState.isLoggedIn = false; // Show 01-Login first on initial visit
+    appState.view = `login`;
+
+    let timerState = {
+      mode: `pomodoro`, // pomodoro | short | long | custom
+      totalSec: 25 * 60,
+      remainingSec: 25 * 60,
+      running: false,
+      intervalId: null,
+      scene: `loft`, // loft | forest | midnight | ocean
+      soundOn: false,
+      fullscreen: false,
+      linkedTaskId: `t1`
+    };
+
+    let audioCtx = null;
+    let noiseNode = null;
+    let gainNode = null;
+    let globeRotLon = -35;
+    let globeRotLat = 18;
+    let globeDragging = false;
+    let globeLastX = 0;
+    let globeLastY = 0;
+    let globeTargetLon = null;
+    let globeTargetLat = null;
+    let selectedTripId = `trip-bora`;
+    let toastTimer = null;
+    let loginTab = `signin`;
+
+    /* ============================================================
+       Persistence & Initialization (IndexedDB)
+       ============================================================ */
+    const DB_NAME = 'PheelOS';
+    const STORE_NAME = 'appState';
+    const DB_VERSION = 1;
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME);
+          }
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function getAppState() {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.get('state');
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function setAppState(state) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const request = store.put(state, 'state');
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    async function persistState() {
+      try {
+        await setAppState(appState);
+      } catch (err) {
+        console.warn('PheelOS: Failed to persist state', err);
+      }
+    }
+
+    async function initApp() {
+      try {
+        const saved = await getAppState();
+        if (saved && typeof saved === 'object' && saved.user) {
+          appState = saved;
+        }
+      } catch (err) {
+        console.warn('PheelOS: Failed to load state, using defaults', err);
+      }
+
+      applyTheme(appState.theme || 'light');
+      renderApp();
+    }
+
+    /* ============================================================
+       Utility Helpers
+       ============================================================ */
+    function formatBaht(num) {
+      return `฿` + Number(num || 0).toLocaleString(`th-TH`);
+    }
+
+    function getAreaObj(id) {
+      return LIFE_AREAS.find(a => a.id === id) || LIFE_AREAS[0];
+    }
+
+    function getPriorityObj(id) {
+      return PRIORITIES.find(p => p.id === id) || PRIORITIES[1];
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute(`data-theme`, theme === `dark` ? `dark` : `light`);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById(`pwa-toast`);
+      const text = document.getElementById(`pwa-toast-text`);
+      if (!toast || !text) return;
+      text.textContent = msg;
+      toast.classList.add(`visible`);
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove(`visible`);
+      }, 2800);
+    }
+
+    function awardProgress(moneyDelta, expDelta, reason) {
+      appState.user.manifestMoney = Math.max(0, (appState.user.manifestMoney || 0) + moneyDelta);
+      appState.user.exp = (appState.user.exp || 0) + expDelta;
+      let leveledUp = false;
+      while (appState.user.exp >= appState.user.expMax) {
+        appState.user.exp -= appState.user.expMax;
+        appState.user.level += 1;
+        leveledUp = true;
+      }
+      if (appState.user.exp < 0) appState.user.exp = 0;
+
+      if (leveledUp) {
+        showToast(`Level Up! คุณขึ้นสู่ Level ${appState.user.level} และรับ ${formatBaht(moneyDelta)}`);
+      } else if (moneyDelta > 0) {
+        showToast(`${reason} · +${formatBaht(moneyDelta)} & +${expDelta} EXP`);
+      } else if (moneyDelta < 0) {
+        showToast(`${reason}`);
+      }
+    }
+
+    function refreshIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+    }
+
+    /* ============================================================
+       Navigation Controller
+       ============================================================ */
+    function navigateTo(view, opts) {
+      closeSheet();
+      if (opts && opts.tab) {
+        if (view === `manifest`) appState.manifestTab = opts.tab;
+        if (view === `ai-coach`) appState.aiCoachTab = opts.tab;
+      }
+      appState.view = view;
+      persistState();
+      renderApp();
+      const main = document.getElementById(`pwa-main`);
+      if (main) main.scrollTop = 0;
+    }
+
+    function openMoreDrawer() {
+      const panel = document.getElementById(`sheet-panel`);
+      const overlay = document.getElementById(`sheet-overlay`);
+      if (!panel || !overlay) return;
+
+      const items = [
+        { view: `ai-coach`, label: `AI Coach`, sub: `วิเคราะห์สไตล์`, icon: `sparkles` },
+        { view: `focus`, label: `Focus Timer`, sub: `จับเวลาโฟกัส`, icon: `timer` },
+        { view: `mood`, label: `Mood Tracker`, sub: `บันทึกอารมณ์`, icon: `smile` },
+        { view: `goals`, label: `Goals`, sub: `เป้าหมาย 6 มิติ`, icon: `target` },
+        { view: `projects`, label: `Projects`, sub: `เส้นเวลาโปรเจกต์`, icon: `folder-kanban` },
+        { view: `progress`, label: `Progress`, sub: `สรุปความก้าวหน้า`, icon: `bar-chart-3` },
+        { view: `manifest`, label: `Universe Shop`, sub: `ช้อปจักรวาลฝัน`, icon: `shopping-bag`, tab: `shop` },
+        { view: `tutorial`, label: `Tutorial`, sub: `คู่มือใช้งาน`, icon: `book-open` },
+        { view: `settings`, label: `Settings`, sub: `ตั้งค่า & ข้อมูล`, icon: `settings` }
+      ];
+
+      panel.innerHTML = `
+        <div class="sheet-handle"></div>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Navigation Hub</div>
+            <h2 class="section-title">เมนูทั้งหมดของ PLAN OS</h2>
+          </div>
+          <button type="button" class="icon-btn" onclick="closeSheet()" aria-label="ปิดเมนู">
+            <i data-lucide="x" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+        <div class="more-grid">
+          ${items.map(it => `
+            <button type="button" class="more-tile" onclick="navigateTo('${it.view}'${it.tab ? `, { tab: '${it.tab}' }` : ``})" tabindex="0" role="button">
+              <i data-lucide="${it.icon}" style="width:22px;height:22px;color:var(--primary);"></i>
+              <span>${it.label}</span>
+              <span class="muted" style="font-size:0.68rem;">${it.sub}</span>
+            </button>
+          `).join(``)}
+        </div>
+        <div class="tile" style="flex-direction:row;align-items:center;justify-content:space-between;">
+          <div>
+            <div style="font-weight:600;font-size:0.85rem;">${appState.user.name}</div>
+            <div class="muted" style="font-size:0.75rem;">Level ${appState.user.level} · ${appState.user.plan}</div>
+          </div>
+          <button type="button" class="btn-secondary btn-sm" onclick="logoutToLogin()">ออกจากระบบ</button>
+        </div>
+      `;
+      overlay.classList.add(`open`);
+      refreshIcons();
+    }
+
+    function closeSheet() {
+      const overlay = document.getElementById(`sheet-overlay`);
+      if (overlay) overlay.classList.remove(`open`);
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target && e.target.id === `sheet-overlay`) {
+        closeSheet();
+      }
+    }
+
+    /* ============================================================
+       Master Render
+       ============================================================ */
+    function renderApp() {
+      const main = document.getElementById(`pwa-main`);
+      const header = document.getElementById(`app-header`);
+      const nav = document.getElementById(`bottom-nav`);
+      const moneyEl = document.getElementById(`header-money`);
+      const titleEl = document.getElementById(`header-title`);
+      const subEl = document.getElementById(`header-sub`);
+      if (!main || !header || !nav) return;
+
+      if (!appState.isLoggedIn || appState.view === `login`) {
+        header.style.display = `none`;
+        nav.classList.add(`hidden`);
+        main.classList.add(`is-login`);
+        renderLoginView(main);
+        refreshIcons();
+        return;
+      }
+
+      header.style.display = `flex`;
+      nav.classList.remove(`hidden`);
+      main.classList.remove(`is-login`);
+      if (moneyEl) moneyEl.textContent = formatBaht(appState.user.manifestMoney);
+
+      const headerTitles = {
+        dashboard: [`PLAN OS`, `Level ${appState.user.level} · ${appState.user.exp}/${appState.user.expMax} EXP`],
+        plan: [`ปฏิทินวางแผน`, `6 Life Areas · Day / Month`],
+        habits: [`สร้างนิสัยยั่งยืน`, `ความสม่ำเสมอรายสัปดาห์`],
+        manifest: [`จักรวาล Manifest`, `Trips · Places · Garage · Shop`],
+        mood: [`บันทึกความรู้สึก`, `Mood & Energy Tracker`],
+        goals: [`เป้าหมาย 6 มิติ`, `One Life. Six Dimensions.`],
+        projects: [`โปรเจกต์ของฉัน`, `เส้นเวลาและความคืบหน้า`],
+        focus: [`จับเวลาโฟกัส`, `Pomodoro & Ambient Sound`],
+        progress: [`เห็นการเติบโตทุกเดือน`, `สรุปผลและสมดุลชีวิต`],
+        'ai-coach': [`AI Coach ส่วนตัว`, `วิเคราะห์สไตล์การทำงานรายสัปดาห์`],
+        tutorial: [`คู่มือเริ่มต้น`, `4 แกนหลักของ PLAN OS`],
+        settings: [`ตั้งค่าบัญชี`, `ธีม ข้อมูล และการแจ้งเตือน`]
+      };
+      const pair = headerTitles[appState.view] || [`PLAN OS`, `Plan + AI + Manifest`];
+      if (titleEl) titleEl.textContent = pair[0];
+      if (subEl) subEl.textContent = pair[1];
+
+      // Sync bottom nav active indicator
+      const navBtns = nav.querySelectorAll(`.nav-item`);
+      const primaryTabs = [`dashboard`, `plan`, `habits`, `manifest`];
+      const activeKey = primaryTabs.includes(appState.view) ? appState.view : `more`;
+      navBtns.forEach(btn => {
+        if (btn.getAttribute(`data-nav`) === activeKey) btn.classList.add(`active`);
+        else btn.classList.remove(`active`);
+      });
+
+      switch (appState.view) {
+        case `dashboard`: renderDashboardView(main); break;
+        case `plan`: renderPlanView(main); break;
+        case `habits`: renderHabitsView(main); break;
+        case `manifest`: renderManifestView(main); break;
+        case `mood`: renderMoodView(main); break;
+        case `goals`: renderGoalsView(main); break;
+        case `projects`: renderProjectsView(main); break;
+        case `focus`: renderFocusView(main); break;
+        case `progress`: renderProgressView(main); break;
+        case `ai-coach`: renderAiCoachView(main); break;
+        case `tutorial`: renderTutorialView(main); break;
+        case `settings`: renderSettingsView(main); break;
+        default: renderDashboardView(main);
+      }
+
+      refreshIcons();
+    }
+
+    /* ============================================================
+       01-Login View
+       ============================================================ */
+    function setLoginTab(tab) {
+      loginTab = tab;
+      renderApp();
+    }
+
+    function submitLoginForm(e) {
+      e.preventDefault();
+      const emailEl = document.getElementById(`login-email`);
+      const nameEl = document.getElementById(`signup-name`);
+      const email = emailEl ? emailEl.value.trim() : ``;
+      const name = nameEl ? nameEl.value.trim() : ``;
+
+      if (loginTab === `signup`) {
+        appState = buildEmptyState(name || `นักสร้างชีวิต`, email || `member@pheel-os.com`);
+        appState.isLoggedIn = true;
+        appState.view = `dashboard`;
+        showToast(`ยินดีต้อนรับ! รับ Manifest Money ฿10,000,000 ทันที`);
+      } else {
+        // Sign in loads demo populated profile if email matches or first login
+        if (!appState.tasks || appState.tasks.length === 0) {
+          appState = buildDemoState();
+        }
+        if (email) appState.user.email = email;
+        appState.isLoggedIn = true;
+        appState.view = `dashboard`;
+        showToast(`เข้าสู่ระบบสำเร็จ ยินดีต้อนรับกลับมา`);
+      }
+      persistState();
+      renderApp();
+    }
+
+    function loginAsDemo() {
+      const currentTheme = appState.theme || `light`;
+      appState = buildDemoState();
+      appState.theme = currentTheme;
+      appState.isLoggedIn = true;
+      appState.view = `dashboard`;
+      persistState();
+      renderApp();
+      showToast(`เข้าสู่ระบบด้วยข้อมูลตัวอย่าง PLAN OS เรียบร้อย`);
+    }
+
+    function logoutToLogin() {
+      closeSheet();
+      appState.isLoggedIn = false;
+      appState.view = `login`;
+      persistState();
+      renderApp();
+    }
+
+    function renderLoginView(main) {
+      main.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:var(--space-lg);">
+          <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-xs);">
+            <div class="brand-mark" style="width:52px;height:52px;font-size:1.45rem;border-radius:var(--rounded-md);">P</div>
+            <div class="eyebrow">Plan + AI + Manifest</div>
+            <h1 class="page-title">ยินดีต้อนรับสู่ PLAN OS</h1>
+            <p class="muted">เมื่อโลกแห่งความเป็นจริงกับโลกแห่งความฝัน มาบรรจบกัน</p>
+          </div>
+
+          <div class="segmented">
+            <button type="button" class="seg-btn ${loginTab === `signin` ? `active` : ``}" onclick="setLoginTab('signin')">เข้าสู่ระบบ</button>
+            <button type="button" class="seg-btn ${loginTab === `signup` ? `active` : ``}" onclick="setLoginTab('signup')">สมัครสมาชิกใหม่</button>
+          </div>
+
+          <form class="tile-elevated" onsubmit="submitLoginForm(event)">
+            ${loginTab === `signup` ? `
+              <div class="form-field">
+                <label class="form-label" for="signup-name">ชื่อเรียกของคุณ</label>
+                <input class="input-ctrl" id="signup-name" type="text" value="คุณฟีล" required>
+              </div>
+            ` : ``}
+            <div class="form-field">
+              <label class="form-label" for="login-email">อีเมล</label>
+              <input class="input-ctrl" id="login-email" type="email" value="pheel@pheel-os.com" required>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="login-password">รหัสผ่าน</label>
+              <input class="input-ctrl" id="login-password" type="password" value="••••••••" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;margin-top:var(--space-xs);">
+              ${loginTab === `signup` ? `สมัครใช้งาน (รับ ฿10,000,000 ทันที)` : `เข้าสู่ระบบ`}
+            </button>
+          </form>
+
+          <div class="tile" style="text-align:center;">
+            <div style="font-weight:600;font-size:0.85rem;">ทดลองใช้งานข้อมูลตัวอย่างแบบครบทุกหน้า</div>
+            <p class="muted" style="font-size:0.78rem;">พร้อม Task, Habits, AI Coach, ลูกโลก 3D และ Universe Shop</p>
+            <button type="button" class="btn-secondary" style="width:100%;" onclick="loginAsDemo()">
+              <i data-lucide="zap" style="width:16px;height:16px;color:var(--primary);"></i>
+              <span>เข้าสู่ระบบทันที (Demo Account)</span>
+            </button>
+          </div>
+
+          <p class="muted" style="text-align:center;font-size:0.76rem;">Build the life you want, one day at a time.</p>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       02-Dashboard View
+       ============================================================ */
+    function cycleManifesto() {
+      if (!appState.manifestos || appState.manifestos.length === 0) return;
+      appState.activeManifestoIdx = (appState.activeManifestoIdx + 1) % appState.manifestos.length;
+      persistState();
+      renderApp();
+    }
+
+    function toggleTaskDone(taskId) {
+      const t = appState.tasks.find(item => item.id === taskId);
+      if (!t) return;
+      const prio = getPriorityObj(t.priority);
+      t.done = !t.done;
+      if (t.done) {
+        awardProgress(prio.reward, 25, `ทำ "${t.title}" สำเร็จ`);
+      } else {
+        awardProgress(-prio.reward, -25, `ยกเลิกสถานะเสร็จของงาน`);
+      }
+      persistState();
+      renderApp();
+    }
+
+    function renderDashboardView(main) {
+      const todayTasks = appState.tasks.filter(t => t.date === appState.selectedDate);
+      const todayDone = todayTasks.filter(t => t.done).length;
+      const habitsDoneToday = appState.habits.filter(h => h.days[2]).length;
+      const expPct = Math.min(100, Math.round((appState.user.exp / appState.user.expMax) * 100));
+      const manifesto = (appState.manifestos && appState.manifestos.length > 0)
+        ? appState.manifestos[appState.activeManifestoIdx % appState.manifestos.length]
+        : { text: `ยังไม่มีคำประกาศิต กดเพิ่มคำประกาศิตประจำตัวของคุณ` };
+
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="muted" style="font-size:0.78rem;">วันพุธที่ 18 พฤศจิกายน 2026</div>
+            <h1 class="page-title">สวัสดี, ${appState.user.name}</h1>
+          </div>
+          <button type="button" class="btn-primary btn-sm" onclick="openTaskSheet()">
+            <i data-lucide="plus" style="width:16px;height:16px;"></i>
+            <span>เพิ่มงาน</span>
+          </button>
+        </div>
+
+        <!-- Level & Manifest Money Card -->
+        <div class="tile">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">เงินในโลก Manifest ของคุณ</div>
+              <div class="figure-val">${formatBaht(appState.user.manifestMoney)}</div>
+            </div>
+            <button type="button" class="link-more" onclick="navigateTo('manifest', { tab: 'shop' })">
+              <span>Universe Shop</span>
+              <i data-lucide="chevron-right" style="width:15px;height:15px;"></i>
+            </button>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;font-weight:600;margin-top:var(--space-xs);">
+            <span>Level ${appState.user.level}</span>
+            <span class="muted">${appState.user.exp} / ${appState.user.expMax} EXP</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" style="width:${expPct}%;"></div>
+          </div>
+        </div>
+
+        <!-- Random Manifesto Quote -->
+        <div class="tile-elevated" style="background:var(--primary-container);border-color:transparent;">
+          <div class="section-head">
+            <span style="font-size:0.75rem;font-weight:700;color:var(--on-primary-container);display:inline-flex;align-items:center;gap:var(--space-xs);">
+              <i data-lucide="quote" style="width:14px;height:14px;"></i> My Manifesto ประจำวัน
+            </span>
+            <div style="display:flex;gap:var(--space-xs);">
+              <button type="button" class="link-more" style="color:var(--on-primary-container);" onclick="cycleManifesto()">สุ่มคำ</button>
+              <button type="button" class="link-more" style="color:var(--on-primary-container);" onclick="navigateTo('manifest', { tab: 'manifesto' })">แก้ไข</button>
+            </div>
+          </div>
+          <p style="font-weight:600;color:var(--on-surface);line-height:1.5;">“${manifesto.text}”</p>
+        </div>
+
+        <!-- Daily Counters -->
+        <div class="grid-2">
+          <div class="tile tile-clickable" onclick="navigateTo('plan')">
+            <div class="muted" style="font-size:0.78rem;">Today's Task</div>
+            <div class="figure-md">${todayDone} / ${todayTasks.length}</div>
+            <div class="muted" style="font-size:0.74rem;">เสร็จแล้ววันนี้</div>
+          </div>
+          <div class="tile tile-clickable" onclick="navigateTo('habits')">
+            <div class="muted" style="font-size:0.78rem;">Habits วันนี้</div>
+            <div class="figure-md">${habitsDoneToday} / ${appState.habits.length}</div>
+            <div class="muted" style="font-size:0.74rem;">นิสัยที่ทำสำเร็จ</div>
+          </div>
+        </div>
+
+        <!-- Today's Tasks -->
+        <div class="section-head">
+          <h2 class="section-title">สิ่งที่ต้องทำในวันนี้</h2>
+          <button type="button" class="link-more" onclick="navigateTo('plan')">ดูปฏิทิน ›</button>
+        </div>
+
+        ${todayTasks.length === 0 ? `
+          <div class="tile" style="text-align:center;">
+            <p class="muted">ยังไม่มี Task สำหรับวันนี้ เริ่มวางแผนเพื่อรับ Manifest Money</p>
+            <button type="button" class="btn-primary btn-sm" onclick="openTaskSheet()">+ สร้าง Task แรกของวัน</button>
+          </div>
+        ` : `
+          <div style="display:flex;flex-direction:column;gap:var(--space-xs);">
+            ${todayTasks.map(t => renderTaskCard(t)).join(``)}
+          </div>
+        `}
+
+        <!-- Quick Habit Check -->
+        <div class="section-head">
+          <h2 class="section-title">เช็คนิสัยประจำวัน (พุธ)</h2>
+          <button type="button" class="link-more" onclick="navigateTo('habits')">ทั้งหมด ›</button>
+        </div>
+        ${appState.habits.length === 0 ? `
+          <div class="tile" style="text-align:center;">
+            <p class="muted">ยังไม่มีรายการนิสัย กดเพื่อสร้างนิสัยใหม่</p>
+            <button type="button" class="btn-secondary btn-sm" onclick="openHabitSheet()">+ เพิ่มนิสัย</button>
+          </div>
+        ` : `
+          <div class="grid-2">
+            ${appState.habits.map(h => {
+              const area = getAreaObj(h.area);
+              const doneToday = !!h.days[2];
+              return `
+                <button type="button" class="tile-elevated tile-clickable" style="text-align:left;${doneToday ? `background:var(--positive-container);border-color:var(--positive);` : ``}" onclick="toggleHabitDay('${h.id}', 2)">
+                  <div class="section-head" style="width:100%;">
+                    <span class="area-badge ${area.cls}">${area.label}</span>
+                    <i data-lucide="${doneToday ? `check-circle-2` : `circle`}" style="width:18px;height:18px;color:${doneToday ? `var(--positive)` : `var(--on-surface-variant)`};"></i>
+                  </div>
+                  <div style="font-weight:600;font-size:0.84rem;">${h.title}</div>
+                  <div class="muted" style="font-size:0.72rem;">Streak ${h.streak} วัน</div>
+                </button>
+              `;
+            }).join(``)}
+          </div>
+        `}
+
+        <!-- Quick Shortcuts -->
+        <div class="section-head">
+          <h2 class="section-title">เครื่องมือช่วยโฟกัสและวิเคราะห์</h2>
+        </div>
+        <div class="grid-2">
+          <button type="button" class="tile tile-clickable" style="text-align:left;" onclick="navigateTo('focus')">
+            <i data-lucide="timer" style="width:20px;height:20px;color:var(--primary);"></i>
+            <div style="font-weight:600;font-size:0.88rem;">Focus Timer</div>
+            <div class="muted" style="font-size:0.74rem;">โฟกัสแล้ว ${appState.focusStats.totalMinutes} นาที</div>
+          </button>
+          <button type="button" class="tile tile-clickable" style="text-align:left;" onclick="navigateTo('mood')">
+            <i data-lucide="heart-handshake" style="width:20px;height:20px;color:var(--secondary);"></i>
+            <div style="font-weight:600;font-size:0.88rem;">Mood Tracker</div>
+            <div class="muted" style="font-size:0.74rem;">บันทึกอารมณ์ & ขอบคุณ</div>
+          </button>
+          <button type="button" class="tile tile-clickable" style="text-align:left;" onclick="navigateTo('ai-coach')">
+            <i data-lucide="sparkles" style="width:20px;height:20px;color:var(--primary);"></i>
+            <div style="font-weight:600;font-size:0.88rem;">AI Coach</div>
+            <div class="muted" style="font-size:0.74rem;">Architect · นักวางระบบ</div>
+          </button>
+          <button type="button" class="tile tile-clickable" style="text-align:left;" onclick="navigateTo('progress')">
+            <i data-lucide="bar-chart-3" style="width:20px;height:20px;color:var(--positive);"></i>
+            <div style="font-weight:600;font-size:0.88rem;">Progress & 6 มิติ</div>
+            <div class="muted" style="font-size:0.74rem;">ดูสมดุลชีวิตเดือนนี้</div>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderTaskCard(t) {
+      const area = getAreaObj(t.area);
+      const prio = getPriorityObj(t.priority);
+      return `
+        <div class="task-item ${t.done ? `done` : ``}">
+          <button type="button" class="task-check-wrap" onclick="toggleTaskDone('${t.id}')" aria-label="สลับสถานะงาน ${t.title}">
+            <span class="task-check">
+              ${t.done ? `<i data-lucide="check" style="width:14px;height:14px;"></i>` : ``}
+            </span>
+          </button>
+          <div class="task-body" onclick="openTaskSheet('${t.id}')" style="cursor:pointer;">
+            <div class="task-title">${t.title}</div>
+            <div class="task-meta">
+              <span class="area-badge ${area.cls}">${area.label}</span>
+              <span class="area-badge ${prio.cls}">${prio.label}</span>
+              <span class="muted" style="font-size:0.74rem;">${t.time || `09:00`} · +${formatBaht(prio.reward)}</span>
+            </div>
+          </div>
+          <button type="button" class="icon-btn" onclick="openTaskSheet('${t.id}')" aria-label="รายละเอียดงาน">
+            <i data-lucide="more-vertical" style="width:16px;height:16px;"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       03-Plan Day / 05-Month / 06 & 17-New Task / 18-Timeline
+       ============================================================ */
+    function setPlanMode(mode) {
+      appState.planMode = mode;
+      persistState();
+      renderApp();
+    }
+
+    function setPlanDate(dateStr) {
+      appState.selectedDate = dateStr;
+      persistState();
+      renderApp();
+    }
+
+    function setPlanAreaFilter(area) {
+      appState.planAreaFilter = area;
+      persistState();
+      renderApp();
+    }
+
+    function renderPlanView(main) {
+      const dayTasks = appState.tasks.filter(t => {
+        const matchDate = t.date === appState.selectedDate;
+        const matchArea = appState.planAreaFilter === `all` || t.area === appState.planAreaFilter;
+        return matchDate && matchArea;
+      });
+
+      let contentHtml = ``;
+      if (appState.planMode === `month`) {
+        // November 2026 starts on Sunday (offset 6 in Mon-Sun grid)
+        const blanks = Array(6).fill(0);
+        const daysInMonth = Array.from({ length: 30 }, (_, i) => i + 1);
+        contentHtml = `
+          <div class="tile">
+            <div class="section-head">
+              <h2 class="section-title">พฤศจิกายน 2026</h2>
+              <span class="muted" style="font-size:0.76rem;">เลือกวันเพื่อดูแผนงาน</span>
+            </div>
+            <div class="month-grid" style="text-align:center;font-size:0.72rem;color:var(--on-surface-variant);font-weight:600;">
+              ${DAYS_TH.map(d => `<div>${d}</div>`).join(``)}
+            </div>
+            <div class="month-grid">
+              ${blanks.map(() => `<div class="month-cell empty"></div>`).join(``)}
+              ${daysInMonth.map(d => {
+                const ds = `2026-11-${String(d).padStart(2, `0`)}`;
+                const hasTask = appState.tasks.some(t => t.date === ds);
+                const isSel = appState.selectedDate === ds;
+                return `
+                  <button type="button" class="month-cell ${isSel ? `selected` : ``}" onclick="setPlanDate('${ds}')">
+                    <span>${d}</span>
+                    ${hasTask ? `<span class="day-dot" style="${isSel ? `background:var(--on-primary);` : ``}"></span>` : ``}
+                  </button>
+                `;
+              }).join(``)}
+            </div>
+          </div>
+          <div class="section-head">
+            <h3 class="section-title">งานวันที่ ${appState.selectedDate}</h3>
+            <button type="button" class="btn-primary btn-sm" onclick="openTaskSheet()">+ เพิ่มงาน</button>
+          </div>
+          ${dayTasks.length === 0 ? `<div class="tile"><p class="muted">ไม่มีงานในวันที่เลือก</p></div>` : `<div style="display:flex;flex-direction:column;gap:var(--space-xs);">${dayTasks.map(renderTaskCard).join(``)}</div>`}
+        `;
+      } else if (appState.planMode === `timeline`) {
+        const hours = [`07:00`, `08:00`, `09:00`, `10:00`, `11:00`, `12:00`, `13:00`, `14:00`, `15:00`, `16:00`, `17:00`, `18:00`, `19:00`, `20:00`, `21:00`];
+        contentHtml = `
+          <div class="tile">
+            <div class="section-head">
+              <h2 class="section-title">เส้นเวลาประจำวัน (${appState.selectedDate})</h2>
+              <button type="button" class="btn-primary btn-sm" onclick="openTaskSheet()">+ แทรกเวลา</button>
+            </div>
+            <div>
+              ${hours.map(hr => {
+                const hrPrefix = hr.slice(0, 2);
+                const slotTasks = dayTasks.filter(t => (t.time || `09:00`).startsWith(hrPrefix));
+                return `
+                  <div class="timeline-row">
+                    <div class="timeline-hour">${hr}</div>
+                    <div class="timeline-slot">
+                      ${slotTasks.length > 0
+                        ? slotTasks.map(t => renderTaskCard(t)).join(``)
+                        : `<button type="button" class="timeline-empty-btn" onclick="openTaskSheet(null, '${hr}')">+ วางงานเวลา ${hr}</button>`
+                      }
+                    </div>
+                  </div>
+                `;
+              }).join(``)}
+            </div>
+          </div>
+        `;
+      } else {
+        contentHtml = `
+          <div class="section-head">
+            <h2 class="section-title">รายการวางแผน (${dayTasks.length} งาน)</h2>
+            <button type="button" class="btn-primary btn-sm" onclick="openTaskSheet()">+ New Task</button>
+          </div>
+          ${dayTasks.length === 0 ? `
+            <div class="tile" style="text-align:center;">
+              <p class="muted">วันนี้ยังว่างอยู่ กดเพิ่มงานเพื่อวางแผนและรับ Manifest Money</p>
+              <button type="button" class="btn-primary btn-sm" onclick="openTaskSheet()">+ เพิ่มงานแรก</button>
+            </div>
+          ` : `
+            <div style="display:flex;flex-direction:column;gap:var(--space-xs);">
+              ${dayTasks.map(renderTaskCard).join(``)}
+            </div>
+          `}
+        `;
+      }
+
+      main.innerHTML = `
+        <div class="segmented">
+          <button type="button" class="seg-btn ${appState.planMode === `day` ? `active` : ``}" onclick="setPlanMode('day')">รายวัน</button>
+          <button type="button" class="seg-btn ${appState.planMode === `timeline` ? `active` : ``}" onclick="setPlanMode('timeline')">เส้นเวลา</button>
+          <button type="button" class="seg-btn ${appState.planMode === `month` ? `active` : ``}" onclick="setPlanMode('month')">รายเดือน</button>
+        </div>
+
+        <div class="week-strip">
+          ${WEEK_DATES.map(w => {
+            const hasTask = appState.tasks.some(t => t.date === w.dateStr);
+            const active = appState.selectedDate === w.dateStr;
+            return `
+              <button type="button" class="day-pill ${active ? `active` : ``}" onclick="setPlanDate('${w.dateStr}')">
+                <span>${w.dayLabel}</span>
+                <span class="day-num">${w.dateNum}</span>
+                ${hasTask ? `<span class="day-dot"></span>` : `<span style="height:5px;"></span>`}
+              </button>
+            `;
+          }).join(``)}
+        </div>
+
+        <div class="chip-row">
+          <button type="button" class="chip ${appState.planAreaFilter === `all` ? `active` : ``}" onclick="setPlanAreaFilter('all')">ทุกมิติ</button>
+          ${LIFE_AREAS.map(a => `
+            <button type="button" class="chip ${appState.planAreaFilter === a.id ? `active` : ``}" onclick="setPlanAreaFilter('${a.id}')">${a.label}</button>
+          `).join(``)}
+        </div>
+
+        ${contentHtml}
+      `;
+    }
+
+    function openTaskSheet(taskId, presetTime) {
+      const panel = document.getElementById(`sheet-panel`);
+      const overlay = document.getElementById(`sheet-overlay`);
+      if (!panel || !overlay) return;
+
+      const existing = taskId ? appState.tasks.find(t => t.id === taskId) : null;
+      const t = existing || {
+        id: ``,
+        title: ``,
+        area: `career`,
+        priority: `Medium`,
+        date: appState.selectedDate || `2026-11-18`,
+        time: presetTime || `09:00`,
+        note: ``,
+        reminder: true
+      };
+
+      panel.innerHTML = `
+        <div class="sheet-handle"></div>
+        <div class="section-head">
+          <h2 class="section-title">${existing ? `รายละเอียดและแก้ไข Task` : `สร้าง Task ใหม่`}</h2>
+          <button type="button" class="icon-btn" onclick="closeSheet()" aria-label="ปิดหน้าต่าง" tabindex="0">
+            <i data-lucide="x" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+        <form onsubmit="saveTaskForm(event, '${t.id}')" style="display:flex;flex-direction:column;gap:var(--space-md);">
+          <div class="form-field">
+            <label class="form-label" for="task-title-input">ชื่องาน / สิ่งที่ต้องทำ</label>
+            <input class="input-ctrl" id="task-title-input" type="text" value="${t.title}" required>
+          </div>
+          <div class="grid-2">
+            <div class="form-field">
+              <label class="form-label" for="task-area-input">6 Life Areas</label>
+              <select class="input-ctrl" id="task-area-input">
+                ${LIFE_AREAS.map(a => `<option value="${a.id}" ${t.area === a.id ? `selected` : ``}>${a.label} (${a.en})</option>`).join(``)}
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="task-prio-input">ความสำคัญ</label>
+              <select class="input-ctrl" id="task-prio-input">
+                ${PRIORITIES.map(p => `<option value="${p.id}" ${t.priority === p.id ? `selected` : ``}>${p.label} (+${formatBaht(p.reward)})</option>`).join(``)}
+              </select>
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="form-field">
+              <label class="form-label" for="task-date-input">วันที่</label>
+              <input class="input-ctrl" id="task-date-input" type="date" value="${t.date}">
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="task-time-input">เวลา</label>
+              <input class="input-ctrl" id="task-time-input" type="time" value="${t.time}">
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="task-note-input">รายละเอียดเพิ่มเติม / Sub-notes</label>
+            <textarea class="input-ctrl" id="task-note-input">${t.note || ``}</textarea>
+          </div>
+          <div style="display:flex;gap:var(--space-sm);">
+            ${existing ? `<button type="button" class="btn-secondary" style="color:var(--error);" onclick="deleteTask('${existing.id}')">ลบงาน</button>` : ``}
+            <button type="submit" class="btn-primary" style="flex:1;">บันทึก Task</button>
+          </div>
+        </form>
+      `;
+      overlay.classList.add(`open`);
+      refreshIcons();
+    }
+
+    function saveTaskForm(e, existingId) {
+      e.preventDefault();
+      const title = document.getElementById(`task-title-input`).value.trim();
+      const area = document.getElementById(`task-area-input`).value;
+      const priority = document.getElementById(`task-prio-input`).value;
+      const date = document.getElementById(`task-date-input`).value;
+      const time = document.getElementById(`task-time-input`).value;
+      const note = document.getElementById(`task-note-input`).value.trim();
+      if (!title) return;
+
+      if (existingId) {
+        const idx = appState.tasks.findIndex(t => t.id === existingId);
+        if (idx >= 0) {
+          appState.tasks[idx] = { ...appState.tasks[idx], title, area, priority, date, time, note };
+        }
+        showToast(`อัปเดต Task เรียบร้อย`);
+      } else {
+        appState.tasks.unshift({
+          id: `t-${Date.now()}`,
+          title,
+          area,
+          priority,
+          date,
+          time,
+          done: false,
+          note,
+          reminder: true
+        });
+        showToast(`เพิ่ม Task ใหม่ลงในแผนเรียบร้อย`);
+      }
+      appState.selectedDate = date;
+      closeSheet();
+      persistState();
+      renderApp();
+    }
+
+    function deleteTask(id) {
+      appState.tasks = appState.tasks.filter(t => t.id !== id);
+      closeSheet();
+      persistState();
+      renderApp();
+      showToast(`ลบ Task เรียบร้อย`);
+    }
+
+    /* ============================================================
+       08 & 19-Habits List / 20-Add Habit
+       ============================================================ */
+    function toggleHabitDay(habitId, dayIdx) {
+      const h = appState.habits.find(item => item.id === habitId);
+      if (!h) return;
+      h.days[dayIdx] = !h.days[dayIdx];
+      if (h.days[dayIdx]) {
+        h.streak += 1;
+        awardProgress(100000, 20, `เช็คนิสัย "${h.title}"`);
+      } else {
+        h.streak = Math.max(0, h.streak - 1);
+        awardProgress(-100000, -20, `ยกเลิกเช็คนิสัย`);
+      }
+      persistState();
+      renderApp();
+    }
+
+    function renderHabitsView(main) {
+      const onGoalCount = appState.habits.filter(h => h.days.filter(Boolean).length >= h.targetPerWeek).length;
+      const totalChecks = appState.habits.reduce((acc, h) => acc + h.days.filter(Boolean).length, 0);
+      const totalTarget = appState.habits.reduce((acc, h) => acc + h.targetPerWeek, 0);
+      const ratePct = totalTarget > 0 ? Math.min(100, Math.round((totalChecks / totalTarget) * 100)) : 0;
+
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Habits Tracker</div>
+            <h1 class="page-title">สร้างนิสัยให้ยั่งยืน</h1>
+          </div>
+          <button type="button" class="btn-primary btn-sm" onclick="openHabitSheet()">+ เพิ่มนิสัย</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="tile">
+            <div class="muted" style="font-size:0.78rem;">Habits on Goal</div>
+            <div class="figure-md">${onGoalCount} / ${appState.habits.length}</div>
+            <div class="muted" style="font-size:0.74rem;">ทำครบเป้าสัปดาห์นี้</div>
+          </div>
+          <div class="tile">
+            <div class="muted" style="font-size:0.78rem;">ความสม่ำเสมอรวม</div>
+            <div class="figure-md">${ratePct}%</div>
+            <div class="muted" style="font-size:0.74rem;">+฿100,000 / ครั้งที่ทำ</div>
+          </div>
+        </div>
+
+        ${appState.habits.length === 0 ? `
+          <div class="tile" style="text-align:center;">
+            <p class="muted">ยังไม่มีนิสัยที่ติดตาม เริ่มสร้างนิสัยเล็กๆ ที่ทำได้จริงทุกสัปดาห์</p>
+            <button type="button" class="btn-primary btn-sm" onclick="openHabitSheet()">+ สร้างนิสัยแรก</button>
+          </div>
+        ` : appState.habits.map(h => {
+          const area = getAreaObj(h.area);
+          const doneCount = h.days.filter(Boolean).length;
+          return `
+            <div class="tile-elevated">
+              <div class="section-head">
+                <span class="area-badge ${area.cls}">${area.label}</span>
+                <div style="display:flex;align-items:center;gap:var(--space-xs);">
+                  <span style="font-size:0.78rem;font-weight:700;color:var(--secondary);">Streak ${h.streak} วัน</span>
+                  <button type="button" class="icon-btn" onclick="deleteHabit('${h.id}')" aria-label="ลบนิสัย ${h.title}">
+                    <i data-lucide="trash-2" style="width:15px;height:15px;"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="section-head">
+                <div style="font-weight:700;font-size:0.95rem;">${h.title}</div>
+                <span class="muted" style="font-size:0.78rem;font-weight:600;">${doneCount}/${h.targetPerWeek} วัน</span>
+              </div>
+              <div class="habit-week">
+                ${DAYS_TH.map((d, idx) => `
+                  <button type="button" class="habit-day-btn ${h.days[idx] ? `done` : ``}" onclick="toggleHabitDay('${h.id}', ${idx})">
+                    <span>${d}</span>
+                    <i data-lucide="${h.days[idx] ? `check` : `minus`}" style="width:13px;height:13px;"></i>
+                  </button>
+                `).join(``)}
+              </div>
+            </div>
+          `;
+        }).join(``)}
+      `;
+    }
+
+    function openHabitSheet() {
+      const panel = document.getElementById(`sheet-panel`);
+      const overlay = document.getElementById(`sheet-overlay`);
+      if (!panel || !overlay) return;
+
+      panel.innerHTML = `
+        <div class="sheet-handle"></div>
+        <div class="section-head">
+          <h2 class="section-title">เพิ่มนิสัยใหม่ (Add Habit)</h2>
+          <button type="button" class="icon-btn" onclick="closeSheet()" aria-label="ปิด" tabindex="0">
+            <i data-lucide="x" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+        <form onsubmit="saveHabitForm(event)" style="display:flex;flex-direction:column;gap:var(--space-md);">
+          <div class="form-field">
+            <label class="form-label" for="habit-title-input">นิสัยที่อยากทำอย่างสม่ำเสมอ</label>
+            <input class="input-ctrl" id="habit-title-input" type="text" value="" required>
+          </div>
+          <div class="grid-2">
+            <div class="form-field">
+              <label class="form-label" for="habit-area-input">มิติของชีวิต</label>
+              <select class="input-ctrl" id="habit-area-input">
+                ${LIFE_AREAS.map(a => `<option value="${a.id}">${a.label}</option>`).join(``)}
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="habit-target-input">เป้าหมายต่อสัปดาห์ (วัน)</label>
+              <select class="input-ctrl" id="habit-target-input">
+                <option value="3">3 วัน / สัปดาห์</option>
+                <option value="4">4 วัน / สัปดาห์</option>
+                <option value="5" selected>5 วัน / สัปดาห์</option>
+                <option value="6">6 วัน / สัปดาห์</option>
+                <option value="7">ทุกวัน (7 วัน)</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">บันทึกนิสัยใหม่</button>
+        </form>
+      `;
+      overlay.classList.add(`open`);
+      refreshIcons();
+    }
+
+    function saveHabitForm(e) {
+      e.preventDefault();
+      const title = document.getElementById(`habit-title-input`).value.trim();
+      const area = document.getElementById(`habit-area-input`).value;
+      const targetPerWeek = parseInt(document.getElementById(`habit-target-input`).value, 10) || 5;
+      if (!title) return;
+
+      appState.habits.push({
+        id: `h-${Date.now()}`,
+        title,
+        area,
+        targetPerWeek,
+        days: [false, false, false, false, false, false, false],
+        streak: 0
+      });
+      closeSheet();
+      persistState();
+      renderApp();
+      showToast(`สร้างนิสัย "${title}" เรียบร้อย`);
+    }
+
+    function deleteHabit(id) {
+      appState.habits = appState.habits.filter(h => h.id !== id);
+      persistState();
+      renderApp();
+      showToast(`ลบนิสัยเรียบร้อย`);
+    }
+
+    /* ============================================================
+       11-Focus Timer + Web Audio Ambient Synth
+       ============================================================ */
+    function setTimerMode(mode, customMin) {
+      stopTimer();
+      timerState.mode = mode;
+      const map = { pomodoro: 25, short: 5, long: 15, custom: customMin || 45 };
+      const mins = map[mode] || 25;
+      timerState.totalSec = mins * 60;
+      timerState.remainingSec = mins * 60;
+      renderApp();
+    }
+
+    function applyCustomMinutes(val) {
+      const m = Math.max(1, Math.min(180, parseInt(val, 10) || 25));
+      setTimerMode(`custom`, m);
+    }
+
+    function toggleTimerRun() {
+      if (timerState.running) {
+        stopTimer();
+        renderApp();
+        return;
+      }
+      timerState.running = true;
+      timerState.intervalId = setInterval(() => {
+        if (timerState.remainingSec > 0) {
+          timerState.remainingSec -= 1;
+          const clock = document.getElementById(`focus-clock-readout`);
+          const ring = document.getElementById(`focus-ring-progress`);
+          if (clock) clock.textContent = formatClock(timerState.remainingSec);
+          if (ring) {
+            const circ = 2 * Math.PI * 92;
+            const ratio = 1 - (timerState.remainingSec / timerState.totalSec);
+            ring.setAttribute(`stroke-dashoffset`, String(circ * (1 - ratio)));
+          }
+        } else {
+          completeFocusSession();
+        }
+      }, 1000);
+      renderApp();
+    }
+
+    function stopTimer() {
+      timerState.running = false;
+      if (timerState.intervalId) {
+        clearInterval(timerState.intervalId);
+        timerState.intervalId = null;
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      timerState.remainingSec = timerState.totalSec;
+      renderApp();
+    }
+
+    function completeFocusSession() {
+      stopTimer();
+      const minsDone = Math.max(1, Math.round(timerState.totalSec / 60));
+      appState.focusStats.totalMinutes += minsDone;
+      appState.focusStats.sessionsToday += 1;
+      timerState.remainingSec = timerState.totalSec;
+      awardProgress(200000, 30, `โฟกัสครบ ${minsDone} นาที`);
+      persistState();
+      renderApp();
+    }
+
+    function setFocusScene(scene) {
+      timerState.scene = scene;
+      renderApp();
+    }
+
+    function setFocusLinkedTask(taskId) {
+      timerState.linkedTaskId = taskId;
+    }
+
+    function toggleAmbientSound() {
+      timerState.soundOn = !timerState.soundOn;
+      if (timerState.soundOn) {
+        startAmbientAudio().then(() => {
+          showToast(`เปิดเสียงบรรยากาศช่วยโฟกัส (Web Audio Synth)`);
+        }).catch(() => {
+          timerState.soundOn = false;
+          showToast(`กรุณาโต้ตอบกับหน้าจอเพื่อเปิดเสียง`);
+        });
+      } else {
+        stopAmbientAudio();
+      }
+      renderApp();
+    }
+
+    async function startAmbientAudio() {
+      try {
+        const AudioCtor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtor) return;
+        if (!audioCtx) audioCtx = new AudioCtor();
+        if (audioCtx.state === `suspended`) await audioCtx.resume();
+
+        // Pink-filtered ambient rain/wind noise
+        const bufferSize = audioCtx.sampleRate * 2;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = buffer.getChannelData(0);
+        let b0 = 0, b1 = 0, b2 = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99765 * b0 + white * 0.0990460;
+          b1 = 0.96300 * b1 + white * 0.2965164;
+          b2 = 0.57000 * b2 + white * 1.0526913;
+          output[i] = (b0 + b1 + b2 + white * 0.1848) * 0.04;
+        }
+        noiseNode = audioCtx.createBufferSource();
+        noiseNode.buffer = buffer;
+        noiseNode.loop = true;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = `lowpass`;
+        filter.frequency.value = 650;
+
+        gainNode = audioCtx.createGain();
+        gainNode.gain.value = 0.28;
+
+        noiseNode.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        noiseNode.start();
+      } catch (err) {
+        // Ignore if blocked
+      }
+    }
+
+    function stopAmbientAudio() {
+      try {
+        if (noiseNode) {
+          noiseNode.stop();
+          noiseNode.disconnect();
+          noiseNode = null;
+        }
+      } catch (err) {}
+    }
+
+    function formatClock(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${String(m).padStart(2, `0`)}:${String(s).padStart(2, `0`)}`;
+    }
+
+    function renderFocusView(main) {
+      const circ = 2 * Math.PI * 92;
+      const ratio = timerState.totalSec > 0 ? 1 - (timerState.remainingSec / timerState.totalSec) : 0;
+      const dashOffset = circ * (1 - ratio);
+      const sceneClass = `focus-scene-${timerState.scene}`;
+
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Deep Work</div>
+            <h1 class="page-title">Focus Timer</h1>
+          </div>
+          <span class="area-badge area-career">วันนี้ ${appState.focusStats.sessionsToday} รอบ · รวม ${appState.focusStats.totalMinutes} นาที</span>
+        </div>
+
+        <div class="segmented">
+          <button type="button" class="seg-btn ${timerState.mode === `pomodoro` ? `active` : ``}" onclick="setTimerMode('pomodoro')">โฟกัส 25น.</button>
+          <button type="button" class="seg-btn ${timerState.mode === `short` ? `active` : ``}" onclick="setTimerMode('short')">พัก 5น.</button>
+          <button type="button" class="seg-btn ${timerState.mode === `long` ? `active` : ``}" onclick="setTimerMode('long')">พัก 15น.</button>
+          <button type="button" class="seg-btn ${timerState.mode === `custom` ? `active` : ``}" onclick="setTimerMode('custom', 45)">กำหนดเอง</button>
+        </div>
+
+        ${timerState.mode === `custom` ? `
+          <div class="form-field">
+            <label class="form-label" for="custom-focus-min">กำหนดเวลาโฟกัส (นาที)</label>
+            <input class="input-ctrl" id="custom-focus-min" type="number" min="1" max="180" value="${Math.round(timerState.totalSec / 60)}" onchange="applyCustomMinutes(this.value)">
+          </div>
+        ` : ``}
+
+        <div class="focus-card ${sceneClass}">
+          <div class="timer-ring-wrap">
+            <svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
+              <circle cx="105" cy="105" r="92" fill="none" stroke="var(--outline-variant)" stroke-width="10" />
+              <circle id="focus-ring-progress" cx="105" cy="105" r="92" fill="none" stroke="var(--primary)" stroke-width="10" stroke-linecap="round"
+                stroke-dasharray="${circ}" stroke-dashoffset="${dashOffset}" transform="rotate(-90 105 105)" />
+            </svg>
+            <div class="timer-readout">
+              <div class="timer-clock" id="focus-clock-readout">${formatClock(timerState.remainingSec)}</div>
+              <div class="muted" style="font-size:0.78rem;">${timerState.running ? `กำลังโฟกัส...` : `พร้อมเริ่มต้น`}</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;justify-content:center;">
+            <button type="button" class="btn-primary" onclick="toggleTimerRun()">
+              <i data-lucide="${timerState.running ? `pause` : `play`}" style="width:18px;height:18px;"></i>
+              <span>${timerState.running ? `หยุดชั่วคราว` : `เริ่มจับเวลา`}</span>
+            </button>
+            <button type="button" class="btn-secondary" onclick="resetTimer()">รีเซ็ต</button>
+            <button type="button" class="btn-secondary" onclick="completeFocusSession()">จบและรับ EXP</button>
+          </div>
+        </div>
+
+        <div class="tile">
+          <div class="form-field">
+            <label class="form-label" for="focus-task-select">เชื่อมกับ Task ที่กำลังทำ</label>
+            <select class="input-ctrl" id="focus-task-select" onchange="setFocusLinkedTask(this.value)">
+              ${appState.tasks.length === 0 ? `<option value="">โฟกัสอิสระ</option>` : appState.tasks.map(t => `<option value="${t.id}" ${timerState.linkedTaskId === t.id ? `selected` : ``}>${t.title}</option>`).join(``)}
+            </select>
+          </div>
+
+          <div class="switch-row">
+            <div>
+              <div style="font-weight:600;font-size:0.88rem;">เสียงบรรยากาศช่วยโฟกัส</div>
+              <div class="muted" style="font-size:0.76rem;">สังเคราะห์เสียงฝน/ลมธรรมชาติแบบเรียลไทม์</div>
+            </div>
+            <button type="button" class="switch-btn ${timerState.soundOn ? `on` : ``}" onclick="toggleAmbientSound()" aria-label="เปิดปิดเสียงบรรยากาศ">
+              <span class="switch-thumb"></span>
+            </button>
+          </div>
+
+          <div>
+            <div class="form-label" style="margin-bottom:var(--space-xs);">ฉากสร้างบรรยากาศ</div>
+            <div class="chip-row">
+              <button type="button" class="chip ${timerState.scene === `loft` ? `active` : ``}" onclick="setFocusScene('loft')">Loft สว่าง</button>
+              <button type="button" class="chip ${timerState.scene === `forest` ? `active` : ``}" onclick="setFocusScene('forest')">ป่าสงบ</button>
+              <button type="button" class="chip ${timerState.scene === `midnight` ? `active` : ``}" onclick="setFocusScene('midnight')">เที่ยงคืน</button>
+              <button type="button" class="chip ${timerState.scene === `ocean` ? `active` : ``}" onclick="setFocusScene('ocean')">ริมทะเล</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       07-Mood Tracker
+       ============================================================ */
+    let draftMood = { mood: 4, energy: 4, triggers: [`งานสำเร็จ`] };
+
+    function selectDraftMood(val) {
+      draftMood.mood = val;
+      renderApp();
+    }
+
+    function updateDraftEnergy(val) {
+      draftMood.energy = parseInt(val, 10) || 4;
+      const el = document.getElementById(`mood-energy-val`);
+      if (el) el.textContent = `${draftMood.energy} / 5`;
+    }
+
+    function toggleMoodTrigger(tag) {
+      if (draftMood.triggers.includes(tag)) {
+        draftMood.triggers = draftMood.triggers.filter(t => t !== tag);
+      } else {
+        draftMood.triggers.push(tag);
+      }
+      renderApp();
+    }
+
+    function saveMoodEntry(e) {
+      e.preventDefault();
+      const gratitude = document.getElementById(`mood-gratitude`).value.trim();
+      const vent = document.getElementById(`mood-vent`).value.trim();
+
+      appState.moods.unshift({
+        id: `m-${Date.now()}`,
+        date: appState.selectedDate || `2026-11-18`,
+        mood: draftMood.mood,
+        energy: draftMood.energy,
+        triggers: [...draftMood.triggers],
+        gratitude,
+        vent
+      });
+      awardProgress(50000, 15, `บันทึกความรู้สึกประจำวัน`);
+      persistState();
+      renderApp();
+    }
+
+    function renderMoodView(main) {
+      const avgMood = appState.moods.length > 0
+        ? (appState.moods.reduce((s, m) => s + m.mood, 0) / appState.moods.length).toFixed(1)
+        : `0.0`;
+
+      // Find top positive trigger
+      const triggerFreq = {};
+      appState.moods.forEach(m => (m.triggers || []).forEach(tr => {
+        triggerFreq[tr] = (triggerFreq[tr] || 0) + m.mood;
+      }));
+      const topTrigger = Object.entries(triggerFreq).sort((a, b) => b[1] - a[1])[0];
+
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Emotional Clarity</div>
+            <h1 class="page-title">บันทึกความรู้สึกประจำวัน</h1>
+          </div>
+          <span class="area-badge area-lifestyle">เฉลี่ย ${avgMood} / 5</span>
+        </div>
+
+        <form class="tile-elevated" onsubmit="saveMoodEntry(event)">
+          <div>
+            <div class="form-label" style="margin-bottom:var(--space-xs);">วันนี้คุณรู้สึกอย่างไร?</div>
+            <div class="mood-scale">
+              ${MOOD_LEVELS.map(m => `
+                <button type="button" class="mood-btn ${draftMood.mood === m.val ? `selected` : ``}" onclick="selectDraftMood(${m.val})">
+                  <i data-lucide="${m.icon}" style="width:20px;height:20px;"></i>
+                  <span>${m.label}</span>
+                </button>
+              `).join(``)}
+            </div>
+          </div>
+
+          <div class="form-field">
+            <div class="section-head">
+              <label class="form-label" for="mood-energy-range">ระดับพลังงาน (Energy)</label>
+              <span id="mood-energy-val" style="font-weight:700;color:var(--primary);">${draftMood.energy} / 5</span>
+            </div>
+            <input id="mood-energy-range" type="range" min="1" max="5" value="${draftMood.energy}" oninput="updateDraftEnergy(this.value)">
+          </div>
+
+          <div>
+            <div class="form-label" style="margin-bottom:var(--space-xs);">เรื่องที่ส่งผลต่ออารมณ์วันนี้</div>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-xs);">
+              ${MOOD_TRIGGERS.map(tag => `
+                <button type="button" class="chip ${draftMood.triggers.includes(tag) ? `active` : ``}" onclick="toggleMoodTrigger('${tag}')">${tag}</button>
+              `).join(``)}
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="mood-gratitude">ขอบคุณสิ่งดีๆ ที่เกิดขึ้น</label>
+            <textarea class="input-ctrl" id="mood-gratitude"></textarea>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="mood-vent">ระบายสิ่งที่ค้างในใจ (Brain Dump)</label>
+            <textarea class="input-ctrl" id="mood-vent"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">บันทึกความรู้สึก (+฿50,000)</button>
+        </form>
+
+        <div class="tile">
+          <div class="section-head">
+            <h2 class="section-title">ปัจจัยที่ส่งผลต่ออารมณ์มากที่สุด</h2>
+          </div>
+          <p class="muted">
+            ${topTrigger ? `ปัจจัย “<strong>${topTrigger[0]}</strong>” มักทำให้คะแนนอารมณ์ของคุณสูงขึ้นอย่างชัดเจน` : `เริ่มบันทึกอารมณ์อย่างน้อย 2 วันเพื่อดูปัจจัยที่มีผลต่อใจคุณ`}
+          </p>
+        </div>
+
+        <div class="section-head">
+          <h2 class="section-title">ประวัติบันทึกล่าสุด</h2>
+        </div>
+        ${appState.moods.length === 0 ? `<div class="tile"><p class="muted">ยังไม่มีบันทึกอารมณ์</p></div>` : appState.moods.slice(0, 5).map(m => `
+          <div class="tile-elevated">
+            <div class="section-head">
+              <span style="font-weight:700;font-size:0.85rem;">${m.date} · Mood ${m.mood}/5 · Energy ${m.energy}/5</span>
+              <span class="area-badge area-growth">${(m.triggers || []).slice(0, 2).join(` · `) || `บันทึกทั่วไป`}</span>
+            </div>
+            ${m.gratitude ? `<div style="font-size:0.85rem;"><strong>ขอบคุณ:</strong> ${m.gratitude}</div>` : ``}
+            ${m.vent ? `<div class="muted" style="font-size:0.82rem;"><strong>ระบาย:</strong> ${m.vent}</div>` : ``}
+          </div>
+        `).join(``)}
+      `;
+    }
+
+    /* ============================================================
+       10-Goals & 21-New Goal
+       ============================================================ */
+    function updateGoalProgress(goalId, delta) {
+      const g = appState.goals.find(item => item.id === goalId);
+      if (!g) return;
+      const wasCompleted = g.completed;
+      g.progress = Math.max(0, Math.min(100, g.progress + delta));
+      g.completed = g.progress >= 100;
+      if (g.completed && !wasCompleted) {
+        awardProgress(500000, 60, `พิชิตเป้าหมาย "${g.title}" สำเร็จ!`);
+      }
+      persistState();
+      renderApp();
+    }
+
+    function renderGoalsView(main) {
+      const completed = appState.goals.filter(g => g.completed).length;
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">6 Life Areas</div>
+            <h1 class="page-title">เป้าหมายชีวิตของคุณ</h1>
+          </div>
+          <button type="button" class="btn-primary btn-sm" onclick="openGoalSheet()">+ New Goal</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="tile">
+            <div class="muted" style="font-size:0.78rem;">เป้าหมายทั้งหมด</div>
+            <div class="figure-md">${appState.goals.length} เป้าหมาย</div>
+          </div>
+          <div class="tile">
+            <div class="muted" style="font-size:0.78rem;">สำเร็จแล้ว</div>
+            <div class="figure-md" style="color:var(--positive);">${completed} เป้าหมาย</div>
+          </div>
+        </div>
+
+        ${appState.goals.length === 0 ? `
+          <div class="tile" style="text-align:center;">
+            <p class="muted">ยังไม่มีเป้าหมาย ลองตั้งเป้าหมายใน 6 มิติของชีวิต</p>
+            <button type="button" class="btn-primary btn-sm" onclick="openGoalSheet()">+ ตั้งเป้าหมายแรก</button>
+          </div>
+        ` : appState.goals.map(g => {
+          const area = getAreaObj(g.area);
+          return `
+            <div class="tile-elevated">
+              <div class="section-head">
+                <span class="area-badge ${area.cls}">${area.label}</span>
+                <span class="muted" style="font-size:0.76rem;">กำหนด: ${g.targetDate}</span>
+              </div>
+              <div style="font-weight:700;font-size:0.95rem;">${g.title}</div>
+              <div class="section-head">
+                <span class="muted" style="font-size:0.78rem;">ความคืบหน้า</span>
+                <span style="font-weight:700;color:${g.completed ? `var(--positive)` : `var(--primary)`};">${g.progress}%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill ${g.completed ? `positive` : ``}" style="width:${g.progress}%;"></div>
+              </div>
+              <div style="display:flex;gap:var(--space-xs);justify-content:flex-end;margin-top:var(--space-xs);">
+                <button type="button" class="btn-secondary btn-sm" onclick="updateGoalProgress('${g.id}', -10)">-10%</button>
+                <button type="button" class="btn-secondary btn-sm" onclick="updateGoalProgress('${g.id}', 10)">+10%</button>
+                ${!g.completed ? `<button type="button" class="btn-primary btn-sm" onclick="updateGoalProgress('${g.id}', 100)">สำเร็จ!</button>` : `<span class="area-badge area-finance">สำเร็จแล้ว</span>`}
+              </div>
+            </div>
+          `;
+        }).join(``)}
+      `;
+    }
+
+    function openGoalSheet() {
+      const panel = document.getElementById(`sheet-panel`);
+      const overlay = document.getElementById(`sheet-overlay`);
+      if (!panel || !overlay) return;
+
+      panel.innerHTML = `
+        <div class="sheet-handle"></div>
+        <div class="section-head">
+          <h2 class="section-title">ตั้งเป้าหมายใหม่ (New Goal)</h2>
+          <button type="button" class="icon-btn" onclick="closeSheet()" aria-label="ปิด">
+            <i data-lucide="x" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+        <form onsubmit="saveGoalForm(event)" style="display:flex;flex-direction:column;gap:var(--space-md);">
+          <div class="form-field">
+            <label class="form-label" for="goal-title-input">เป้าหมายที่ต้องการทำให้สำเร็จ</label>
+            <input class="input-ctrl" id="goal-title-input" type="text" required>
+          </div>
+          <div class="grid-2">
+            <div class="form-field">
+              <label class="form-label" for="goal-area-input">มิติของชีวิต</label>
+              <select class="input-ctrl" id="goal-area-input">
+                ${LIFE_AREAS.map(a => `<option value="${a.id}">${a.label}</option>`).join(``)}
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="goal-date-input">วันที่อยากทำให้สำเร็จ</label>
+              <input class="input-ctrl" id="goal-date-input" type="date" value="2026-12-31">
+            </div>
+          </div>
+          <button type="submit" class="btn-primary">บันทึกเป้าหมาย</button>
+        </form>
+      `;
+      overlay.classList.add(`open`);
+      refreshIcons();
+    }
+
+    function saveGoalForm(e) {
+      e.preventDefault();
+      const title = document.getElementById(`goal-title-input`).value.trim();
+      const area = document.getElementById(`goal-area-input`).value;
+      const targetDate = document.getElementById(`goal-date-input`).value;
+      if (!title) return;
+
+      appState.goals.unshift({
+        id: `g-${Date.now()}`,
+        title,
+        area,
+        targetDate,
+        progress: 0,
+        completed: false
+      });
+      closeSheet();
+      persistState();
+      renderApp();
+      showToast(`เพิ่มเป้าหมาย "${title}" เรียบร้อย`);
+    }
+
+    /* ============================================================
+       09-Projects View
+       ============================================================ */
+    function toggleProjectStep(projId, stepId) {
+      const p = appState.projects.find(item => item.id === projId);
+      if (!p) return;
+      const s = p.steps.find(st => st.id === stepId);
+      if (!s) return;
+      s.done = !s.done;
+      if (s.done) awardProgress(120000, 20, `เสร็จสิ้นขั้นตอน "${s.text}"`);
+      persistState();
+      renderApp();
+    }
+
+    function setProjectPhase(projId, phaseIdx) {
+      const p = appState.projects.find(item => item.id === projId);
+      if (!p) return;
+      p.currentPhase = phaseIdx;
+      persistState();
+      renderApp();
+    }
+
+    function renderProjectsView(main) {
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Milestones & Timeline</div>
+            <h1 class="page-title">แตกงานใหญ่เป็นขั้นตอน</h1>
+          </div>
+          <button type="button" class="btn-primary btn-sm" onclick="openProjectSheet()">+ โปรเจกต์</button>
+        </div>
+
+        ${appState.projects.length === 0 ? `
+          <div class="tile" style="text-align:center;">
+            <p class="muted">ยังไม่มีโปรเจกต์ แบ่งงานใหญ่เป็นช่วงบนเส้นเวลาเพื่อลงมือง่ายขึ้น</p>
+            <button type="button" class="btn-primary btn-sm" onclick="openProjectSheet()">+ สร้างโปรเจกต์แรก</button>
+          </div>
+        ` : appState.projects.map(p => {
+          const area = getAreaObj(p.area);
+          const doneCount = p.steps.filter(s => s.done).length;
+          const pct = p.steps.length > 0 ? Math.round((doneCount / p.steps.length) * 100) : 0;
+          return `
+            <div class="tile-elevated">
+              <div class="section-head">
+                <span class="area-badge ${area.cls}">${area.label}</span>
+                <span class="muted" style="font-size:0.76rem;">กำหนดส่ง: ${p.deadline}</span>
+              </div>
+              <div class="section-head">
+                <div style="font-weight:700;font-size:0.98rem;">${p.title}</div>
+                <span style="font-weight:700;color:var(--primary);">${pct}%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width:${pct}%;"></div>
+              </div>
+
+              <!-- Timeline Phases -->
+              <div class="grid-3" style="margin-top:var(--space-xs);">
+                ${p.phases.map((ph, idx) => `
+                  <button type="button" class="chip ${p.currentPhase === idx ? `active` : ``}" style="justify-content:center;font-size:0.7rem;" onclick="setProjectPhase('${p.id}', ${idx})">
+                    ${idx + 1}. ${ph}
+                  </button>
+                `).join(``)}
+              </div>
+
+              <!-- Checklist Steps -->
+              <div style="display:flex;flex-direction:column;gap:var(--space-xs);margin-top:var(--space-xs);">
+                ${p.steps.map(st => `
+                  <button type="button" class="task-item ${st.done ? `done` : ``}" style="text-align:left;width:100%;" onclick="toggleProjectStep('${p.id}', '${st.id}')">
+                    <span class="task-check" style="margin-top:0;">
+                      ${st.done ? `<i data-lucide="check" style="width:13px;height:13px;"></i>` : ``}
+                    </span>
+                    <span class="task-title" style="font-size:0.84rem;">${st.text}</span>
+                  </button>
+                `).join(``)}
+              </div>
+            </div>
+          `;
+        }).join(``)}
+      `;
+    }
+
+    function openProjectSheet() {
+      const panel = document.getElementById(`sheet-panel`);
+      const overlay = document.getElementById(`sheet-overlay`);
+      if (!panel || !overlay) return;
+
+      panel.innerHTML = `
+        <div class="sheet-handle"></div>
+        <div class="section-head">
+          <h2 class="section-title">สร้างโปรเจกต์ใหม่</h2>
+          <button type="button" class="icon-btn" onclick="closeSheet()" aria-label="ปิด">
+            <i data-lucide="x" style="width:20px;height:20px;"></i>
+          </button>
+        </div>
+        <form onsubmit="saveProjectForm(event)" style="display:flex;flex-direction:column;gap:var(--space-md);">
+          <div class="form-field">
+            <label class="form-label" for="proj-title-input">ชื่อโปรเจกต์</label>
+            <input class="input-ctrl" id="proj-title-input" type="text" required>
+          </div>
+          <div class="grid-2">
+            <div class="form-field">
+              <label class="form-label" for="proj-area-input">มิติชีวิต</label>
+              <select class="input-ctrl" id="proj-area-input">
+                ${LIFE_AREAS.map(a => `<option value="${a.id}">${a.label}</option>`).join(``)}
+              </select>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="proj-deadline-input">กำหนดเสร็จ</label>
+              <input class="input-ctrl" id="proj-deadline-input" type="text" value="31 ธ.ค. 2026">
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="proj-steps-input">ขั้นตอนย่อย (คั่นด้วย Enter)</label>
+            <textarea class="input-ctrl" id="proj-steps-input">วางขอบเขตงาน
+ลงมือทำช่วงแรก
+ตรวจทานและปิดงาน</textarea>
+          </div>
+          <button type="submit" class="btn-primary">สร้างโปรเจกต์</button>
+        </form>
+      `;
+      overlay.classList.add(`open`);
+      refreshIcons();
+    }
+
+    function saveProjectForm(e) {
+      e.preventDefault();
+      const title = document.getElementById(`proj-title-input`).value.trim();
+      const area = document.getElementById(`proj-area-input`).value;
+      const deadline = document.getElementById(`proj-deadline-input`).value.trim();
+      const rawSteps = document.getElementById(`proj-steps-input`).value.split(`\n`).map(s => s.trim()).filter(Boolean);
+      if (!title) return;
+
+      appState.projects.unshift({
+        id: `p-${Date.now()}`,
+        title,
+        area,
+        deadline,
+        currentPhase: 0,
+        phases: [`เริ่มต้น`, `กำลังทำ`, `สรุปผล`],
+        steps: rawSteps.map((txt, idx) => ({ id: `ps-${Date.now()}-${idx}`, text: txt, done: false }))
+      });
+      closeSheet();
+      persistState();
+      renderApp();
+      showToast(`สร้างโปรเจกต์ "${title}" เรียบร้อย`);
+    }
+
+    /* ============================================================
+       14, 23, 24, 25 - Manifest Universe (Trips 3D Globe, Places, Garage, Manifesto, Shop)
+       ============================================================ */
+    function setManifestTab(tab) {
+      appState.manifestTab = tab;
+      persistState();
+      renderApp();
+    }
+
+    function setShopFilter(f) {
+      appState.shopFilter = f;
+      persistState();
+      renderApp();
+    }
+
+    function buyShopItem(itemId) {
+      const item = SHOP_CATALOG.find(i => i.id === itemId);
+      if (!item) return;
+      if (appState.ownedShopIds.includes(itemId)) {
+        showToast(`คุณมี ${item.name} ในจักรวาล Manifest แล้ว`);
+        return;
+      }
+      if (appState.user.manifestMoney < item.price) {
+        const diff = item.price - appState.user.manifestMoney;
+        showToast(`เงิน Manifest ขาดอีก ${formatBaht(diff)} · ทำ Task เพิ่มเพื่อสะสม!`);
+        return;
+      }
+      appState.user.manifestMoney -= item.price;
+      appState.ownedShopIds.push(itemId);
+      if (item.type === `trips`) selectedTripId = item.id;
+      appState.manifestTab = item.type;
+      persistState();
+      renderApp();
+      showToast(`สำเร็จ! เพิ่ม "${item.name}" เข้าสู่จักรวาล Manifest แล้ว`);
+    }
+
+    function addManifestoQuote(e) {
+      e.preventDefault();
+      const input = document.getElementById(`manifesto-new-input`);
+      if (!input) return;
+      const text = input.value.trim();
+      if (!text) return;
+      appState.manifestos.unshift({ id: `mf-${Date.now()}`, text, pinned: true });
+      appState.activeManifestoIdx = 0;
+      persistState();
+      renderApp();
+      showToast(`บันทึกคำประกาศิตใหม่แล้ว`);
+    }
+
+    function deleteManifesto(id) {
+      appState.manifestos = appState.manifestos.filter(m => m.id !== id);
+      appState.activeManifestoIdx = 0;
+      persistState();
+      renderApp();
+    }
+
+    function focusGlobePin(tripId, lat, lon) {
+      selectedTripId = tripId;
+      globeRotLat = lat * 0.6;
+      globeRotLon = -lon;
+      renderApp();
+    }
+
+    function renderManifestView(main) {
+      const ownedItems = SHOP_CATALOG.filter(i => appState.ownedShopIds.includes(i.id));
+      const totalAssetVal = ownedItems.reduce((s, i) => s + i.price, 0);
+      const ownedTrips = ownedItems.filter(i => i.type === `trips`);
+      const ownedPlaces = ownedItems.filter(i => i.type === `places`);
+      const ownedGarage = ownedItems.filter(i => i.type === `garage`);
+
+      let bodyHtml = ``;
+      if (appState.manifestTab === `trips`) {
+        bodyHtml = `
+          <div class="globe-box">
+            <div class="section-head" style="width:100%;">
+              <span style="font-weight:700;font-size:0.88rem;">ลูกโลก 3D · จุดหมายในฝัน (${ownedTrips.length})</span>
+              <span class="muted" style="font-size:0.74rem;">ลากเพื่อหมุนลูกโลก</span>
+            </div>
+            <canvas id="manifest-globe-canvas" width="240" height="240"></canvas>
+            ${ownedTrips.length === 0 ? `
+              <p class="muted" style="text-align:center;">ยังไม่มีทริปปักหมุดบนลูกโลก ไปเลือกซื้อใน Shop ได้เลย</p>
+              <button type="button" class="btn-primary btn-sm" onclick="setManifestTab('shop')">เปิด Universe Shop</button>
+            ` : `
+              <div class="chip-row" style="width:100%;">
+                ${ownedTrips.map(tr => `
+                  <button type="button" class="chip ${selectedTripId === tr.id ? `active` : ``}" onclick="focusGlobePin('${tr.id}', ${tr.lat}, ${tr.lon})">
+                    <i data-lucide="map-pin" style="width:13px;height:13px;"></i> ${tr.name}
+                  </button>
+                `).join(``)}
+              </div>
+            `}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-xs);">
+            ${ownedTrips.map(tr => `
+              <div class="tile-elevated tile-clickable" onclick="focusGlobePin('${tr.id}', ${tr.lat}, ${tr.lon})">
+                <div class="section-head">
+                  <div style="display:flex;align-items:center;gap:var(--space-sm);">
+                    <i data-lucide="${tr.icon}" style="width:20px;height:20px;color:var(--primary);"></i>
+                    <div>
+                      <div style="font-weight:700;font-size:0.9rem;">${tr.name}</div>
+                      <div class="muted" style="font-size:0.76rem;">${tr.sub}</div>
+                    </div>
+                  </div>
+                  <span class="area-badge area-career">ปักหมุดแล้ว</span>
+                </div>
+              </div>
+            `).join(``)}
+          </div>
+        `;
+      } else if (appState.manifestTab === `places`) {
+        bodyHtml = ownedPlaces.length === 0 ? `
+          <div class="tile" style="text-align:center;">
+            <p class="muted">ยังไม่มีที่อยู่ในฝัน (My Places) เลือกซื้อบ้านและวิลล่าใน Universe Shop</p>
+            <button type="button" class="btn-primary btn-sm" onclick="setManifestTab('shop')">ไปที่ Universe Shop</button>
+          </div>
+        ` : ownedPlaces.map(pl => `
+          <div class="tile-elevated">
+            <div class="section-head">
+              <div style="display:flex;align-items:center;gap:var(--space-sm);">
+                <i data-lucide="${pl.icon}" style="width:22px;height:22px;color:var(--secondary);"></i>
+                <div>
+                  <div style="font-weight:700;font-size:0.92rem;">${pl.name}</div>
+                  <div class="muted" style="font-size:0.76rem;">${pl.sub}</div>
+                </div>
+              </div>
+              <span class="area-badge area-finance">${formatBaht(pl.price)}</span>
+            </div>
+          </div>
+        `).join(``);
+      } else if (appState.manifestTab === `garage`) {
+        bodyHtml = ownedGarage.length === 0 ? `
+          <div class="tile" style="text-align:center;">
+            <p class="muted">โรงรถและท่าเรือของคุณยังว่างอยู่ สะสมรถ เรือ และเครื่องบินได้ใน Shop</p>
+            <button type="button" class="btn-primary btn-sm" onclick="setManifestTab('shop')">ไปที่ Universe Shop</button>
+          </div>
+        ` : ownedGarage.map(gr => `
+          <div class="tile-elevated">
+            <div class="section-head">
+              <div style="display:flex;align-items:center;gap:var(--space-sm);">
+                <i data-lucide="${gr.icon}" style="width:22px;height:22px;color:var(--primary);"></i>
+                <div>
+                  <div style="font-weight:700;font-size:0.92rem;">${gr.name}</div>
+                  <div class="muted" style="font-size:0.76rem;">${gr.sub}</div>
+                </div>
+              </div>
+              <span class="area-badge area-lifestyle">${formatBaht(gr.price)}</span>
+            </div>
+          </div>
+        `).join(``);
+      } else if (appState.manifestTab === `manifesto`) {
+        bodyHtml = `
+          <form class="tile-elevated" onsubmit="addManifestoQuote(event)">
+            <div class="form-field">
+              <label class="form-label" for="manifesto-new-input">บันทึกคำประกาศิตประจำตัว (My Manifesto)</label>
+              <textarea class="input-ctrl" id="manifesto-new-input" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">เพิ่มคำประกาศิต (แสดงบน Dashboard)</button>
+          </form>
+          ${appState.manifestos.map((m, idx) => `
+            <div class="tile">
+              <div class="section-head">
+                <span class="area-badge area-growth">คำประกาศิต #${idx + 1}</span>
+                <button type="button" class="icon-btn" onclick="deleteManifesto('${m.id}')" aria-label="ลบคำประกาศิต">
+                  <i data-lucide="trash-2" style="width:15px;height:15px;"></i>
+                </button>
+              </div>
+              <p style="font-weight:600;line-height:1.5;">“${m.text}”</p>
+            </div>
+          `).join(``)}
+        `;
+      } else {
+        // Universe Shop
+        const filtered = SHOP_CATALOG.filter(i => appState.shopFilter === `all` || i.type === appState.shopFilter);
+        bodyHtml = `
+          <div class="chip-row">
+            <button type="button" class="chip ${appState.shopFilter === `all` ? `active` : ``}" onclick="setShopFilter('all')">ทั้งหมด (${SHOP_CATALOG.length})</button>
+            <button type="button" class="chip ${appState.shopFilter === `trips` ? `active` : ``}" onclick="setShopFilter('trips')">My Trips</button>
+            <button type="button" class="chip ${appState.shopFilter === `places` ? `active` : ``}" onclick="setShopFilter('places')">My Places</button>
+            <button type="button" class="chip ${appState.shopFilter === `garage` ? `active` : ``}" onclick="setShopFilter('garage')">My Garage</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
+            ${filtered.map(item => {
+              const owned = appState.ownedShopIds.includes(item.id);
+              const canAfford = appState.user.manifestMoney >= item.price;
+              return `
+                <div class="tile-elevated">
+                  <div class="section-head">
+                    <div style="display:flex;align-items:center;gap:var(--space-sm);">
+                      <div style="width:40px;height:40px;border-radius:var(--rounded-sm);background:var(--primary-container);color:var(--on-primary-container);display:grid;place-items:center;">
+                        <i data-lucide="${item.icon}" style="width:20px;height:20px;"></i>
+                      </div>
+                      <div>
+                        <div style="font-weight:700;font-size:0.92rem;">${item.name}</div>
+                        <div class="muted" style="font-size:0.75rem;">${item.sub}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="section-head" style="margin-top:var(--space-xs);">
+                    <span style="font-weight:700;font-variant-numeric:tabular-nums;">${formatBaht(item.price)}</span>
+                    ${owned
+                      ? `<span class="area-badge area-finance">เป็นเจ้าของแล้ว</span>`
+                      : `<button type="button" class="btn-primary btn-sm" ${canAfford ? `` : `style="background:var(--surface-container);color:var(--on-surface-variant);"`} onclick="buyShopItem('${item.id}')">${canAfford ? `ซื้อเลย` : `เงินยังไม่พอ`}</button>`
+                    }
+                  </div>
+                </div>
+              `;
+            }).join(``)}
+          </div>
+        `;
+      }
+
+      main.innerHTML = `
+        <div class="tile">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">รู้สึก → ได้รับ</div>
+              <div class="figure-md">${formatBaht(appState.user.manifestMoney)}</div>
+              <div class="muted" style="font-size:0.75rem;">มูลค่าสินทรัพย์ในจักรวาล: ${formatBaht(totalAssetVal)}</div>
+            </div>
+            <button type="button" class="btn-primary btn-sm" onclick="setManifestTab('shop')">
+              <i data-lucide="shopping-bag" style="width:15px;height:15px;"></i> Shop
+            </button>
+          </div>
+        </div>
+
+        <div class="chip-row">
+          <button type="button" class="chip ${appState.manifestTab === `trips` ? `active` : ``}" onclick="setManifestTab('trips')">My Trips (${ownedTrips.length})</button>
+          <button type="button" class="chip ${appState.manifestTab === `places` ? `active` : ``}" onclick="setManifestTab('places')">My Places (${ownedPlaces.length})</button>
+          <button type="button" class="chip ${appState.manifestTab === `garage` ? `active` : ``}" onclick="setManifestTab('garage')">My Garage (${ownedGarage.length})</button>
+          <button type="button" class="chip ${appState.manifestTab === `manifesto` ? `active` : ``}" onclick="setManifestTab('manifesto')">My Manifesto</button>
+          <button type="button" class="chip ${appState.manifestTab === `shop` ? `active` : ``}" onclick="setManifestTab('shop')">Universe Shop</button>
+        </div>
+
+        ${bodyHtml}
+      `;
+
+      if (appState.manifestTab === `trips`) {
+        initManifestGlobe(ownedTrips);
+      }
+    }
+
+    function initManifestGlobe(ownedTrips) {
+      const canvas = document.getElementById(`manifest-globe-canvas`);
+      if (!canvas) return;
+      const ctx = canvas.getContext(`2d`);
+      if (!ctx) return;
+
+      // Make canvas responsive - resize based on container
+      const container = canvas.parentElement;
+      const containerWidth = container ? container.clientWidth : canvas.width;
+      const dpr = window.devicePixelRatio || 1;
+      const size = Math.min(containerWidth - 32, 300);
+      canvas.width = size * dpr;
+      canvas.height = size * dpr;
+      canvas.style.width = `${size}px`;
+      canvas.style.height = `${size}px`;
+      ctx.scale(dpr, dpr);
+
+      const styles = getComputedStyle(document.documentElement);
+      const oceanCol = styles.getPropertyValue(`--globe-ocean`).trim();
+      const landCol = styles.getPropertyValue(`--globe-land`).trim();
+      const gridCol = styles.getPropertyValue(`--globe-grid`).trim();
+      const pinCol = styles.getPropertyValue(`--primary`).trim();
+      const selCol = styles.getPropertyValue(`--secondary`).trim();
+
+      function project(latDeg, lonDeg, r, cx, cy) {
+        const lat = latDeg * Math.PI / 180;
+        const lon = (lonDeg + globeRotLon) * Math.PI / 180;
+        const rotLat = globeRotLat * Math.PI / 180;
+        const x0 = Math.cos(lat) * Math.sin(lon);
+        const y0 = Math.sin(lat);
+        const z0 = Math.cos(lat) * Math.cos(lon);
+        const y1 = y0 * Math.cos(rotLat) - z0 * Math.sin(rotLat);
+        const z1 = y0 * Math.sin(rotLat) + z0 * Math.cos(rotLat);
+        return { x: cx + r * x0, y: cy - r * y1, visible: z1 > 0, z: z1 };
+      }
+
+      // Simple stylized continent polygons (lat, lon)
+      const continents = [
+        [[50,-125],[60,-100],[50,-65],[25,-80],[18,-95],[32,-117]], // N America
+        [[10,-75],[5,-50],[-20,-40],[-52,-68],[-20,-75]], // S America
+        [[36,-10],[55,-5],[58,28],[40,35],[36,15]], // Europe
+        [[35,-10],[30,32],[10,48],[-34,22],[-15,12],[12,-15]], // Africa
+        [[55,40],[68,140],[35,140],[15,105],[22,70],[40,45]], // Asia
+        [[-12,130],[-25,152],[-38,142],[-32,115]] // Australia
+      ];
+
+      function draw() {
+        const w = size;
+        const h = size;
+        const cx = w / 2;
+        const cy = h / 2;
+        const r = Math.min(w, h) * 0.43;
+        ctx.clearRect(0, 0, w, h);
+
+        // Sphere background
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fillStyle = oceanCol;
+        ctx.fill();
+
+        // Graticule meridians
+        ctx.strokeStyle = gridCol;
+        ctx.lineWidth = 1;
+        for (let lon = -150; lon <= 180; lon += 30) {
+          ctx.beginPath();
+          let started = false;
+          for (let lat = -85; lat <= 85; lat += 5) {
+            const p = project(lat, lon, r, cx, cy);
+            if (p.visible) {
+              if (!started) { ctx.moveTo(p.x, p.y); started = true; }
+              else ctx.lineTo(p.x, p.y);
+            } else {
+              started = false;
+            }
+          }
+          ctx.stroke();
+        }
+
+        // Stylized landmasses
+        ctx.fillStyle = landCol;
+        continents.forEach(poly => {
+          const pts = poly.map(([la, lo]) => project(la, lo, r, cx, cy));
+          if (pts.some(p => p.visible)) {
+            ctx.beginPath();
+            pts.forEach((p, idx) => {
+              const clampedX = Math.max(cx - r, Math.min(cx + r, p.x));
+              const clampedY = Math.max(cy - r, Math.min(cy + r, p.y));
+              if (idx === 0) ctx.moveTo(clampedX, clampedY);
+              else ctx.lineTo(clampedX, clampedY);
+            });
+            ctx.closePath();
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.clip();
+            ctx.beginPath();
+            pts.forEach((p, idx) => {
+              if (idx === 0) ctx.moveTo(p.x, p.y);
+              else ctx.lineTo(p.x, p.y);
+            });
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+          }
+        });
+
+        // Owned Trip Pins
+        ownedTrips.forEach(tr => {
+          const p = project(tr.lat, tr.lon, r, cx, cy);
+          if (p.visible) {
+            const isSel = tr.id === selectedTripId;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, isSel ? 9 : 6, 0, Math.PI * 2);
+            ctx.fillStyle = isSel ? selCol : pinCol;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, isSel ? 3.5 : 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = styles.getPropertyValue(`--on-primary`).trim();
+            ctx.fill();
+          }
+        });
+      }
+
+      draw();
+
+      // Touch and pointer events for globe rotation
+      let isDragging = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      const handleDown = (ev) => {
+        isDragging = true;
+        lastX = ev.clientX || (ev.touches && ev.touches[0].clientX);
+        lastY = ev.clientY || (ev.touches && ev.touches[0].clientY);
+      };
+
+      const handleMove = (ev) => {
+        if (!isDragging) return;
+        const clientX = ev.clientX || (ev.touches && ev.touches[0].clientX);
+        const clientY = ev.clientY || (ev.touches && ev.touches[0].clientY);
+        if (!clientX || !clientY) return;
+        const dx = clientX - lastX;
+        const dy = clientY - lastY;
+        lastX = clientX;
+        lastY = clientY;
+        globeRotLon += dx * 0.6;
+        globeRotLat = Math.max(-55, Math.min(55, globeRotLat + dy * 0.4));
+        draw();
+      };
+
+      const handleUp = () => { isDragging = false; };
+
+      canvas.addEventListener('pointerdown', handleDown);
+      canvas.addEventListener('pointermove', handleMove);
+      canvas.addEventListener('pointerup', handleUp);
+      canvas.addEventListener('pointerleave', handleUp);
+      canvas.addEventListener('touchstart', handleDown, { passive: true });
+      canvas.addEventListener('touchmove', handleMove, { passive: true });
+      canvas.addEventListener('touchend', handleUp);
+
+      // Store cleanup handlers
+      canvas._globeCleanup = () => {
+        canvas.removeEventListener('pointerdown', handleDown);
+        canvas.removeEventListener('pointermove', handleMove);
+        canvas.removeEventListener('pointerup', handleUp);
+        canvas.removeEventListener('pointerleave', handleUp);
+        canvas.removeEventListener('touchstart', handleDown);
+        canvas.removeEventListener('touchmove', handleMove);
+        canvas.removeEventListener('touchend', handleUp);
+      };
+    }
+
+    /* ============================================================
+       13-AI Coach View
+       ============================================================ */
+    function setAiCoachTab(tab) {
+      appState.aiCoachTab = tab;
+      persistState();
+      renderApp();
+    }
+
+    function applyCoachRecommendation(title, type) {
+      if (type === `habit`) {
+        appState.habits.push({
+          id: `h-coach-${Date.now()}`,
+          title,
+          area: `health`,
+          targetPerWeek: 4,
+          days: [false, false, false, false, false, false, false],
+          streak: 0
+        });
+        showToast(`เพิ่มนิสัย "${title}" จากคำแนะนำ AI Coach แล้ว`);
+      } else {
+        appState.tasks.unshift({
+          id: `t-coach-${Date.now()}`,
+          title,
+          area: `career`,
+          priority: `High`,
+          date: `2026-11-19`,
+          time: `09:30`,
+          done: false,
+          note: `สร้างจากคำแนะนำของ AI Coach`,
+          reminder: true
+        });
+        showToast(`เพิ่มงาน "${title}" ลงในแผนวันพรุ่งนี้แล้ว`);
+      }
+      persistState();
+    }
+
+    function renderAiCoachView(main) {
+      const weeklyBars = [
+        { day: `จ`, count: 4, pct: 100 },
+        { day: `อ`, count: 3, pct: 100 },
+        { day: `พ`, count: 6, pct: 73 },
+        { day: `พฤ`, count: 3, pct: 100 },
+        { day: `ศ`, count: 5, pct: 73 },
+        { day: `ส`, count: 2, pct: 100 },
+        { day: `อา`, count: 2, pct: 100 }
+      ];
+
+      let tabBody = ``;
+      if (appState.aiCoachTab === `style`) {
+        tabBody = `
+          <div class="tile" style="background:var(--primary-container);">
+            <div class="eyebrow">สัปดาห์นี้คุณทำงานแบบ</div>
+            <div class="page-title" style="color:var(--on-primary-container);">Architect · นักวางระบบ</div>
+            <p style="font-size:0.86rem;font-weight:500;">วางแผนไว้ล่วงหน้า · ทำสม่ำเสมอเกือบทุกวัน</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-top:var(--space-xs);">
+              <span class="area-badge area-career">สายเช้า</span>
+              <span class="area-badge area-finance">ต่อเนื่องไม่หลุด</span>
+              <span class="area-badge area-growth">โฟกัสยาว</span>
+            </div>
+          </div>
+
+          <div class="tile-elevated">
+            <div class="section-head">
+              <h2 class="section-title">สไตล์การทำงาน 4 รูปแบบ</h2>
+            </div>
+            <div class="grid-2">
+              ${WORK_STYLES.map(ws => {
+                const active = ws.id === `Architect`;
+                return `
+                  <div class="tile" style="${active ? `border:2px solid var(--primary);background:var(--surface-elevated);` : ``}">
+                    <div style="font-weight:700;font-size:0.88rem;">${ws.name}</div>
+                    <div style="font-size:0.78rem;font-weight:600;color:var(--primary);">${ws.th}</div>
+                    <div class="muted" style="font-size:0.72rem;line-height:1.4;">${ws.desc}</div>
+                  </div>
+                `;
+              }).join(``)}
+            </div>
+          </div>
+        `;
+      } else if (appState.aiCoachTab === `summary`) {
+        const avgMood = appState.moods.length > 0
+          ? (appState.moods.reduce((s, m) => s + m.mood, 0) / appState.moods.length).toFixed(1)
+          : `4.1`;
+        tabBody = `
+          <div class="grid-2">
+            <div class="tile">
+              <div class="muted" style="font-size:0.76rem;">Tasks done</div>
+              <div class="figure-md">22 / 25</div>
+            </div>
+            <div class="tile">
+              <div class="muted" style="font-size:0.76rem;">Habits on goal</div>
+              <div class="figure-md">3 / 4</div>
+            </div>
+            <div class="tile">
+              <div class="muted" style="font-size:0.76rem;">Focus</div>
+              <div class="figure-md">${appState.focusStats.totalMinutes} min</div>
+            </div>
+            <div class="tile">
+              <div class="muted" style="font-size:0.76rem;">Avg Mood</div>
+              <div class="figure-md">${avgMood}</div>
+            </div>
+          </div>
+
+          <div class="tile-elevated">
+            <h2 class="section-title">Highlights ประจำสัปดาห์</h2>
+            <ul style="margin:0;padding-left:1.25rem;display:flex;flex-direction:column;gap:var(--space-xs);font-size:0.86rem;">
+              <li>ปิดงานสำคัญได้ก่อนเที่ยง 4 วัน (จ อ พ พฤ)</li>
+              <li>ออกกำลังกายครบเป้า ต่อเนื่องเป็นสัปดาห์ที่ 3 (จ พ ศ ส)</li>
+            </ul>
+          </div>
+
+          <div class="tile-elevated">
+            <h2 class="section-title">Patterns · รูปแบบชีวิตของคุณ</h2>
+            <p class="muted" style="font-size:0.84rem;">วันที่ทำงานไม่เกิน 4 งาน คุณทำเสร็จครบทุกงาน (100% เทียบกับ 73% ในวันที่มี 5–6 งาน)</p>
+            <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--space-xs);align-items:end;min-height:140px;padding-top:var(--space-md);">
+              ${weeklyBars.map(b => `
+                <div style="display:flex;flex-direction:column;align-items:center;gap:var(--space-xs);">
+                  <span style="font-size:0.74rem;font-weight:700;">${b.count}</span>
+                  <div style="width:100%;max-width:26px;height:${b.count * 16}px;border-radius:var(--rounded-sm);background:${b.count <= 4 ? `var(--primary)` : `var(--secondary)`};"></div>
+                  <span style="font-size:0.75rem;font-weight:600;color:var(--on-surface-variant);">${b.day}</span>
+                </div>
+              `).join(``)}
+            </div>
+          </div>
+        `;
+      } else {
+        const recs = [
+          { num: `1`, title: `วางแผนวันละไม่เกิน 4 งาน ถ้ามีเกินให้เลื่อนไปวันที่ยังว่าง`, why: `เพราะวันที่มีไม่เกิน 4 งาน คุณทำเสร็จครบทุกงาน`, tag: `วางแผนให้น้อยลง`, actionTitle: `จัดตารางงานพรุ่งนี้ไม่เกิน 4 งาน`, type: `task` },
+          { num: `2`, title: `วางแผนทำงานที่ต้องใช้สมาธิไว้ช่วงเช้า ก่อน 11 โมง`, why: `เพราะคุณปิดงานสำคัญได้ก่อนเที่ยงถึง 4 วัน`, tag: `ทำงานหนักตอนมีแรง`, actionTitle: `บล็อกเวลาโฟกัสช่วงเช้า 09:00–11:00`, type: `task` },
+          { num: `3`, title: `ถ้าวันไหนงานแน่นจนไม่ได้ออกกำลังกาย ให้เดินเร็ว 10 นาทีแทน`, why: `เพื่อรักษาความต่อเนื่องของการออกกำลังกายเป็นสัปดาห์ที่ 4`, tag: `ทำให้เล็กลง`, actionTitle: `เดินเร็ว 10 นาทีในวันที่งานแน่น`, type: `habit` }
+        ];
+        tabBody = `
+          <div class="section-head">
+            <h2 class="section-title">Try next week · 3 สิ่งที่แนะนำ</h2>
+          </div>
+          ${recs.map(r => `
+            <div class="tile-elevated">
+              <div class="section-head">
+                <span class="area-badge area-career">ข้อแนะนำ #${r.num}</span>
+                <span class="area-badge area-lifestyle">${r.tag}</span>
+              </div>
+              <div style="font-weight:700;font-size:0.92rem;">${r.title}</div>
+              <p class="muted" style="font-size:0.82rem;">${r.why}</p>
+              <button type="button" class="btn-secondary btn-sm" onclick="applyCoachRecommendation('${r.actionTitle}', '${r.type}')">
+                <i data-lucide="plus-circle" style="width:15px;height:15px;color:var(--primary);"></i>
+                <span>นำไปใช้ในสัปดาห์หน้า</span>
+              </button>
+            </div>
+          `).join(``)}
+        `;
+      }
+
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">AI Personal Coach</div>
+            <h1 class="page-title">โค้ชส่วนตัวที่รู้จักชีวิตคุณ</h1>
+          </div>
+        </div>
+
+        <div class="segmented">
+          <button type="button" class="seg-btn ${appState.aiCoachTab === `style` ? `active` : ``}" onclick="setAiCoachTab('style')">สไตล์การทำงาน</button>
+          <button type="button" class="seg-btn ${appState.aiCoachTab === `summary` ? `active` : ``}" onclick="setAiCoachTab('summary')">สรุปสัปดาห์</button>
+          <button type="button" class="seg-btn ${appState.aiCoachTab === `advice` ? `active` : ``}" onclick="setAiCoachTab('advice')">คำแนะนำ</button>
+        </div>
+
+        ${tabBody}
+      `;
+    }
+
+    /* ============================================================
+       12 & 22 - Progress View (with Empty State Toggle)
+       ============================================================ */
+    function toggleEmptyProgressPreview() {
+      appState.emptyPreview = !appState.emptyPreview;
+      persistState();
+      renderApp();
+    }
+
+    function renderProgressView(main) {
+      const hasData = !appState.emptyPreview && (appState.tasks.length > 0 || appState.habits.length > 0);
+
+      if (!hasData) {
+        main.innerHTML = `
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Monthly Growth</div>
+              <h1 class="page-title">ความก้าวหน้ารายเดือน</h1>
+            </div>
+            ${appState.tasks.length > 0 ? `<button type="button" class="btn-secondary btn-sm" onclick="toggleEmptyProgressPreview()">กลับสู่ข้อมูลจริง</button>` : ``}
+          </div>
+          <div class="tile" style="text-align:center;padding:var(--space-xl) var(--space-md);">
+            <i data-lucide="bar-chart-2" style="width:40px;height:40px;color:var(--on-surface-variant);margin:0 auto;"></i>
+            <h2 class="section-title">ยังไม่มีข้อมูลการเติบโตในเดือนนี้</h2>
+            <p class="muted">เมื่อคุณเริ่มวางแผน Task, เช็คนิสัย หรือจับเวลาโฟกัส กราฟสมดุลชีวิต 6 มิติและยอด Manifest Money จะปรากฏที่นี่</p>
+            <div style="display:flex;gap:var(--space-sm);justify-content:center;margin-top:var(--space-sm);">
+              <button type="button" class="btn-primary btn-sm" onclick="navigateTo('plan')">เริ่มวางแผนวันนี้</button>
+              <button type="button" class="btn-secondary btn-sm" onclick="loginAsDemo()">โหลดข้อมูลตัวอย่าง</button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const doneTasks = appState.tasks.filter(t => t.done).length;
+      const areaStats = LIFE_AREAS.map(a => {
+        const count = appState.tasks.filter(t => t.area === a.id).length + appState.habits.filter(h => h.area === a.id).length + appState.goals.filter(g => g.area === a.id).length;
+        return { ...a, count };
+      });
+      const maxCount = Math.max(1, ...areaStats.map(s => s.count));
+
+      main.innerHTML = `
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Monthly Growth</div>
+            <h1 class="page-title">เห็นการเติบโตทุกเดือน</h1>
+          </div>
+          <button type="button" class="btn-secondary btn-sm" onclick="toggleEmptyProgressPreview()">ดูตัวอย่างหน้าว่าง</button>
+        </div>
+
+        <div class="grid-2">
+          <div class="tile">
+            <div class="muted" style="font-size:0.76rem;">งานที่ทำสำเร็จ</div>
+            <div class="figure-md">${doneTasks} / ${appState.tasks.length}</div>
+          </div>
+          <div class="tile">
+            <div class="muted" style="font-size:0.76rem;">Manifest สะสม</div>
+            <div class="figure-md">${formatBaht(appState.user.manifestMoney)}</div>
+          </div>
+        </div>
+
+        <div class="tile-elevated">
+          <h2 class="section-title">ความสมดุลของ 6 Life Areas</h2>
+          <p class="muted" style="font-size:0.8rem;">สัดส่วนกิจกรรมจาก Task, Habit และ Goal ของคุณ</p>
+          <div style="display:flex;flex-direction:column;gap:var(--space-sm);margin-top:var(--space-xs);">
+            ${areaStats.map(s => {
+              const pct = Math.round((s.count / maxCount) * 100);
+              return `
+                <div>
+                  <div class="section-head" style="margin-bottom:var(--space-2xs);">
+                    <span style="font-size:0.82rem;font-weight:600;">${s.label} (${s.en})</span>
+                    <span class="muted" style="font-size:0.78rem;">${s.count} รายการ</span>
+                  </div>
+                  <div class="progress-track">
+                    <div class="progress-fill" style="width:${pct}%;background:${s.colorVar};"></div>
+                  </div>
+                </div>
+              `;
+            }).join(``)}
+          </div>
+        </div>
+      `;
+    }
+
+    /* ============================================================
+       15-Tutorial & 16-Settings
+       ============================================================ */
+    function renderTutorialView(main) {
+      const pillars = [
+        { num: `01`, code: `CLARITY`, title: `ชีวิตที่มีทิศทางชัดเจนขึ้น`, desc: `มองเห็นภาพรวมของชีวิต เป้าหมาย 6 มิติ และการเดินทางสู่ความฝันอย่างกระจ่างแจ้ง`, target: `goals` },
+        { num: `02`, code: `ACTION`, title: `จากความตั้งใจสู่การลงมือทำ`, desc: `แผนการที่ดีใน Plan Day และ Habits จะนำไปสู่การลงมือทำอย่างสม่ำเสมอ พร้อมรับ Manifest Money`, target: `plan` },
+        { num: `03`, code: `INSIGHT`, title: `เข้าใจตัวเองมากขึ้นทุกสัปดาห์`, desc: `AI Coach ช่วยให้เห็นสไตล์การทำงานและรูปแบบชีวิต เพื่อปรับแผนให้เหมาะกับตัวเองยิ่งขึ้น`, target: `ai-coach` },
+        { num: `04`, code: `FEEL GOOD`, title: `รู้สึกดีกับการเติบโต`, desc: `สัมผัสความรู้สึกที่ได้รับจากการสร้างจักรวาล Manifest ของตัวคุณเอง ตามหลัก รู้สึก → ได้รับ`, target: `manifest` }
+      ];
+
+      main.innerHTML = `
+        <div>
+          <div class="eyebrow">PLAN OS Guide</div>
+          <h1 class="page-title">คู่มือเริ่มต้นใช้งาน</h1>
+          <p class="muted">4 แกนหลักที่ทำให้ชีวิตเป็นระบบและรู้สึกดีขึ้นในทุกวัน</p>
+        </div>
+
+        ${pillars.map(p => `
+          <div class="tile-elevated tile-clickable" onclick="navigateTo('${p.target}')">
+            <div class="section-head">
+              <span class="area-badge area-career">${p.code} · ${p.num}</span>
+              <i data-lucide="arrow-right" style="width:16px;height:16px;color:var(--primary);"></i>
+            </div>
+            <div style="font-weight:700;font-size:0.95rem;">${p.title}</div>
+            <p class="muted" style="font-size:0.84rem;">${p.desc}</p>
+          </div>
+        `).join(``)}
+      `;
+    }
+
+    function toggleDarkTheme() {
+      appState.theme = appState.theme === `dark` ? `light` : `dark`;
+      applyTheme(appState.theme);
+      persistState();
+      renderApp();
+    }
+
+    function toggleReminders() {
+      appState.user.remindersEnabled = !appState.user.remindersEnabled;
+      persistState();
+      renderApp();
+      showToast(appState.user.remindersEnabled ? `เปิดการแจ้งเตือนตามเวลาแล้ว` : `ปิดการแจ้งเตือนแล้ว`);
+    }
+
+    function updateProfileName(e) {
+      e.preventDefault();
+      const el = document.getElementById(`settings-name-input`);
+      if (!el) return;
+      const val = el.value.trim();
+      if (!val) return;
+      appState.user.name = val;
+      persistState();
+      renderApp();
+      showToast(`บันทึกชื่อผู้ใช้เรียบร้อย`);
+    }
+
+    function resetAllData(btn) {
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `กดอีกครั้งเพื่อยืนยันรีเซ็ตข้อมูลทั้งหมด`;
+        return;
+      }
+      const theme = appState.theme;
+      appState = buildEmptyState(appState.user.name, appState.user.email);
+      appState.theme = theme;
+      persistState();
+      renderApp();
+      showToast(`รีเซ็ตเป็นบัญชีเริ่มต้น (Empty State + ฿10,000,000) แล้ว`);
+    }
+
+    function exportAppData() {
+      const jsonStr = JSON.stringify(appState, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'pheel-os-backup.json';
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast(`ส่งออกไฟล์สำรองข้อมูลเรียบร้อย`);
+    }
+
+    function renderSettingsView(main) {
+      main.innerHTML = `
+        <div>
+          <div class="eyebrow">Preferences</div>
+          <h1 class="page-title">ตั้งค่าและบัญชีผู้ใช้</h1>
+        </div>
+
+        <form class="tile-elevated" onsubmit="updateProfileName(event)">
+          <div class="section-head">
+            <div>
+              <div style="font-weight:700;">${appState.user.name}</div>
+              <div class="muted" style="font-size:0.78rem;">${appState.user.email} · ${appState.user.plan}</div>
+            </div>
+            <span class="area-badge area-finance">Lv.${appState.user.level}</span>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="settings-name-input">ชื่อที่แสดงในแอป</label>
+            <div style="display:flex;gap:var(--space-xs);">
+              <input class="input-ctrl" id="settings-name-input" type="text" value="${appState.user.name}" required>
+              <button type="submit" class="btn-primary btn-sm">บันทึก</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="tile-elevated">
+          <div class="switch-row">
+            <div>
+              <div style="font-weight:600;font-size:0.9rem;">โหมดกลางคืน (Dark Mode)</div>
+              <div class="muted" style="font-size:0.76rem;">ปรับหน้าจอให้สบายตายามค่ำคืน</div>
+            </div>
+            <button type="button" class="switch-btn ${appState.theme === `dark` ? `on` : ``}" onclick="toggleDarkTheme()" aria-label="สลับโหมดมืด">
+              <span class="switch-thumb"></span>
+            </button>
+          </div>
+          <div class="switch-row" style="border-top:1px solid var(--outline-variant);padding-top:var(--space-sm);">
+            <div>
+              <div style="font-weight:600;font-size:0.9rem;">การแจ้งเตือนตามเวลาที่ตั้งไว้</div>
+              <div class="muted" style="font-size:0.76rem;">เตือน Task และเวลาเข้านอน</div>
+            </div>
+            <button type="button" class="switch-btn ${appState.user.remindersEnabled ? `on` : ``}" onclick="toggleReminders()" aria-label="เปิดปิดการแจ้งเตือน">
+              <span class="switch-thumb"></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="tile-elevated">
+          <h2 class="section-title">จัดการข้อมูลส่วนตัว</h2>
+          <button type="button" class="btn-secondary" onclick="loginAsDemo()">โหลดข้อมูลตัวอย่างเต็มรูปแบบ (Demo)</button>
+          <button type="button" class="btn-secondary" onclick="exportAppData()">ส่งออกข้อมูลสำรอง (JSON)</button>
+          <button type="button" class="btn-secondary" style="color:var(--error);" onclick="resetAllData(this)">ล้างข้อมูลทั้งหมด (เริ่มจากศูนย์)</button>
+          <button type="button" class="btn-primary" style="margin-top:var(--space-xs);" onclick="logoutToLogin()">ออกจากระบบ (ไปหน้า 01-Login)</button>
+        </div>
+
+        <p class="muted" style="text-align:center;font-size:0.75rem;">
+          PLAN OS PWA · ออกแบบตามข้อมูล pheel-os.com
+        </p>
+      `;
+    }
+
+    // Online/Offline detection
+    window.addEventListener('online', () => {
+      const indicator = document.getElementById('offline-indicator');
+      if (indicator) indicator.classList.remove('visible');
+      showToast('กลับมาออนไลน์แล้ว');
+    });
+
+    window.addEventListener('offline', () => {
+      const indicator = document.getElementById('offline-indicator');
+      if (indicator) indicator.classList.add('visible');
+      showToast('ออฟไลน์ - ข้อมูลยังคงบันทึกได้ในเครื่อง');
+    });
+
+    // Show install banner after 30 seconds if not installed
+    document.addEventListener(`DOMContentLoaded`, initApp);
+
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('[PWA] Service Worker registered:', registration.scope);
+
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New version available
+                  showToast('มีเวอร์ชันใหม่พร้อมใช้งาน โหลดหน้าใหม่เพื่ออัปเดต');
+                }
+              });
+            });
+          })
+          .catch((error) => {
+            console.log('[PWA] Service Worker registration failed:', error);
+          });
+      });
+    }
+
+    // Detect if running as PWA
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+      console.log('[PWA] Running as installed PWA');
+      document.body.classList.add('pwa-installed');
+    }
+  </script>
+</body>
+</html>

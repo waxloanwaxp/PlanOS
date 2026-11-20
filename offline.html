@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PHEEL OS — ออฟไลน์</title>
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#006bd6">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef0f4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans Thai', sans-serif;
+      color: #1d1d1f;
+    }
+    .offline-container {
+      text-align: center;
+      padding: 2rem;
+      max-width: 320px;
+    }
+    .offline-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #006bd6;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 1.5rem;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    p { color: #6e6e73; margin-bottom: 1.5rem; line-height: 1.5; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: #006bd6;
+      color: white;
+      border: none;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.9; }
+    .features {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #d2d2d7;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 0.75rem;
+      color: #6e6e73;
+    }
+    .feature { display: flex; align-items: center; gap: 0.25rem; }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">📱</div>
+    <h1>คุณกำลังออฟไลน์</h1>
+    <p>PHEEL OS ทำงานได้ในโหมดออฟไลน์ ข้อมูลของคุณยังคงถูกบันทึกในเครื่องและจะซิงค์เมื่อกลับมาออนไลน์</p>
+    <button class="btn" onclick="window.location.reload()">ลองใหม่อีกครั้ง</button>
+    <div class="features">
+      <div class="feature">📝 Task & Habits</div>
+      <div class="feature">💾 เก็บข้อมูลในเครื่อง</div>
+      <div class="feature">🔄 ซิงค์อัตโนมัติ</div>
+    </div>
+  </div>
+  <script>
+    // Try to redirect to main app if cached
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.ready.then(() => {
+        window.location.href = '/PheelOs.html';
+      }).catch(() => {});
+    }
+  </script>
+</body>
+</html>
