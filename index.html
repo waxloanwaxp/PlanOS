@@ -1711,11 +1711,20 @@
         appState.view = `dashboard`;
         showToast(`ยินดีต้อนรับ! รับ Manifest Money ฿10,000,000 ทันที`);
       } else {
-        // Sign in - use empty state for clean start
-        appState = buildEmptyState(name || `นักสร้างชีวิต`, email || `member@pheel-os.com`);
-        appState.isLoggedIn = true;
-        appState.view = `dashboard`;
-        showToast(`เข้าสู่ระบบสำเร็จ ยินดีต้อนรับกลับมา`);
+        // Sign in - load existing data for this email if available
+        const saved = getAppState();
+        if (saved && saved.user && saved.user.email === email) {
+          appState = saved;
+          appState.isLoggedIn = true;
+          appState.view = `dashboard`;
+          showToast(`เข้าสู่ระบบสำเร็จ ยินดีต้อนรับกลับมา ${appState.user.name}`);
+        } else {
+          // No saved data for this email - create empty state
+          appState = buildEmptyState(name || `นักสร้างชีวิต`, email || `member@pheel-os.com`);
+          appState.isLoggedIn = true;
+          appState.view = `dashboard`;
+          showToast(`เข้าสู่ระบบสำเร็จ ยินดีต้อนรับกลับมา`);
+        }
       }
       persistState();
       renderApp();
@@ -1725,7 +1734,7 @@
       closeSheet();
       appState.isLoggedIn = false;
       appState.view = `login`;
-      persistState();
+      // Don't persist - keep user data in localStorage for next login
       renderApp();
     }
 
@@ -1748,12 +1757,12 @@
             ${loginTab === `signup` ? `
               <div class="form-field">
                 <label class="form-label" for="signup-name">ชื่อเรียกของคุณ</label>
-                <input class="input-ctrl" id="signup-name" type="text" value="คุณฟีล" required>
+                <input class="input-ctrl" id="signup-name" type="text" value="${(getAppState() && getAppState().user && getAppState().user.name) || 'คุณฟีล'}" required>
               </div>
             ` : ``}
             <div class="form-field">
               <label class="form-label" for="login-email">อีเมล</label>
-              <input class="input-ctrl" id="login-email" type="email" value="pheel@pheel-os.com" required>
+              <input class="input-ctrl" id="login-email" type="email" value="${(getAppState() && getAppState().user && getAppState().user.email) || 'pheel@pheel-os.com'}" required>
             </div>
             <div class="form-field">
               <label class="form-label" for="login-password">รหัสผ่าน</label>
@@ -1765,11 +1774,11 @@
           </form>
 
           <div class="tile" style="text-align:center;">
-            <div style="font-weight:600;font-size:0.85rem;">ทดลองใช้งานข้อมูลตัวอย่างแบบครบทุกหน้า</div>
-            <p class="muted" style="font-size:0.78rem;">พร้อม Task, Habits, AI Coach, ลูกโลก 3D และ Universe Shop</p>
-            <button type="button" class="btn-secondary" style="width:100%;" onclick="loginAsDemo()">
-              <i data-lucide="zap" style="width:16px;height:16px;color:var(--primary);"></i>
-              <span>เข้าสู่ระบบทันที (Demo Account)</span>
+            <div style="font-weight:600;font-size:0.85rem;">เริ่มสร้างชีวิตที่คุณต้องการ</div>
+            <p class="muted" style="font-size:0.78rem;">สมัครสมาชิกเพื่อรับ Manifest Money ฿10,000,000 ทันที</p>
+            <button type="button" class="btn-primary" style="width:100%;" onclick="setLoginTab('signup')">
+              <i data-lucide="user-plus" style="width:16px;height:16px;"></i>
+              <span>สมัครสมาชิกใหม่</span>
             </button>
           </div>
 
