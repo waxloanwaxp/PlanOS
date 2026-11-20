@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23006bd6' width='100' height='100' rx='20'/><text x='50' y='68' font-family='Arial, sans-serif' font-size='50' font-weight='bold' fill='white' text-anchor='middle'>P</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
   <style>
     :root {
@@ -39,10 +39,10 @@
       --outline-variant: #e5e5ea;
 
       /* Accents */
-      --primary: #006bd6;
+      --primary: #007a8a;
       --on-primary: #ffffff;
-      --primary-container: #e8f1fd;
-      --on-primary-container: #0058b0;
+      --primary-container: #e0f5f8;
+      --on-primary-container: #005d6b;
       --secondary: #bf4800;
       --secondary-container: #fff1e8;
       --tertiary: #1d1d1f;
@@ -57,10 +57,10 @@
       --warning-container: #fef4e6;
 
       /* Focus ring */
-      --focus: #006bd6;
+      --focus: #007a8a;
 
       /* Data series */
-      --data-1: #006bd6;
+      --data-1: #007a8a;
       --data-2: #bf4800;
       --data-3: #248a3d;
       --data-4: #8944ab;
@@ -88,9 +88,9 @@
       --scene-ocean-bg: #e8f2f8;
 
       /* Fonts */
-      --font-headline: 'Noto Sans Thai', 'Inter Tight', sans-serif;
-      --font-body: 'Noto Sans Thai', 'Inter', sans-serif;
-      --font-label: 'Noto Sans Thai', 'Inter', sans-serif;
+      --font-headline: 'Sarabun', sans-serif;
+      --font-body: 'Sarabun', sans-serif;
+      --font-label: 'Sarabun', sans-serif;
 
       /* Type scale */
       --display-size: clamp(1.625rem, 1.35rem + 1vw, 2rem);
@@ -149,10 +149,10 @@
       --outline: #384152;
       --outline-variant: #252c3a;
 
-      --primary: #3b9eff;
+      --primary: #14c8d4;
       --on-primary: #061322;
-      --primary-container: #162a42;
-      --on-primary-container: #8dc5ff;
+      --primary-container: #0d353a;
+      --on-primary-container: #8df5fb;
       --secondary: #ff8a3d;
       --secondary-container: #332013;
       --tertiary: #f5f5f7;
@@ -165,7 +165,7 @@
       --warning: #f5a638;
       --warning-container: #33240f;
 
-      --focus: #3b9eff;
+      --focus: #14c8d4;
 
       --area-career-bg: #15283f;
       --area-finance-bg: #122e1c;
@@ -174,9 +174,9 @@
       --area-growth-bg: #271a42;
       --area-lifestyle-bg: #332013;
 
-      --globe-ocean: #122036;
-      --globe-land: #243b5c;
-      --globe-grid: rgba(59, 158, 255, 0.2);
+      --globe-ocean: #0d2a2f;
+      --globe-land: #1a4a52;
+      --globe-grid: rgba(20, 200, 212, 0.2);
       --tile-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.32);
       --device-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
     }
@@ -411,9 +411,13 @@
     }
     .tile-clickable {
       cursor: pointer;
-      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+      transition: background-color var(--dur-short) var(--ease-out);
     }
     .tile-clickable:hover {
+      background: var(--surface-container);
+    }
+    /* Reserve elevation for true z-axis moments: sheets, modals, globe hero */
+    .tile-elevated.tile-clickable:hover {
       box-shadow: var(--tile-shadow-hover);
       transform: translateY(-1px);
     }
@@ -962,6 +966,68 @@
     }
     #manifest-globe-canvas:active { cursor: grabbing; }
 
+    /* Immersive Manifest Globe Hero */
+    .manifest-globe-hero {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      max-width: 360px;
+      margin: 0 auto var(--space-md);
+      border-radius: var(--rounded-lg);
+      overflow: hidden;
+      background: var(--globe-ocean);
+      box-shadow: var(--device-shadow);
+    }
+    .manifest-globe-hero #manifest-globe-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+      touch-action: none;
+    }
+    .manifest-globe-hero #manifest-globe-canvas:active { cursor: grabbing; }
+    .globe-overlay {
+      position: absolute;
+      inset: 0;
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(180deg, transparent 40%, rgba(13, 16, 22, 0.6) 100%);
+      pointer-events: none;
+    }
+    .globe-overlay * { pointer-events: auto; }
+    .globe-title-row {
+      color: var(--background);
+      margin-bottom: var(--space-xs);
+    }
+    .globe-trip-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .globe-trip-chips .chip {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--background);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+    }
+    .globe-trip-chips .chip.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .globe-empty-state {
+      text-align: center;
+      color: var(--background);
+      padding: var(--space-lg);
+    }
+    .globe-empty-state .btn-primary {
+      margin-top: var(--space-sm);
+    }
+
     /* Bottom Sheet Modal (for Add Task, Add Habit, More Nav, Details) */
     .sheet-overlay {
       position: absolute;
@@ -1175,19 +1241,19 @@
       <nav class="bottom-nav" id="bottom-nav" aria-label="เมนูหลัก">
         <button type="button" class="nav-item active" data-nav="dashboard" onclick="navigateTo('dashboard')">
           <span class="nav-pill"><i data-lucide="layout-dashboard" style="width:19px;height:19px;"></i></span>
-          <span>หน้าหลัก</span>
+          <span>วันนี้ทำอะไร</span>
         </button>
         <button type="button" class="nav-item" data-nav="plan" onclick="navigateTo('plan')">
           <span class="nav-pill"><i data-lucide="calendar-days" style="width:19px;height:19px;"></i></span>
-          <span>วางแผน</span>
+          <span>ปฏิทิน</span>
         </button>
         <button type="button" class="nav-item" data-nav="habits" onclick="navigateTo('habits')">
           <span class="nav-pill"><i data-lucide="check-circle-2" style="width:19px;height:19px;"></i></span>
-          <span>นิสัย</span>
+          <span>นิสัยของฉัน</span>
         </button>
         <button type="button" class="nav-item" data-nav="manifest" onclick="navigateTo('manifest')">
           <span class="nav-pill"><i data-lucide="globe" style="width:19px;height:19px;"></i></span>
-          <span>Manifest</span>
+          <span>จักรวาลฝัน</span>
         </button>
         <button type="button" class="nav-item" data-nav="more" onclick="openMoreDrawer()">
           <span class="nav-pill"><i data-lucide="grid-2x2" style="width:19px;height:19px;"></i></span>
@@ -1564,22 +1630,21 @@
       if (!panel || !overlay) return;
 
       const items = [
-        { view: `ai-coach`, label: `AI Coach`, sub: `วิเคราะห์สไตล์`, icon: `sparkles` },
+        { view: `ai-coach`, label: `โค้ช AI`, sub: `วิเคราะห์สไตล์การทำงาน`, icon: `sparkles` },
         { view: `focus`, label: `Focus Timer`, sub: `จับเวลาโฟกัส`, icon: `timer` },
-        { view: `mood`, label: `Mood Tracker`, sub: `บันทึกอารมณ์`, icon: `smile` },
-        { view: `goals`, label: `Goals`, sub: `เป้าหมาย 6 มิติ`, icon: `target` },
-        { view: `projects`, label: `Projects`, sub: `เส้นเวลาโปรเจกต์`, icon: `folder-kanban` },
-        { view: `progress`, label: `Progress`, sub: `สรุปความก้าวหน้า`, icon: `bar-chart-3` },
+        { view: `mood`, label: `บันทึกอารมณ์`, sub: `บันทึกอารมณ์ & พลังงาน`, icon: `smile` },
+        { view: `goals`, label: `เป้าหมายชีวิต`, sub: `6 มิติของชีวิต`, icon: `target` },
+        { view: `projects`, label: `โปรเจกต์ของฉัน`, sub: `เส้นเวลาและความคืบหน้า`, icon: `folder-kanban` },
+        { view: `progress`, label: `ความก้าวหน้า`, sub: `สรุปสมดุลชีวิตรายเดือน`, icon: `bar-chart-3` },
         { view: `manifest`, label: `Universe Shop`, sub: `ช้อปจักรวาลฝัน`, icon: `shopping-bag`, tab: `shop` },
-        { view: `tutorial`, label: `Tutorial`, sub: `คู่มือใช้งาน`, icon: `book-open` },
-        { view: `settings`, label: `Settings`, sub: `ตั้งค่า & ข้อมูล`, icon: `settings` }
+        { view: `tutorial`, label: `คู่มือใช้งาน`, sub: `4 แกนหลักของ PLAN OS`, icon: `book-open` },
+        { view: `settings`, label: `ตั้งค่า`, sub: `บัญชี ธีม และการแจ้งเตือน`, icon: `settings` }
       ];
 
       panel.innerHTML = `
         <div class="sheet-handle"></div>
         <div class="section-head">
           <div>
-            <div class="eyebrow">Navigation Hub</div>
             <h2 class="section-title">เมนูทั้งหมดของ PLAN OS</h2>
           </div>
           <button type="button" class="icon-btn" onclick="closeSheet()" aria-label="ปิดเมนู">
@@ -1646,17 +1711,17 @@
 
       const headerTitles = {
         dashboard: [`PLAN OS`, `Level ${appState.user.level} · ${appState.user.exp}/${appState.user.expMax} EXP`],
-        plan: [`ปฏิทินวางแผน`, `6 Life Areas · Day / Month`],
-        habits: [`สร้างนิสัยยั่งยืน`, `ความสม่ำเสมอรายสัปดาห์`],
-        manifest: [`จักรวาล Manifest`, `Trips · Places · Garage · Shop`],
-        mood: [`บันทึกความรู้สึก`, `Mood & Energy Tracker`],
-        goals: [`เป้าหมาย 6 มิติ`, `One Life. Six Dimensions.`],
+        plan: [`ปฏิทิน`, `วันนี้ / เดือนนี้ / เส้นเวลา`],
+        habits: [`นิสัยของฉัน`, `ความสม่ำเสมอรายสัปดาห์`],
+        manifest: [`จักรวาลฝัน`, `ทริป · ที่อยู่ · โรงรถ · คำประกาศิต · Shop`],
+        mood: [`บันทึกอารมณ์`, `บันทึกอารมณ์ & พลังงาน`],
+        goals: [`เป้าหมายชีวิต`, `6 มิติ · ความคืบหน้า`],
         projects: [`โปรเจกต์ของฉัน`, `เส้นเวลาและความคืบหน้า`],
-        focus: [`จับเวลาโฟกัส`, `Pomodoro & Ambient Sound`],
-        progress: [`เห็นการเติบโตทุกเดือน`, `สรุปผลและสมดุลชีวิต`],
-        'ai-coach': [`AI Coach ส่วนตัว`, `วิเคราะห์สไตล์การทำงานรายสัปดาห์`],
-        tutorial: [`คู่มือเริ่มต้น`, `4 แกนหลักของ PLAN OS`],
-        settings: [`ตั้งค่าบัญชี`, `ธีม ข้อมูล และการแจ้งเตือน`]
+        focus: [`Focus Timer`, `Pomodoro & เสียงประสาน`],
+        progress: [`ความก้าวหน้า`, `สรุปสมดุลชีวิตรายเดือน`],
+        'ai-coach': [`โค้ช AI`, `วิเคราะห์สไตล์การทำงานรายสัปดาห์`],
+        tutorial: [`คู่มือใช้งาน`, `4 แกนหลักของ PLAN OS`],
+        settings: [`ตั้งค่า`, `บัญชี · ธีม · การแจ้งเตือน`]
       };
       const pair = headerTitles[appState.view] || [`PLAN OS`, `Plan + AI + Manifest`];
       if (titleEl) titleEl.textContent = pair[0];
@@ -1743,7 +1808,6 @@
         <div style="display:flex;flex-direction:column;gap:var(--space-lg);">
           <div style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:var(--space-xs);">
             <div class="brand-mark" style="width:52px;height:52px;font-size:1.45rem;border-radius:var(--rounded-md);">P</div>
-            <div class="eyebrow">Plan + AI + Manifest</div>
             <h1 class="page-title">ยินดีต้อนรับสู่ PLAN OS</h1>
             <p class="muted">เมื่อโลกแห่งความเป็นจริงกับโลกแห่งความฝัน มาบรรจบกัน</p>
           </div>
@@ -1836,7 +1900,6 @@
         <div class="tile">
           <div class="section-head">
             <div>
-              <div class="eyebrow">เงินในโลก Manifest ของคุณ</div>
               <div class="figure-val">${formatBaht(appState.user.manifestMoney)}</div>
             </div>
             <button type="button" class="link-more" onclick="navigateTo('manifest', { tab: 'shop' })">
@@ -1857,7 +1920,7 @@
         <div class="tile-elevated" style="background:var(--primary-container);border-color:transparent;">
           <div class="section-head">
             <span style="font-size:0.75rem;font-weight:700;color:var(--on-primary-container);display:inline-flex;align-items:center;gap:var(--space-xs);">
-              <i data-lucide="quote" style="width:14px;height:14px;"></i> My Manifesto ประจำวัน
+              <i data-lucide="quote" style="width:14px;height:14px;"></i> คำประกาศิตประจำวัน
             </span>
             <div style="display:flex;gap:var(--space-xs);">
               <button type="button" class="link-more" style="color:var(--on-primary-container);" onclick="cycleManifesto()">สุ่มคำ</button>
@@ -1870,12 +1933,12 @@
         <!-- Daily Counters -->
         <div class="grid-2">
           <div class="tile tile-clickable" onclick="navigateTo('plan')">
-            <div class="muted" style="font-size:0.78rem;">Today's Task</div>
+            <div class="muted" style="font-size:0.78rem;">งานวันนี้</div>
             <div class="figure-md">${todayDone} / ${todayTasks.length}</div>
             <div class="muted" style="font-size:0.74rem;">เสร็จแล้ววันนี้</div>
           </div>
           <div class="tile tile-clickable" onclick="navigateTo('habits')">
-            <div class="muted" style="font-size:0.78rem;">Habits วันนี้</div>
+            <div class="muted" style="font-size:0.78rem;">นิสัยวันนี้</div>
             <div class="figure-md">${habitsDoneToday} / ${appState.habits.length}</div>
             <div class="muted" style="font-size:0.74rem;">นิสัยที่ทำสำเร็จ</div>
           </div>
@@ -1939,17 +2002,17 @@
           </button>
           <button type="button" class="tile tile-clickable" style="text-align:left;" onclick="navigateTo('mood')">
             <i data-lucide="heart-handshake" style="width:20px;height:20px;color:var(--secondary);"></i>
-            <div style="font-weight:600;font-size:0.88rem;">Mood Tracker</div>
-            <div class="muted" style="font-size:0.74rem;">บันทึกอารมณ์ & ขอบคุณ</div>
+            <div style="font-weight:600;font-size:0.88rem;">บันทึกอารมณ์</div>
+            <div class="muted" style="font-size:0.74rem;">บันทึกอารมณ์ & พลังงาน</div>
           </button>
           <button type="button" class="tile tile-clickable" style="text-align:left;" onclick="navigateTo('ai-coach')">
             <i data-lucide="sparkles" style="width:20px;height:20px;color:var(--primary);"></i>
-            <div style="font-weight:600;font-size:0.88rem;">AI Coach</div>
-            <div class="muted" style="font-size:0.74rem;">Architect · นักวางระบบ</div>
+            <div style="font-weight:600;font-size:0.88rem;">โค้ช AI</div>
+            <div class="muted" style="font-size:0.74rem;">นักวางระบบ · Architect</div>
           </button>
           <button type="button" class="tile tile-clickable" style="text-align:left;" onclick="navigateTo('progress')">
             <i data-lucide="bar-chart-3" style="width:20px;height:20px;color:var(--positive);"></i>
-            <div style="font-weight:600;font-size:0.88rem;">Progress & 6 มิติ</div>
+            <div style="font-weight:600;font-size:0.88rem;">ความก้าวหน้า</div>
             <div class="muted" style="font-size:0.74rem;">ดูสมดุลชีวิตเดือนนี้</div>
           </button>
         </div>
@@ -2261,7 +2324,6 @@
       main.innerHTML = `
         <div class="section-head">
           <div>
-            <div class="eyebrow">Habits Tracker</div>
             <h1 class="page-title">สร้างนิสัยให้ยั่งยืน</h1>
           </div>
           <button type="button" class="btn-primary btn-sm" onclick="openHabitSheet()">+ เพิ่มนิสัย</button>
@@ -2544,7 +2606,6 @@
       main.innerHTML = `
         <div class="section-head">
           <div>
-            <div class="eyebrow">Deep Work</div>
             <h1 class="page-title">Focus Timer</h1>
           </div>
           <span class="area-badge area-career">วันนี้ ${appState.focusStats.sessionsToday} รอบ · รวม ${appState.focusStats.totalMinutes} นาที</span>
@@ -2677,7 +2738,6 @@
       main.innerHTML = `
         <div class="section-head">
           <div>
-            <div class="eyebrow">Emotional Clarity</div>
             <h1 class="page-title">บันทึกความรู้สึกประจำวัน</h1>
           </div>
           <span class="area-badge area-lifestyle">เฉลี่ย ${avgMood} / 5</span>
@@ -2772,7 +2832,6 @@
       main.innerHTML = `
         <div class="section-head">
           <div>
-            <div class="eyebrow">6 Life Areas</div>
             <h1 class="page-title">เป้าหมายชีวิตของคุณ</h1>
           </div>
           <button type="button" class="btn-primary btn-sm" onclick="openGoalSheet()">+ New Goal</button>
@@ -2905,7 +2964,6 @@
       main.innerHTML = `
         <div class="section-head">
           <div>
-            <div class="eyebrow">Milestones & Timeline</div>
             <h1 class="page-title">แตกงานใหญ่เป็นขั้นตอน</h1>
           </div>
           <button type="button" class="btn-primary btn-sm" onclick="openProjectSheet()">+ โปรเจกต์</button>
@@ -3099,46 +3157,51 @@
       let bodyHtml = ``;
       if (appState.manifestTab === `trips`) {
         bodyHtml = `
-          <div class="globe-box">
-            <div class="section-head" style="width:100%;">
-              <span style="font-weight:700;font-size:0.88rem;">ลูกโลก 3D · จุดหมายในฝัน (${ownedTrips.length})</span>
-              <span class="muted" style="font-size:0.74rem;">ลากเพื่อหมุนลูกโลก</span>
-            </div>
-            <canvas id="manifest-globe-canvas" width="240" height="240"></canvas>
-            ${ownedTrips.length === 0 ? `
-              <p class="muted" style="text-align:center;">ยังไม่มีทริปปักหมุดบนลูกโลก ไปเลือกซื้อใน Shop ได้เลย</p>
-              <button type="button" class="btn-primary btn-sm" onclick="setManifestTab('shop')">เปิด Universe Shop</button>
-            ` : `
-              <div class="chip-row" style="width:100%;">
-                ${ownedTrips.map(tr => `
-                  <button type="button" class="chip ${selectedTripId === tr.id ? `active` : ``}" onclick="focusGlobePin('${tr.id}', ${tr.lat}, ${tr.lon})">
-                    <i data-lucide="map-pin" style="width:13px;height:13px;"></i> ${tr.name}
-                  </button>
-                `).join(``)}
+          <div class="manifest-globe-hero">
+            <canvas id="manifest-globe-canvas"></canvas>
+            <div class="globe-overlay">
+              <div class="globe-title-row">
+                <span style="font-weight:700;font-size:0.95rem;">จุดหมายในฝัน <span class="muted" style="font-weight:400;">(${ownedTrips.length})</span></span>
               </div>
-            `}
-          </div>
-          <div style="display:flex;flex-direction:column;gap:var(--space-xs);">
-            ${ownedTrips.map(tr => `
-              <div class="tile-elevated tile-clickable" onclick="focusGlobePin('${tr.id}', ${tr.lat}, ${tr.lon})">
-                <div class="section-head">
-                  <div style="display:flex;align-items:center;gap:var(--space-sm);">
-                    <i data-lucide="${tr.icon}" style="width:20px;height:20px;color:var(--primary);"></i>
-                    <div>
-                      <div style="font-weight:700;font-size:0.9rem;">${tr.name}</div>
-                      <div class="muted" style="font-size:0.76rem;">${tr.sub}</div>
-                    </div>
-                  </div>
-                  <span class="area-badge area-career">ปักหมุดแล้ว</span>
+              ${ownedTrips.length > 0 ? `
+                <div class="globe-trip-chips">
+                  ${ownedTrips.map(tr => `
+                    <button type="button" class="chip ${selectedTripId === tr.id ? `active` : ``}" onclick="focusGlobePin('${tr.id}', ${tr.lat}, ${tr.lon})">
+                      <i data-lucide="map-pin" style="width:12px;height:12px;"></i> ${tr.name}
+                    </button>
+                  `).join(``)}
                 </div>
-              </div>
-            `).join(``)}
+              ` : `
+                <div class="globe-empty-state">
+                  <p class="muted">ยังไม่มีทริปปักหมุดบนลูกโลก</p>
+                  <button type="button" class="btn-primary btn-sm" onclick="setManifestTab('shop')">เปิด Universe Shop</button>
+                </div>
+              `}
+            </div>
           </div>
+          ${ownedTrips.length > 0 ? `
+            <div style="display:flex;flex-direction:column;gap:var(--space-xs);margin-top:var(--space-md);">
+              ${ownedTrips.map(tr => `
+                <div class="tile-elevated tile-clickable" onclick="focusGlobePin('${tr.id}', ${tr.lat}, ${tr.lon})">
+                  <div class="section-head">
+                    <div style="display:flex;align-items:center;gap:var(--space-sm);">
+                      <i data-lucide="${tr.icon}" style="width:20px;height:20px;color:var(--primary);"></i>
+                      <div>
+                        <div style="font-weight:700;font-size:0.9rem;">${tr.name}</div>
+                        <div class="muted" style="font-size:0.76rem;">${tr.sub}</div>
+                      </div>
+                    </div>
+                    <span class="area-badge area-career">ปักหมุดแล้ว</span>
+                  </div>
+                </div>
+              `).join(``)}
+            </div>
+          ` : ``}
         `;
       } else if (appState.manifestTab === `places`) {
         bodyHtml = ownedPlaces.length === 0 ? `
           <div class="tile" style="text-align:center;">
-            <p class="muted">ยังไม่มีที่อยู่ในฝัน (My Places) เลือกซื้อบ้านและวิลล่าใน Universe Shop</p>
+            <p class="muted">ยังไม่มีที่อยู่ในฝัน เลือกซื้อบ้านและวิลล่าใน Universe Shop</p>
             <button type="button" class="btn-primary btn-sm" onclick="setManifestTab('shop')">ไปที่ Universe Shop</button>
           </div>
         ` : ownedPlaces.map(pl => `
@@ -3179,7 +3242,7 @@
         bodyHtml = `
           <form class="tile-elevated" onsubmit="addManifestoQuote(event)">
             <div class="form-field">
-              <label class="form-label" for="manifesto-new-input">บันทึกคำประกาศิตประจำตัว (My Manifesto)</label>
+              <label class="form-label" for="manifesto-new-input">บันทึกคำประกาศิตประจำตัว</label>
               <textarea class="input-ctrl" id="manifesto-new-input" required></textarea>
             </div>
             <button type="submit" class="btn-primary">เพิ่มคำประกาศิต (แสดงบน Dashboard)</button>
@@ -3202,9 +3265,9 @@
         bodyHtml = `
           <div class="chip-row">
             <button type="button" class="chip ${appState.shopFilter === `all` ? `active` : ``}" onclick="setShopFilter('all')">ทั้งหมด (${SHOP_CATALOG.length})</button>
-            <button type="button" class="chip ${appState.shopFilter === `trips` ? `active` : ``}" onclick="setShopFilter('trips')">My Trips</button>
-            <button type="button" class="chip ${appState.shopFilter === `places` ? `active` : ``}" onclick="setShopFilter('places')">My Places</button>
-            <button type="button" class="chip ${appState.shopFilter === `garage` ? `active` : ``}" onclick="setShopFilter('garage')">My Garage</button>
+            <button type="button" class="chip ${appState.shopFilter === `trips` ? `active` : ``}" onclick="setShopFilter('trips')">ทริป</button>
+            <button type="button" class="chip ${appState.shopFilter === `places` ? `active` : ``}" onclick="setShopFilter('places')">ที่อยู่</button>
+            <button type="button" class="chip ${appState.shopFilter === `garage` ? `active` : ``}" onclick="setShopFilter('garage')">โรงรถ</button>
           </div>
           <div style="display:flex;flex-direction:column;gap:var(--space-sm);">
             ${filtered.map(item => {
@@ -3241,7 +3304,6 @@
         <div class="tile">
           <div class="section-head">
             <div>
-              <div class="eyebrow">รู้สึก → ได้รับ</div>
               <div class="figure-md">${formatBaht(appState.user.manifestMoney)}</div>
               <div class="muted" style="font-size:0.75rem;">มูลค่าสินทรัพย์ในจักรวาล: ${formatBaht(totalAssetVal)}</div>
             </div>
@@ -3252,10 +3314,10 @@
         </div>
 
         <div class="chip-row">
-          <button type="button" class="chip ${appState.manifestTab === `trips` ? `active` : ``}" onclick="setManifestTab('trips')">My Trips (${ownedTrips.length})</button>
-          <button type="button" class="chip ${appState.manifestTab === `places` ? `active` : ``}" onclick="setManifestTab('places')">My Places (${ownedPlaces.length})</button>
-          <button type="button" class="chip ${appState.manifestTab === `garage` ? `active` : ``}" onclick="setManifestTab('garage')">My Garage (${ownedGarage.length})</button>
-          <button type="button" class="chip ${appState.manifestTab === `manifesto` ? `active` : ``}" onclick="setManifestTab('manifesto')">My Manifesto</button>
+          <button type="button" class="chip ${appState.manifestTab === `trips` ? `active` : ``}" onclick="setManifestTab('trips')">ทริป (${ownedTrips.length})</button>
+          <button type="button" class="chip ${appState.manifestTab === `places` ? `active` : ``}" onclick="setManifestTab('places')">ที่อยู่ (${ownedPlaces.length})</button>
+          <button type="button" class="chip ${appState.manifestTab === `garage` ? `active` : ``}" onclick="setManifestTab('garage')">โรงรถ (${ownedGarage.length})</button>
+          <button type="button" class="chip ${appState.manifestTab === `manifesto` ? `active` : ``}" onclick="setManifestTab('manifesto')">คำประกาศิต</button>
           <button type="button" class="chip ${appState.manifestTab === `shop` ? `active` : ``}" onclick="setManifestTab('shop')">Universe Shop</button>
         </div>
 
@@ -3273,15 +3335,19 @@
       const ctx = canvas.getContext(`2d`);
       if (!ctx) return;
 
-      // Make canvas responsive - resize based on container
+      // Cleanup previous instance
+      if (canvas._globeCleanup) {
+        canvas._globeCleanup();
+      }
+
+      // Make canvas responsive - resize based on container (hero is aspect-ratio 1)
       const container = canvas.parentElement;
-      const containerWidth = container ? container.clientWidth : canvas.width;
+      const containerWidth = container ? container.clientWidth : 300;
       const dpr = window.devicePixelRatio || 1;
-      const size = Math.min(containerWidth - 32, 300);
+      const size = Math.min(containerWidth, 360);
       canvas.width = size * dpr;
       canvas.height = size * dpr;
-      canvas.style.width = `${size}px`;
-      canvas.style.height = `${size}px`;
+      // CSS handles display size via aspect-ratio, no need to set style.width/height
       ctx.scale(dpr, dpr);
 
       const styles = getComputedStyle(document.documentElement);
@@ -3313,7 +3379,15 @@
         [[-12,130],[-25,152],[-38,142],[-32,115]] // Australia
       ];
 
-      function draw() {
+      // Entrance animation state
+      let animPhase = 0; // 0 = ocean, 1 = grid, 2 = continents, 3 = pins
+      let animProgress = 0;
+      let animStartTime = 0;
+      const animDuration = 1200; // total ms
+      const phaseDurations = [200, 200, 500, 300]; // ms per phase
+      let animFrameId = null;
+
+      function draw(progressOverride) {
         const w = size;
         const h = size;
         const cx = w / 2;
@@ -3321,15 +3395,22 @@
         const r = Math.min(w, h) * 0.43;
         ctx.clearRect(0, 0, w, h);
 
-        // Sphere background
+        // Determine animation progress
+        const progress = progressOverride !== undefined ? progressOverride : animProgress;
+
+        // Phase 0: Ocean background (immediate)
         ctx.beginPath();
         ctx.arc(cx, cy, r, 0, Math.PI * 2);
         ctx.fillStyle = oceanCol;
         ctx.fill();
 
-        // Graticule meridians
+        if (progress < phaseDurations[0]) return;
+
+        // Phase 1: Graticule meridians (fade in)
+        const gridPhase = Math.min(1, (progress - phaseDurations[0]) / phaseDurations[1]);
         ctx.strokeStyle = gridCol;
         ctx.lineWidth = 1;
+        ctx.globalAlpha = gridPhase;
         for (let lon = -150; lon <= 180; lon += 30) {
           ctx.beginPath();
           let started = false;
@@ -3344,12 +3425,21 @@
           }
           ctx.stroke();
         }
+        ctx.globalAlpha = 1;
 
-        // Stylized landmasses
+        if (progress < phaseDurations[0] + phaseDurations[1]) return;
+
+        // Phase 2: Continents (draw with progressive reveal)
+        const continentPhase = Math.min(1, (progress - phaseDurations[0] - phaseDurations[1]) / phaseDurations[2]);
         ctx.fillStyle = landCol;
-        continents.forEach(poly => {
+        continents.forEach((poly, polyIdx) => {
           const pts = poly.map(([la, lo]) => project(la, lo, r, cx, cy));
           if (pts.some(p => p.visible)) {
+            // Stagger each continent slightly
+            const polyDelay = polyIdx * 80;
+            const polyProgress = Math.min(1, Math.max(0, (progress - phaseDurations[0] - phaseDurations[1] - polyDelay) / (phaseDurations[2] / continents.length)));
+            if (polyProgress <= 0) return;
+
             ctx.beginPath();
             pts.forEach((p, idx) => {
               const clampedX = Math.max(cx - r, Math.min(cx + r, p.x));
@@ -3363,80 +3453,118 @@
             ctx.arc(cx, cy, r, 0, Math.PI * 2);
             ctx.clip();
             ctx.beginPath();
-            pts.forEach((p, idx) => {
+            // Draw partial path based on progress
+            const totalPts = pts.length;
+            const drawPts = Math.max(2, Math.floor(totalPts * polyProgress));
+            pts.slice(0, drawPts).forEach((p, idx) => {
               if (idx === 0) ctx.moveTo(p.x, p.y);
               else ctx.lineTo(p.x, p.y);
             });
-            ctx.closePath();
+            if (drawPts >= totalPts) ctx.closePath();
             ctx.fill();
             ctx.restore();
           }
         });
 
-        // Owned Trip Pins
-        ownedTrips.forEach(tr => {
+        if (progress < phaseDurations[0] + phaseDurations[1] + phaseDurations[2]) return;
+
+        // Phase 3: Pins (pop in with stagger)
+        const pinPhase = Math.min(1, (progress - phaseDurations[0] - phaseDurations[1] - phaseDurations[2]) / phaseDurations[3]);
+        ownedTrips.forEach((tr, idx) => {
           const p = project(tr.lat, tr.lon, r, cx, cy);
           if (p.visible) {
             const isSel = tr.id === selectedTripId;
+            const pinDelay = idx * 80;
+            const pinProgress = Math.min(1, Math.max(0, (progress - phaseDurations[0] - phaseDurations[1] - phaseDurations[2] - pinDelay) / (phaseDurations[3] / Math.max(1, ownedTrips.length))));
+            if (pinProgress <= 0) return;
+
+            const scale = 0.3 + 0.7 * pinProgress; // pop from 30% to 100%
+            const pinR = (isSel ? 9 : 6) * scale;
+            const innerR = (isSel ? 3.5 : 2.5) * scale;
+
             ctx.beginPath();
-            ctx.arc(p.x, p.y, isSel ? 9 : 6, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, pinR, 0, Math.PI * 2);
             ctx.fillStyle = isSel ? selCol : pinCol;
+            ctx.globalAlpha = pinProgress;
             ctx.fill();
+            ctx.globalAlpha = 1;
             ctx.beginPath();
-            ctx.arc(p.x, p.y, isSel ? 3.5 : 2.5, 0, Math.PI * 2);
+            ctx.arc(p.x, p.y, innerR, 0, Math.PI * 2);
             ctx.fillStyle = styles.getPropertyValue(`--on-primary`).trim();
             ctx.fill();
           }
         });
       }
 
-      draw();
+      // Animation loop
+      function animate(timestamp) {
+        if (!animStartTime) animStartTime = timestamp;
+        const elapsed = timestamp - animStartTime;
+        animProgress = Math.min(elapsed, animDuration);
+        draw(animProgress);
+        if (elapsed < animDuration) {
+          animFrameId = requestAnimationFrame(animate);
+        } else {
+          // Animation complete - draw final state and enable interaction
+          draw(animDuration);
+          enableInteraction();
+        }
+      }
 
-      // Touch and pointer events for globe rotation
-      let isDragging = false;
-      let lastX = 0;
-      let lastY = 0;
+      function enableInteraction() {
+        // Touch and pointer events for globe rotation
+        let isDragging = false;
+        let lastX = 0;
+        let lastY = 0;
 
-      const handleDown = (ev) => {
-        isDragging = true;
-        lastX = ev.clientX || (ev.touches && ev.touches[0].clientX);
-        lastY = ev.clientY || (ev.touches && ev.touches[0].clientY);
-      };
+        const handleDown = (ev) => {
+          isDragging = true;
+          lastX = ev.clientX || (ev.touches && ev.touches[0].clientX);
+          lastY = ev.clientY || (ev.touches && ev.touches[0].clientY);
+        };
 
-      const handleMove = (ev) => {
-        if (!isDragging) return;
-        const clientX = ev.clientX || (ev.touches && ev.touches[0].clientX);
-        const clientY = ev.clientY || (ev.touches && ev.touches[0].clientY);
-        if (!clientX || !clientY) return;
-        const dx = clientX - lastX;
-        const dy = clientY - lastY;
-        lastX = clientX;
-        lastY = clientY;
-        globeRotLon += dx * 0.6;
-        globeRotLat = Math.max(-55, Math.min(55, globeRotLat + dy * 0.4));
-        draw();
-      };
+        const handleMove = (ev) => {
+          if (!isDragging) return;
+          const clientX = ev.clientX || (ev.touches && ev.touches[0].clientX);
+          const clientY = ev.clientY || (ev.touches && ev.touches[0].clientY);
+          if (!clientX || !clientY) return;
+          const dx = clientX - lastX;
+          const dy = clientY - lastY;
+          lastX = clientX;
+          lastY = clientY;
+          globeRotLon += dx * 0.6;
+          globeRotLat = Math.max(-55, Math.min(55, globeRotLat + dy * 0.4));
+          draw(animDuration); // Draw final state
+        };
 
-      const handleUp = () => { isDragging = false; };
+        const handleUp = () => { isDragging = false; };
 
-      canvas.addEventListener('pointerdown', handleDown);
-      canvas.addEventListener('pointermove', handleMove);
-      canvas.addEventListener('pointerup', handleUp);
-      canvas.addEventListener('pointerleave', handleUp);
-      canvas.addEventListener('touchstart', handleDown, { passive: true });
-      canvas.addEventListener('touchmove', handleMove, { passive: true });
-      canvas.addEventListener('touchend', handleUp);
+        canvas.addEventListener('pointerdown', handleDown);
+        canvas.addEventListener('pointermove', handleMove);
+        canvas.addEventListener('pointerup', handleUp);
+        canvas.addEventListener('pointerleave', handleUp);
+        canvas.addEventListener('touchstart', handleDown, { passive: true });
+        canvas.addEventListener('touchmove', handleMove, { passive: true });
+        canvas.addEventListener('touchend', handleUp);
 
-      // Store cleanup handlers
-      canvas._globeCleanup = () => {
-        canvas.removeEventListener('pointerdown', handleDown);
-        canvas.removeEventListener('pointermove', handleMove);
-        canvas.removeEventListener('pointerup', handleUp);
-        canvas.removeEventListener('pointerleave', handleUp);
-        canvas.removeEventListener('touchstart', handleDown);
-        canvas.removeEventListener('touchmove', handleMove);
-        canvas.removeEventListener('touchend', handleUp);
-      };
+        // Store cleanup handlers
+        canvas._globeCleanup = () => {
+          if (animFrameId) cancelAnimationFrame(animFrameId);
+          canvas.removeEventListener('pointerdown', handleDown);
+          canvas.removeEventListener('pointermove', handleMove);
+          canvas.removeEventListener('pointerup', handleUp);
+          canvas.removeEventListener('pointerleave', handleUp);
+          canvas.removeEventListener('touchstart', handleDown);
+          canvas.removeEventListener('touchmove', handleMove);
+          canvas.removeEventListener('touchend', handleUp);
+        };
+      }
+
+      // Start entrance animation
+      animStartTime = 0;
+      animProgress = 0;
+      animPhase = 0;
+      animFrameId = requestAnimationFrame(animate);
     }
 
     /* ============================================================
@@ -3491,8 +3619,7 @@
       if (appState.aiCoachTab === `style`) {
         tabBody = `
           <div class="tile" style="background:var(--primary-container);">
-            <div class="eyebrow">สัปดาห์นี้คุณทำงานแบบ</div>
-            <div class="page-title" style="color:var(--on-primary-container);">Architect · นักวางระบบ</div>
+            <div class="page-title" style="color:var(--on-primary-container);">นักวางระบบ · Architect</div>
             <p style="font-size:0.86rem;font-weight:500;">วางแผนไว้ล่วงหน้า · ทำสม่ำเสมอเกือบทุกวัน</p>
             <div style="display:flex;flex-wrap:wrap;gap:var(--space-xs);margin-top:var(--space-xs);">
               <span class="area-badge area-career">สายเช้า</span>
@@ -3538,13 +3665,13 @@
               <div class="figure-md">${appState.focusStats.totalMinutes} min</div>
             </div>
             <div class="tile">
-              <div class="muted" style="font-size:0.76rem;">Avg Mood</div>
+              <div class="muted" style="font-size:0.76rem;">อารมณ์เฉลี่ย</div>
               <div class="figure-md">${avgMood}</div>
             </div>
           </div>
 
           <div class="tile-elevated">
-            <h2 class="section-title">Highlights ประจำสัปดาห์</h2>
+            <h2 class="section-title">ไฮไลท์สัปดาห์นี้</h2>
             <ul style="margin:0;padding-left:1.25rem;display:flex;flex-direction:column;gap:var(--space-xs);font-size:0.86rem;">
               <li>ปิดงานสำคัญได้ก่อนเที่ยง 4 วัน (จ อ พ พฤ)</li>
               <li>ออกกำลังกายครบเป้า ต่อเนื่องเป็นสัปดาห์ที่ 3 (จ พ ศ ส)</li>
@@ -3552,7 +3679,7 @@
           </div>
 
           <div class="tile-elevated">
-            <h2 class="section-title">Patterns · รูปแบบชีวิตของคุณ</h2>
+            <h2 class="section-title">รูปแบบชีวิตของคุณ</h2>
             <p class="muted" style="font-size:0.84rem;">วันที่ทำงานไม่เกิน 4 งาน คุณทำเสร็จครบทุกงาน (100% เทียบกับ 73% ในวันที่มี 5–6 งาน)</p>
             <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:var(--space-xs);align-items:end;min-height:140px;padding-top:var(--space-md);">
               ${weeklyBars.map(b => `
@@ -3573,7 +3700,7 @@
         ];
         tabBody = `
           <div class="section-head">
-            <h2 class="section-title">Try next week · 3 สิ่งที่แนะนำ</h2>
+            <h2 class="section-title">ลองทำสัปดาห์หน้า · 3 ข้อแนะนำ</h2>
           </div>
           ${recs.map(r => `
             <div class="tile-elevated">
@@ -3595,7 +3722,6 @@
       main.innerHTML = `
         <div class="section-head">
           <div>
-            <div class="eyebrow">AI Personal Coach</div>
             <h1 class="page-title">โค้ชส่วนตัวที่รู้จักชีวิตคุณ</h1>
           </div>
         </div>
@@ -3626,7 +3752,6 @@
         main.innerHTML = `
           <div class="section-head">
             <div>
-              <div class="eyebrow">Monthly Growth</div>
               <h1 class="page-title">ความก้าวหน้ารายเดือน</h1>
             </div>
             ${appState.tasks.length > 0 ? `<button type="button" class="btn-secondary btn-sm" onclick="toggleEmptyProgressPreview()">กลับสู่ข้อมูลจริง</button>` : ``}
@@ -3654,7 +3779,6 @@
       main.innerHTML = `
         <div class="section-head">
           <div>
-            <div class="eyebrow">Monthly Growth</div>
             <h1 class="page-title">เห็นการเติบโตทุกเดือน</h1>
           </div>
           <button type="button" class="btn-secondary btn-sm" onclick="toggleEmptyProgressPreview()">ดูตัวอย่างหน้าว่าง</button>
@@ -3707,7 +3831,6 @@
 
       main.innerHTML = `
         <div>
-          <div class="eyebrow">PLAN OS Guide</div>
           <h1 class="page-title">คู่มือเริ่มต้นใช้งาน</h1>
           <p class="muted">4 แกนหลักที่ทำให้ชีวิตเป็นระบบและรู้สึกดีขึ้นในทุกวัน</p>
         </div>
@@ -3780,7 +3903,6 @@
     function renderSettingsView(main) {
       main.innerHTML = `
         <div>
-          <div class="eyebrow">Preferences</div>
           <h1 class="page-title">ตั้งค่าและบัญชีผู้ใช้</h1>
         </div>
 
